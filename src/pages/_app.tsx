@@ -1,5 +1,6 @@
 import { makeStore } from "@/store/store";
 import "@/styles/globals.css";
+import { ThemeProvider } from "@material-tailwind/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
@@ -20,10 +21,12 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout || ((page) => page);
   return (
-    <Provider store={store}>
-      {getLayout(
-        <Component {...rest} />
-      )}
-    </Provider>
+    <ThemeProvider>
+      <Provider store={store}>
+        {getLayout(
+          <Component {...rest} />
+        )}
+      </Provider>
+    </ThemeProvider>
   );
 }

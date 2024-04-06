@@ -29,4 +29,7 @@ declare module "@material-tailwind/react" {
     export interface NavbarProps extends EventCapture {
         placeholder?: unknown;
     }
+    export interface CheckboxProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
 }
