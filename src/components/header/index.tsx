@@ -6,6 +6,8 @@ import {
     Button,
     IconButton,
 } from "@material-tailwind/react";
+import { SiPolywork } from "react-icons/si";
+import Link from "next/link";
 
 export const Header = () => {
     const [openNav, setOpenNav] = React.useState(false);
@@ -26,7 +28,7 @@ export const Header = () => {
                 className="p-1 font-normal"
             >
                 <a href="#" className="flex items-center">
-                    Pages
+                    О нас
                 </a>
             </Typography>
             <Typography
@@ -36,7 +38,7 @@ export const Header = () => {
                 className="p-1 font-normal"
             >
                 <a href="#" className="flex items-center">
-                    Account
+                    Контакты
                 </a>
             </Typography>
             <Typography
@@ -46,17 +48,7 @@ export const Header = () => {
                 className="p-1 font-normal"
             >
                 <a href="#" className="flex items-center">
-                    Blocks
-                </a>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <a href="#" className="flex items-center">
-                    Docs
+                    Пользовательское соглашение
                 </a>
             </Typography>
         </ul>
@@ -64,32 +56,39 @@ export const Header = () => {
 
     return (
         <header className="w-full sticky top-0 z-10">
-            <Navbar className="rounded-none px-4 py-2 lg:px-8 lg:py-4">
+            <Navbar className="rounded-none max-w-full px-4 py-2 lg:px-8 lg:py-4">
                 <div className="flex items-center justify-between text-blue-gray-900">
-                    <Typography
-                        as="a"
-                        href="#"
-                        className="mr-4 cursor-pointer py-1.5 font-medium"
-                    >
-                        Material Tailwind
-                    </Typography>
+                    <div className="flex items-center gap-2">
+                        <SiPolywork />
+                        <Typography
+                            as="a"
+                            href="#"
+                            className="mr-4 cursor-pointer py-1.5 font-medium"
+                        >
+                            Портфолио
+                        </Typography>
+                    </div>
                     <div className="flex items-center gap-4">
                         <div className="mr-4 hidden lg:block">{navList}</div>
                         <div className="flex items-center gap-x-1">
-                            <Button
-                                variant="text"
-                                size="sm"
-                                className="hidden lg:inline-block"
-                            >
-                                <span>Log In</span>
-                            </Button>
-                            <Button
-                                variant="gradient"
-                                size="sm"
-                                className="hidden lg:inline-block"
-                            >
-                                <span>Sign in</span>
-                            </Button>
+                            <Link href="/login">
+                                <Button
+                                    variant="text"
+                                    size="sm"
+                                    className="hidden lg:inline-block"
+                                >
+                                    <span>Войти</span>
+                                </Button>
+                            </Link>
+                            <Link href="/registration">
+                                <Button
+                                    variant="gradient"
+                                    size="sm"
+                                    className="hidden lg:inline-block"
+                                >
+                                    <span>Регистрация</span>
+                                </Button>
+                            </Link>
                         </div>
                         <IconButton
                             variant="text"

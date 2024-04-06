@@ -7,7 +7,7 @@ import HeadLayout from "@/components/layout/headLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="mx-auto max-w-screen-md py-12">
       <Card className="mb-12 overflow-hidden">
@@ -151,3 +151,5 @@ Home.getLayout = function getLayout(page: ReactElement) {
     </HeadLayout>
 )
 }
+
+export default Home;

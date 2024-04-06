@@ -5,7 +5,7 @@ import { Mutex } from 'async-mutex'
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.BASE_URL_SERVICE,
+  baseUrl: "http://127.0.0.1:8000",
   prepareHeaders: (headers, { getState }) => {
     // const token = (getState() as RootState).auth.access;
     const token = localStorage.getItem('token');
@@ -67,14 +67,14 @@ export const projectApi = createApi({
     regUser: build.mutation<any, any>({
       query: (data) => ({
         method: 'POST',
-        url: '/dashboard/manager/register',
+        url: '/auth/users/',
         body: data,
       }),
     }),
     loginUser: build.mutation<any, any>({
       query: (data) => ({
         method: 'POST',
-        url: '/dashboard/manager/login',
+        url: '/auth/jwt/create',
         body: data,
       }),
     }),

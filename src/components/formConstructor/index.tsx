@@ -13,7 +13,7 @@ type Props<T extends FieldValues> = {
     children?: React.ReactNode;
     errors?: Record<string, any>;
     inputClassName?: string;
-    formRef: React.RefObject<HTMLFormElement>;
+    formRef?: React.RefObject<HTMLFormElement>;
 }
 
 export function FormConstructor<T extends FieldValues>({
@@ -27,11 +27,14 @@ export function FormConstructor<T extends FieldValues>({
                     {...register(item.fieldName!)}
                     label={item.label}
                     placeholder={item.placeholder}
+                    type={item.password ? 'password' : 'text'}
                     error={item.fieldName && errors && errors[item.fieldName]?.message}
                 />
-                {item.fieldName && errors && <Typography variant="h6" color="red" className="-mb-3">
+                {item.fieldName && errors && errors[item.fieldName] && 
+                <Typography variant="small" color="red" className="-mb-3">
                     {errors[item.fieldName]?.message}
-                </Typography>}
+                </Typography>
+                }
             </div>
         ),
         image: (item: IForm<T>, index: number) => (

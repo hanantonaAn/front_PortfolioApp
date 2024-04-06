@@ -1,81 +1,71 @@
-import { Button, Card, Checkbox, Input, Typography } from "@material-tailwind/react"
+import { FormConstructor } from "@/components/formConstructor"
+import { authLoginForm } from "@/forms/authForm"
+import { useLoginUserMutation } from "@/service/projectService"
+import { useAppDispatch } from "@/store/hooks"
+import { ISignInType, SignInSchema } from "@/utils/yupSchema"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Button, Card, Typography } from "@material-tailwind/react"
 import { NextPage } from "next"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { SubmitHandler, useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 
 
 const Login: NextPage = () => {
+
+  // регистрация формы
+  const { register, handleSubmit, formState: { errors } } = useForm<ISignInType>({
+    resolver: yupResolver(SignInSchema),
+  });
+
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const loginAuthUser: SubmitHandler<ISignInType> = (data) => {
+    toast.promise(
+      loginUser(data).unwrap(),
+      {
+        loading: 'Вход в систему...',
+        success: () => `Вход прошел успешно`,
+        error: () => `Произошла ошибка`
+      }
+    ).then((res) => {
+      // dispatch(setUser(res.data.manager));
+      // authLogin(res.data.accessToken);
+      localStorage.setItem('token', res.data.access);
+      // dispatch(setCredentials(res.data.accessToken));
+      router.push('/')
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <Card className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible" color="transparent" shadow={false}>
       <Typography variant="h4" color="blue-gray">
-        Sign Up
+        Войти
       </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Nice to meet you! Enter your details to register.
-      </Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
-        <div className="mb-1 flex flex-col gap-6">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Name
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="name@mail.com"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <Input
-            size="lg"
-            placeholder="name@mail.com"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Password
-          </Typography>
-          <Input
-            type="password"
-            size="lg"
-            placeholder="********"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
-        <Checkbox
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
-            >
-              I agree the
-              <a
-                href="#"
-                className="font-medium transition-colors hover:text-gray-900"
-              >
-                &nbsp;Terms and Conditions
-              </a>
-            </Typography>
-          }
-          containerProps={{ className: "-ml-2.5" }}
-        />
-        <Button className="mt-6" fullWidth>
-          sign up
+      <FormConstructor
+        fieldList={authLoginForm}
+        onSubmit={handleSubmit(data => loginAuthUser(data))}
+        register={register}
+        formClassName="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+        inputClassName="mb-1 flex flex-col gap-6"
+        errors={errors}>
+        <Button className="mt-6" fullWidth loading={isLoading} type="submit">
+          Войти
         </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{" "}
-          <a href="#" className="font-medium text-gray-900">
-            Sign In
-          </a>
-        </Typography>
-      </form>
+      </FormConstructor>
+      <Typography color="gray" className="mt-4 text-center font-normal">
+        Ещё нет аккаунта?{" "}
+        <Link href="/registration" className="font-medium text-blue-600">
+          Регистрация
+        </Link>
+      </Typography>
     </Card>
   )
 }

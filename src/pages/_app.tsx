@@ -4,6 +4,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
@@ -26,6 +27,7 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
         {getLayout(
           <Component {...rest} />
         )}
+        <Toaster />
       </Provider>
     </ThemeProvider>
   );
