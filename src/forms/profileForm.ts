@@ -67,9 +67,18 @@ export const profileForm: IForm<IProfileType>[] = [
     },
     {
         fieldName: "sex",
-        type: "input",
-        placeholder: "Пол",
-        label: "Пол"
+        type: "select",
+        label: "Пол",
+        options: [
+            {
+                value: "male",
+                label: "Мужской"
+            },
+            {
+                value: "female",
+                label: "Женский"
+            }
+        ]
     },
     {
         type: "title",
@@ -77,21 +86,54 @@ export const profileForm: IForm<IProfileType>[] = [
     },
     {
         fieldName: "languages",
-        type: "input",
+        type: "inputByTags",
         placeholder: "Языки",
         label: "Иностранные языки"
     },
     {
         fieldName: "curses",
-        type: "input",
+        type: "inputByTags",
         placeholder: "Курсы",
         label: "Оконченные курсы"
     },
     {
         fieldName: "education_level",
-        type: "input",
-        placeholder: "Образование",
-        label: "Уровень образования"
+        type: "select",
+        label: "Уровень образования",
+        options: [
+            {
+                value: "secondary",
+                label: "Среднее"
+            },
+            {
+                value: "special_secondary",
+                label: "Среднее специальное"
+            },
+            {
+                value: "unfinished_higher",
+                label: "Неоконченное высшее"
+            },
+            {
+                value: "higher",
+                label: "Высшее"
+            },
+            {
+                value: "bachelor",
+                label: "Бакалавр"
+            },
+            {
+                value: "master",
+                label: "Магистр"
+            },
+            {
+                value: "candidate",
+                label: "Кандидат наук"
+            },
+            {
+                value: "doctor",
+                label: "Доктор наук"
+            }
+        ]
     },
     {
         fieldName: "graduation_place",

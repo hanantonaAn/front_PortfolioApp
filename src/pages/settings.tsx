@@ -1,5 +1,5 @@
 import PageLayout from "@/components/layout/pageLayout";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
@@ -10,6 +10,7 @@ import { IProfileType, ProfileSchema } from "@/utils/yupSchema";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { profileForm } from "@/forms/profileForm";
 import { useCreateUserDataMutation } from "@/service/userDataService";
+import { IFormTagsKey } from "@/types/form";
 
 
 const Settings = () => {
@@ -17,19 +18,24 @@ const Settings = () => {
     resolver: yupResolver(ProfileSchema),
   });
 
+  const [tags, setTags] = useState<IFormTagsKey>({ languages: [], curses: [] });
+
   const [updateProfile] = useCreateUserDataMutation()
 
   const test: SubmitHandler<IProfileType> = (data) => {
     const formData = new FormData();
-    for (const key in data) {
+    Object.entries(data).forEach(([key, value]) => {
       if (key === "picture") {
-        data.picture && formData.append(key, data.picture)
-      } else {
-        formData.append(key, (data as any)[key])
+        formData.append(key, value);
+      } else if (["languages", "curses"].includes(key)) {
+        formData.append(key, JSON.stringify(tags[key as keyof typeof tags]));
+      } else if (value) {
+        formData.append(key, value);
       }
-    }
+    });
     updateProfile(formData).unwrap()
   };
+  
   return (
     <Wrapper>
       <div className="flex gap-5 py-12">
@@ -44,20 +50,9 @@ const Settings = () => {
               register={register}
               inputClassName="grid grid-cols-1 gap-2"
               control={control}
+              tags={tags}
+              setTags={setTags}
               errors={errors}>
-              {
-                ['1', '2'] &&
-                <div className="flex flex-wrap gap-2 mt-6">
-                  {['1', '2'].map((item, id) => {
-                    return (
-                      <div className="flex gap-4 rounded-2xl bg-blue-500 text-white px-3 py-2" key={id}>
-                        #{item}
-                        <span className="text-red-500 cursor-pointer hover:text-red-500/50 transition-all duration-150">x</span>
-                      </div>
-                    )
-                  })}
-                </div>
-              }
               <Button type="submit" color="light-blue" className="mt-5">
                 Сохранить
               </Button>
