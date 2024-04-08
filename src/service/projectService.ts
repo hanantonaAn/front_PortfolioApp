@@ -1,4 +1,5 @@
 import { RootState } from '@/store/store';
+import { IUser } from '@/types/user';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Mutex } from 'async-mutex'
 
@@ -78,9 +79,9 @@ export const projectApi = createApi({
         body: data,
       }),
     }),
-    getUser: build.query<any, void>({
+    getUser: build.query<IUser, void>({
       query: () => ({
-        url: '/dashboard/manager'
+        url: '/auth/users/me/'
       }),
     }),
   }),

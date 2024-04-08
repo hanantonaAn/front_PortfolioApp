@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-editor:before {
+    color: white !important;
+}
+
+/* IFrame ql */
+.ql-video {
+    width: 100%;
+    height: 728px;
+}
+
+.ql-container {
+    height: 400px !important;
+}

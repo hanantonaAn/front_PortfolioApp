@@ -2,6 +2,7 @@ import { FormConstructor } from "@/components/formConstructor"
 import { authLoginForm } from "@/forms/authForm"
 import { useLoginUserMutation } from "@/service/projectService"
 import { useAppDispatch } from "@/store/hooks"
+import { setCredentials } from "@/store/slice/authSlice"
 import { ISignInType, SignInSchema } from "@/utils/yupSchema"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, Card, Typography } from "@material-tailwind/react"
@@ -35,8 +36,8 @@ const Login: NextPage = () => {
     ).then((res) => {
       // dispatch(setUser(res.data.manager));
       // authLogin(res.data.accessToken);
-      localStorage.setItem('token', res.data.access);
-      // dispatch(setCredentials(res.data.accessToken));
+      localStorage.setItem('token', res.access);
+      dispatch(setCredentials(res));
       router.push('/')
     })
       .catch((error) => {

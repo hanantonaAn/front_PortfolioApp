@@ -32,4 +32,34 @@ declare module "@material-tailwind/react" {
     export interface CheckboxProps extends EventCapture {
         crossOrigin?: unknown;
     }
+    export interface AvatarProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface MenuListProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface MenuItemProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface CardBodyProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface CardHeaderProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface CardFooterProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface ListProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface ListItemProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface ListItemPrefixProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface ListItemSuffixProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
 }

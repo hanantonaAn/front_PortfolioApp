@@ -1,6 +1,6 @@
 import { IForm, IFormType } from "@/types/form";
 import { Input, Typography } from "@material-tailwind/react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { Control, Controller, FieldValues, UseFormRegister } from "react-hook-form";
 
 
 
@@ -14,10 +14,11 @@ type Props<T extends FieldValues> = {
     errors?: Record<string, any>;
     inputClassName?: string;
     formRef?: React.RefObject<HTMLFormElement>;
+    control?: Control<FieldValues>;
 }
 
 export function FormConstructor<T extends FieldValues>({
-    containerClassName, formClassName, fieldList, onSubmit, register, children, errors, inputClassName, formRef
+    containerClassName, formClassName, fieldList, onSubmit, register, children, errors, inputClassName, formRef, control
 }: Props<T>) {
 
     const renderMap: Record<IFormType, (item: IForm<T>, index: number) => JSX.Element> = {
@@ -42,19 +43,30 @@ export function FormConstructor<T extends FieldValues>({
                 <label htmlFor="image" className="block text-sm font-medium text-gray-700">
                     Загрузите изображение
                 </label>
-                <input
-                    {...register(item.fieldName!)}
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept="image/*"
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+                <Controller 
+                    control={control}
+                    name={item.fieldName!}
+                    render={({ field: { onChange, value, ...field } }) => {
+                        return (
+                            <input
+                                {...field}
+                                onChange={(e) => {
+                                    if(e.target.files)
+                                    onChange(e.target.files[0])
+                                }}
+                                type="file"
+                                id="image"
+                                name="image"
+                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
+                        )
+                    }}
+                    />
                 {item.fieldName && errors && <p className="text-red-500 text-xs">{errors[item.fieldName]?.message}</p>}
             </div>
         ),
         title: (item: IForm<T>, index: number) => (
-            <Typography key={index}>{item.label}</Typography>
+            <Typography variant="h6" key={index}>{item.label}</Typography>
         ),
     };
     return (

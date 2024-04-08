@@ -12,7 +12,7 @@ export const Footer = () => {
                         href="#"
                         className="mr-4 cursor-pointer py-1.5 font-medium"
                     >
-                        Портфолио
+                        PortfolioCamp
                     </Typography>
                 </div>
                 <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
@@ -60,7 +60,7 @@ export const Footer = () => {
             </div>
             <hr className="my-8 border-blue-gray-50" />
             <Typography color="blue-gray" className="text-center font-normal">
-                &copy; 2024 Портфолио
+                &copy; 2024 PortfolioCamp
             </Typography>
         </footer>
     );
