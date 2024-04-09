@@ -1,145 +1,130 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import PageLayout from "@/components/layout/pageLayout";
 import { ReactElement } from "react";
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Typography, Input } from "@material-tailwind/react";
 import HeadLayout from "@/components/layout/headLayout";
+import Image from "next/image";
+import Link from "next/link";
+import { CiBasketball, CiSearch } from "react-icons/ci";
+import { FaEye, FaLightbulb, FaRegFilePdf, FaSearch, FaShare, FaStar } from "react-icons/fa";
+import { useGetUserInfoQuery } from "@/service/userInfoService";
 
-const inter = Inter({ subsets: ["latin"] });
 
 const Home = () => {
+  const { data: userInfo } = useGetUserInfoQuery();
+
   return (
-    <div className="mx-auto max-w-screen-md py-12">
-      <Card className="mb-12 overflow-hidden">
-        <img
-          alt="nature"
-          className="h-[32rem] w-full object-cover object-center"
-          src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2717&q=80"
-        />
-      </Card>
+    <div className="mx-auto max-w-screen-xl py-12 px-5 lg:px-10">
       <Typography variant="h2" color="blue-gray" className="mb-2">
-        What is Material Tailwind
+        Создайте своё резюме
       </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
+      <Typography variant="h2" color="blue-gray">
+        И кастомизируйте...
       </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
+      <Button className="mt-5" color="light-blue">Создать резюме</Button>
+      <div className="mt-20">
+        <Typography variant="h2">Платформа для поиска людей</Typography>
+        <div className="w-[30rem] mt-4 flex items-center gap-6">
+          <Input size="lg" label="Найти интересующее вас портфолио" icon={<CiSearch />} />
+          <Button size="lg">Поиск</Button>
+        </div>
+      </div>
+      <Typography variant="h3" className="mt-20">
+        Популярные портфолио
       </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
-      <Typography color="gray" className="font-normal">
-        Can you help me out? you will get a lot of free exposure doing this
-        can my website be in english?. There is too much white space do less
-        with more, so that will be a conversation piece can you rework to make
-        the pizza look more delicious other agencies charge much lesser can
-        you make the blue bluer?. I think we need to start from scratch can my
-        website be in english?, yet make it sexy i&apos;ll pay you in a week
-        we don&apos;t need to pay upfront i hope you understand can you make
-        it stand out more?. Make the font bigger can you help me out? you will
-        get a lot of free exposure doing this that&apos;s going to be a chunk
-        of change other agencies charge much lesser. Are you busy this
-        weekend? I have a new project with a tight deadline that&apos;s going
-        to be a chunk of change. There are more projects lined up charge extra
-        the next time.
-      </Typography>
+      <div className="grid grid-cols-3 gap-6 mt-12">
+        {userInfo && userInfo.map((item, index) => {
+          if (index < 3) {
+            return (
+              <Card key={item.user_data[0]?.id} className="w-full">
+                <CardHeader color="blue-gray" className="relative h-56">
+                  <Image
+                    width={1024}
+                    height={768}
+                    className="w-full h-auto"
+                    src={item.user_data[0]?.picture}
+                    alt="card-image"
+                  />
+                </CardHeader>
+                <CardBody>
+                  <Typography variant="h5" color="blue-gray" className="mb-2">
+                    {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
+                  </Typography>
+                  <Typography>
+                    Уровень образования: {item.user_data[0]?.education_level}
+                  </Typography>
+                  <Typography>
+                    Город: {item.user_data[0]?.city}
+                  </Typography>
+                  <Typography>
+                    Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
+                  </Typography>
+                </CardBody>
+                <CardFooter className="pt-0">
+                  <Link href={`/profile/${item.user.username}`}>
+                    <Button>Открыть профиль</Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            )
+          }
+        })}
+      </div>
+      <div className="container mx-auto px-4">
+        <Typography variant="h4" className="text-center my-8">Почему мы?</Typography>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <Typography variant="h5" className="mb-4">Наши особенности</Typography>
+            <ul className="list-none">
+              <li className="flex items-center mb-2">
+                <CiBasketball size={24} />
+                <Typography variant="paragraph" className="ml-2">Конструктор резюме</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <FaSearch size={24} />
+                <Typography variant="paragraph" className="ml-2">Подбор вакансий</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <FaStar size={24} />
+                <Typography variant="paragraph" className="ml-2">Рекомендательный блок</Typography>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <Typography variant="h5" className="mb-4">Ваше резюме</Typography>
+            <ul className="list-none">
+              <li className="flex items-center mb-2">
+                <FaRegFilePdf size={24} />
+                <Typography variant="paragraph" className="ml-2">Уникальность</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <CiBasketball size={24} />
+                <Typography variant="paragraph" className="ml-2">Расскажите о себе</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <FaRegFilePdf size={24} />
+                <Typography variant="paragraph" className="ml-2">Сохраняйте PDF вариант</Typography>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <Typography variant="h5" className="mb-4">Сообщество</Typography>
+            <ul className="list-none">
+              <li className="flex items-center mb-2">
+                <FaEye size={24} />
+                <Typography variant="paragraph" className="ml-2">Смотрите резюме коллег</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <FaShare size={24} />
+                <Typography variant="paragraph" className="ml-2">Делитесь</Typography>
+              </li>
+              <li className="flex items-center mb-2">
+                <FaLightbulb size={24} />
+                <Typography variant="paragraph" className="ml-2">Вдохновляйтесь резюме других пользователей</Typography>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -149,7 +134,7 @@ Home.getLayout = function getLayout(page: ReactElement) {
     <HeadLayout title="Главная" description="Главная" keywords="Главная">
       <PageLayout>{page}</PageLayout>
     </HeadLayout>
-)
+  )
 }
 
 export default Home;

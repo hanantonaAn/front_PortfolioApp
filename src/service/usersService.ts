@@ -1,11 +1,10 @@
-import { UserDataByUser } from "@/types/userDataByUser";
+import { IUsers } from "@/types/user";
 import { projectApi } from "./projectService";
 
-const userDataService = projectApi.injectEndpoints({
+const usersService = projectApi.injectEndpoints({
     endpoints: (build) => ({
-        // get all experience
-        // NO AUTH METHOD
-        getUserData: build.query<UserDataByUser[], void>({
+        // get by userbyusername
+        getUserByUsername: build.query<IUsers, string>({
             query: () => ({
                 url: `/userdata/`,
             }),
@@ -22,5 +21,5 @@ const userDataService = projectApi.injectEndpoints({
 })
 
 export const {
-    useGetUserDataQuery,
-} = userDataService;
+    useGetUserByUsernameQuery
+} = usersService;

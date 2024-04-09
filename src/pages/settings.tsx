@@ -1,26 +1,45 @@
 import PageLayout from "@/components/layout/pageLayout";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
-import { Card, CardHeader, Typography, CardBody, Avatar, Button, CardFooter, Input } from "@material-tailwind/react";
+import { Card, Typography, Button } from "@material-tailwind/react";
 import { FormConstructor } from "@/components/formConstructor";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IProfileType, ProfileSchema } from "@/utils/yupSchema";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { profileForm } from "@/forms/profileForm";
-import { useCreateUserDataMutation } from "@/service/userDataService";
 import { IFormTagsKey } from "@/types/form";
+import { useCreateUserDataByUserMutation, useGetUserDataByUserQuery, useUpdateUserDataByUserMutation } from "@/service/userDataByUserService";
 
 
 const Settings = () => {
-  const { register, control, handleSubmit, formState: { errors } } = useForm<IProfileType>({
+
+  const { data: profile } = useGetUserDataByUserQuery();
+
+  const { register, control, reset, handleSubmit, formState: { errors } } = useForm<IProfileType>({
     resolver: yupResolver(ProfileSchema),
   });
 
   const [tags, setTags] = useState<IFormTagsKey>({ languages: [], curses: [] });
 
-  const [updateProfile] = useCreateUserDataMutation()
+  useEffect(() => {
+    if(profile && profile.length > 0) {
+      reset({
+        ...profile[0],
+        languages: '',
+        curses: ''
+      })
+      setTags((prev) => ({
+        ...prev,
+        languages: profile[0].languages,
+        curses: profile[0].curses
+      }))
+    }
+  }, [profile])
+
+  const [createProfile] = useCreateUserDataByUserMutation();
+  const [updateProfile] = useUpdateUserDataByUserMutation();
 
   const test: SubmitHandler<IProfileType> = (data) => {
     const formData = new FormData();
@@ -33,7 +52,11 @@ const Settings = () => {
         formData.append(key, value);
       }
     });
-    updateProfile(formData).unwrap()
+    if(profile && profile.length > 0) {
+      updateProfile({id: profile[0].id, data: formData}).unwrap()
+    } else {
+      createProfile(formData).unwrap()
+    }
   };
   
   return (
