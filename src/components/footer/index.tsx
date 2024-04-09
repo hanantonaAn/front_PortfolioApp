@@ -1,4 +1,5 @@
 import { Typography } from "@material-tailwind/react";
+import Link from "next/link";
 import { SiPolywork } from "react-icons/si";
 
 export const Footer = () => {
@@ -23,7 +24,27 @@ export const Footer = () => {
                             color="blue-gray"
                             className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                         >
-                            About Us
+                            О нас
+                        </Typography>
+                    </li>
+                    <li>
+                        <Link href="/privacy-policy">
+                            <Typography
+                                color="blue-gray"
+                                className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                            >
+                                Пользовательское соглашение
+                            </Typography>
+                        </Link>
+                    </li>
+                    <li>
+                        <Typography
+                            as="a"
+                            href="#"
+                            color="blue-gray"
+                            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                        >
+                            Наши партнеры
                         </Typography>
                     </li>
                     <li>
@@ -33,27 +54,7 @@ export const Footer = () => {
                             color="blue-gray"
                             className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                         >
-                            License
-                        </Typography>
-                    </li>
-                    <li>
-                        <Typography
-                            as="a"
-                            href="#"
-                            color="blue-gray"
-                            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-                        >
-                            Contribute
-                        </Typography>
-                    </li>
-                    <li>
-                        <Typography
-                            as="a"
-                            href="#"
-                            color="blue-gray"
-                            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-                        >
-                            Contact Us
+                            Свяжитесь с нами
                         </Typography>
                     </li>
                 </ul>

@@ -56,16 +56,6 @@ export const Header = () => {
                     Контакты
                 </a>
             </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <Link href="/privacy-policy" className="flex items-center">
-                    Пользовательское соглашение
-                </Link>
-            </Typography>
         </ul>
     );
     
