@@ -1,0 +1,14 @@
+export type IPortfolio = {
+    id: string;
+    portfolio_html: string;
+    portfolio_text: string;
+    public: boolean;
+    sphere_id: string;
+    heading_ids: string[];
+    link_ids: string[];
+    textfield_ids: string[];
+    list_ids: string[];
+    photo_ids: string[];
+    slider_ids: string[];
+    hashtag_ids: string[];
+}
