@@ -44,6 +44,7 @@ export const authLoginForm: IForm<ISignInType>[] = [
         fieldName: "password",
         type: "input",
         placeholder: "Пароль",
-        label: "Пароль"
+        label: "Пароль",
+        password: true
     }
 ];

@@ -9,6 +9,7 @@ import { Button, Card, Typography } from "@material-tailwind/react"
 import { NextPage } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useEffect } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 
@@ -19,6 +20,10 @@ const Login: NextPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<ISignInType>({
     resolver: yupResolver(SignInSchema),
   });
+
+  useEffect(() => {
+    localStorage.removeItem('token')
+  }, [])
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
 

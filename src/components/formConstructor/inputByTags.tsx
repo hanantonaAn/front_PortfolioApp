@@ -62,7 +62,7 @@ export function InputByTags<T extends FieldValues>({
                 )}
             />
             {
-                tags && tags[fieldName].length > 0 &&
+                tags && tags[fieldName]?.length > 0 &&
                 <div className="flex flex-wrap gap-2 mt-2 mb-2">
                     {tags[fieldName].map((item, id) => {
                         return (

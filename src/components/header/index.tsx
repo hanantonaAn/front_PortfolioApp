@@ -12,7 +12,6 @@ import { ProfileMenu } from "../profileMenu";
 import { useGetUserQuery } from "@/service/projectService";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUser } from "@/store/slice/authSlice";
-import { useRouter } from "next/router";
 
 export const Header = () => {
     const [openNav, setOpenNav] = React.useState(false);
@@ -24,10 +23,11 @@ export const Header = () => {
         );
     }, []);
 
-    const { data: user } = useGetUserQuery();
+    const { data: user } = useGetUserQuery(undefined, {
+        pollingInterval: 900000
+    });
+    
     const dispatch = useAppDispatch();
-
-    const router = useRouter()
 
     const use = useAppSelector(state => state.auth.user)
 
@@ -35,7 +35,7 @@ export const Header = () => {
         if(user) {
             dispatch(setUser(user))
         }
-    }, [user, router])
+    }, [user, dispatch])
 
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">

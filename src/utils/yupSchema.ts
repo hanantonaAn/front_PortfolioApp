@@ -48,3 +48,12 @@ export const ProfileSchema = Yup.object({
 });
 
 export type IProfileType = Yup.InferType<typeof ProfileSchema>;
+
+
+// форма опыт
+export const ExperienceSchema = Yup.object({
+    experience_years: Yup.string(),
+    experience: Yup.string(),
+});
+
+export type IExperienceType = Yup.InferType<typeof ExperienceSchema>;

@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, Card, Checkbox, Typography } from "@material-tailwind/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ReactElement } from "react"
+import { ReactElement, useEffect } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 
@@ -25,6 +25,10 @@ const Registration = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  useEffect(() => {
+    localStorage.removeItem('token')
+  }, [])
+
   const registrationUser: SubmitHandler<ISignUpType> = (data) => {
     toast.promise(
       registerUser(data).unwrap(),
@@ -35,7 +39,6 @@ const Registration = () => {
       }
     ).then((res) => {
       dispatch(setUser(res.data));
-      // authLogin(res.data.accessToken);
       localStorage.setItem('token', res.data);
       dispatch(setCredentials(res.data));
       router.push('/login')

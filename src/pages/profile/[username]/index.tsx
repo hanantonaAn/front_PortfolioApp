@@ -14,6 +14,14 @@ import parse from 'html-react-parser';
 import { useCreatePortfolioMutation, useGetAllPortfolioQuery, useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+
+const experienceObj: { [key: string]: string } = {
+    noExperience: "Нет опыта",
+    between1And3: "От 1 года до 3 лет",
+    between3And6: "От 3 до 6 лет",
+    moreThan6: "Более 6 лет"
+}
+
 const Profile = () => {
     const [open, setOpen] = useState(false);
 
@@ -33,7 +41,6 @@ const Profile = () => {
     const { data: userByName } = useGetUserInfoByUsernameQuery(postId || '')
 
     const user = useAppSelector(state => state.auth.user);
-
 
     const { data: portfolio } = useGetAllPortfolioQuery();
 
@@ -116,7 +123,24 @@ const Profile = () => {
                         </div>
                     }
                     <div className="flex-[3]">
-                        <div className="flex items-center gap-2">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <Typography variant="h5">
+                                    Мой опыт
+                                </Typography>
+                            </div>
+                            {portfolio && portfolio.length > 0 &&
+                                <Card className="mt-12 w-full p-6">
+                                    <Typography>
+                                        Опыт: {userByName?.user_experience.experience}
+                                    </Typography>
+                                    <Typography>
+                                        Опыт работы: {userByName && experienceObj[userByName?.user_experience.experience_years]}
+                                    </Typography>
+                                </Card>
+                            }
+                        </div>
+                        <div className="flex items-center gap-2 mt-6">
                             <Typography variant="h5">
                                 Мое портфолио
                             </Typography>
@@ -138,10 +162,10 @@ const Profile = () => {
                             </>
                         )
                         }
-                        {portfolio && portfolio.length > 0 && 
-                        <Card className="mt-12 w-full p-6">
-                            {parse(portfolio[0].portfolio_html)}
-                        </Card>
+                        {portfolio && portfolio.length > 0 &&
+                            <Card className="mt-12 w-full p-6">
+                                {parse(portfolio[0].portfolio_html)}
+                            </Card>
                         }
                     </div>
                 </div>
