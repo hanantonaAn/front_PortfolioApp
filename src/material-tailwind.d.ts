@@ -62,4 +62,13 @@ declare module "@material-tailwind/react" {
     export interface ListItemSuffixProps extends EventCapture {
         crossOrigin?: unknown;
     }
+    export interface StepperProps extends EventCapture {
+        crossOrigin?: unknown;
+    }
+    export interface StepProps extends EventCapture {
+        crossOrigin?: unknown;
+        onPointerEnterCapture?: undefined;
+        onPointerLeaveCapture?: undefined;
+        placeholder?: undefined
+    }
 }

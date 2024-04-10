@@ -47,16 +47,6 @@ export const Footer = () => {
                             Наши партнеры
                         </Typography>
                     </li>
-                    <li>
-                        <Typography
-                            as="a"
-                            href="#"
-                            color="blue-gray"
-                            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-                        >
-                            Свяжитесь с нами
-                        </Typography>
-                    </li>
                 </ul>
             </div>
             <hr className="my-8 border-blue-gray-50" />

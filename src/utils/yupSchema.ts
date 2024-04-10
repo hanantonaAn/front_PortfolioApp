@@ -10,6 +10,9 @@ export const SignUpSchema = Yup.object({
     re_password: Yup.string()
         .oneOf([Yup.ref('password')], 'Пароли не совпадают')
         .required('Поле обязательно'),
+    termsAccepted: Yup.boolean()
+        .oneOf([true], 'Вы должны согласиться с условиями пользования')
+        .required('Обязательное поле'),
 })
 
 export type ISignUpType = Yup.InferType<typeof SignUpSchema>;
@@ -57,3 +60,12 @@ export const ExperienceSchema = Yup.object({
 });
 
 export type IExperienceType = Yup.InferType<typeof ExperienceSchema>;
+
+
+
+// форма скиллов
+export const SkillsSchema = Yup.object({
+    skills: Yup.string(),
+});
+
+export type ISkillsType = Yup.InferType<typeof SkillsSchema>;

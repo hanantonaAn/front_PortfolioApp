@@ -38,9 +38,9 @@ const Registration = () => {
         error: (err) => `Произошла ошибка (${err?.data})`
       }
     ).then((res) => {
-      dispatch(setUser(res.data));
+      dispatch(setUser({username: res.username}));
       localStorage.setItem('token', res.data);
-      dispatch(setCredentials(res.data));
+      // dispatch(setCredentials(res.data));
       router.push('/login')
     })
       .catch((error) => {
@@ -64,6 +64,7 @@ const Registration = () => {
         inputClassName="mb-1 flex flex-col gap-6"
         errors={errors}>
         <Checkbox
+          {...register('termsAccepted', { required: true })}
           label={
             <Typography
               variant="small"
@@ -81,6 +82,11 @@ const Registration = () => {
           }
           containerProps={{ className: "-ml-2.5" }}
         />
+        {errors && errors.termsAccepted &&
+          <Typography variant="small" color="red" className="-mb-3">
+            {errors.termsAccepted?.message}
+          </Typography>
+        }
         <Button className="mt-6" fullWidth loading={isLoading} type="submit">
           Регистрация
         </Button>
@@ -101,7 +107,7 @@ Registration.getLayout = function getLayout(page: ReactElement) {
     <HeadLayout title="Регистарция" description="Регистарция" keywords="Регистарция">
       {page}
     </HeadLayout>
-)
+  )
 }
 
 export default Registration;

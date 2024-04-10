@@ -6,7 +6,7 @@ export type IFormArea<T, U extends IFormType>  = {
     fieldName: Path<T>;
     type: U;
     label?: string;
-    password?: boolean;
+    inputType?: 'password' | 'date';
     placeholder?: string;
 };
 

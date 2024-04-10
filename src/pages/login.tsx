@@ -1,7 +1,8 @@
 import { FormConstructor } from "@/components/formConstructor"
 import { authLoginForm } from "@/forms/authForm"
 import { useLoginUserMutation } from "@/service/projectService"
-import { useAppDispatch } from "@/store/hooks"
+import { useGetUserSkillsByUserQuery } from "@/service/usersSkillByUserService"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { setCredentials } from "@/store/slice/authSlice"
 import { ISignInType, SignInSchema } from "@/utils/yupSchema"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -21,6 +22,10 @@ const Login: NextPage = () => {
     resolver: yupResolver(SignInSchema),
   });
 
+  const { data: skills } = useGetUserSkillsByUserQuery()
+
+  const username = useAppSelector(state => state.auth.username);
+
   useEffect(() => {
     localStorage.removeItem('token')
   }, [])
@@ -39,11 +44,15 @@ const Login: NextPage = () => {
         error: () => `Произошла ошибка`
       }
     ).then((res) => {
-      // dispatch(setUser(res.data.manager));
-      // authLogin(res.data.accessToken);
       localStorage.setItem('token', res.access);
       dispatch(setCredentials(res));
-      router.push('/')
+      if(skills && skills.length > 0) {
+        router.push(`/profile/${username}`)
+      } else if(username) {
+        router.push('/resume');
+      } else {
+        router.push('/')
+      }
     })
       .catch((error) => {
         console.error(error);

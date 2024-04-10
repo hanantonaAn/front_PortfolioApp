@@ -8,6 +8,13 @@ const userExperienceByUserService = projectApi.injectEndpoints({
             query: () => ({
                 url: `/userexperiencebyuser/`,
             }),
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: 'UserExperience' as const, id })),
+                        { type: 'UserExperience', id: 'LIST' },
+                    ]
+                    : [{ type: 'UserExperience', id: 'LIST' }],
         }),
         // create experience
         createUserExperienceByUser: build.mutation<IExperience, FormData>({
@@ -16,6 +23,7 @@ const userExperienceByUserService = projectApi.injectEndpoints({
                 url: `/userexperiencebyuser/`,
                 body: data
             }),
+            invalidatesTags: [{ type: 'UserExperience', id: 'LIST' }],
         }),
         // update experience
         updateUserExperienceByUser: build.mutation<IExperience, {id: string, data: FormData}>({
@@ -24,6 +32,7 @@ const userExperienceByUserService = projectApi.injectEndpoints({
                 url: `/userexperiencebyuser/${id}/`,
                 body: data
             }),
+            invalidatesTags: [{ type: 'UserExperience', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

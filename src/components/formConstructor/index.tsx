@@ -36,7 +36,7 @@ export function FormConstructor<T extends FieldValues>({
                     {...register(item.fieldName)}
                     label={item.label}
                     placeholder={item.placeholder}
-                    type={'password' in item ? 'password' : 'text'}
+                    type={item.inputType ? item.inputType : 'text'}
                     error={item.fieldName && errors && errors[item.fieldName]?.message}
                 />
                 {item.fieldName && errors && errors[item.fieldName] &&

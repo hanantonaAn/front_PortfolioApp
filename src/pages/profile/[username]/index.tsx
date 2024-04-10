@@ -42,16 +42,14 @@ const Profile = () => {
 
     const user = useAppSelector(state => state.auth.user);
 
-    const { data: portfolio } = useGetAllPortfolioQuery();
-
     const [createNewPortfolio] = useCreatePortfolioMutation();
     const [updatePortfolio] = useUpdatePortfolioByIdMutation();
 
     const createPortfolio = () => {
-        if (portfolio && portfolio.length > 0) {
+        if (userByName && userByName.user_portfolio) {
             console.log('sdfadsf')
             updatePortfolio({
-                id: portfolio[0].id,
+                id: userByName.user_portfolio.id,
                 data: {
                     portfolio_html: value
                 }
@@ -70,7 +68,7 @@ const Profile = () => {
     return (
         <HeadLayout title={userByName?.user.username} description="Профиль" keywords="Профиль">
             <Wrapper>
-                <div className="flex gap-12 py-12">
+                <div className="flex gap-12 py-12 break-all">
                     {userByName &&
                         <div className="flex-1">
                             <div className="flex gap-4">
@@ -84,70 +82,76 @@ const Profile = () => {
                             </div>
                             <div className="mt-2">
                                 <Typography variant="small">
-                                    Статус: {userByName.user_data.status}
+                                    Статус: {userByName?.user_data?.status}
                                 </Typography>
                                 <Typography variant="small">
-                                    Telegram: {userByName.user_data.contact_telegram}
+                                    Telegram: {userByName?.user_data?.contact_telegram}
                                 </Typography>
                                 <Typography variant="small">
-                                    Телефон: {userByName.user_data.phone_number}
+                                    Телефон: {userByName?.user_data?.phone_number}
                                 </Typography>
                                 <Typography variant="small">
-                                    E-mail: {userByName.user_data.contact_email}
+                                    E-mail: {userByName?.user_data?.contact_email}
                                 </Typography>
                                 <Typography variant="small">
-                                    Город: {userByName.user_data.city}
+                                    Город: {userByName?.user_data?.city}
                                 </Typography>
                                 <Typography variant="small">
-                                    Дата рождения: {userByName.user_data.date_of_birth}
+                                    Дата рождения: {userByName?.user_data?.date_of_birth}
                                 </Typography>
                                 <Typography variant="small">
-                                    Пол: {userByName.user_data.sex}
+                                    Пол: {userByName?.user_data?.sex}
                                 </Typography>
                                 <Typography variant="small">
-                                    Языки: {userByName.user_data.languages}
+                                    Языки: {userByName?.user_data?.languages && JSON.parse(userByName?.user_data?.languages as any).join(', ')}
+                                </Typography>
+                                <Typography className="" variant="small">
+                                    Курсы: {userByName?.user_data?.curses && JSON.parse(userByName?.user_data?.curses as any).join(', ')}
                                 </Typography>
                                 <Typography variant="small">
-                                    Курсы: {userByName.user_data.curses}
+                                    Образование: {userByName?.user_data?.education_level}
                                 </Typography>
                                 <Typography variant="small">
-                                    Образование: {userByName.user_data.education_level}
+                                    Учебное заведение: {userByName?.user_data?.graduation_place}
                                 </Typography>
                                 <Typography variant="small">
-                                    Учебное заведение: {userByName.user_data.graduation_place}
-                                </Typography>
-                                <Typography variant="small">
-                                    Дата окончания: {userByName.user_data.graduation_date}
+                                    Дата окончания: {userByName?.user_data?.graduation_date}
                                 </Typography>
                             </div>
                         </div>
                     }
                     <div className="flex-[3]">
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <Typography variant="h5">
-                                    Мой опыт
-                                </Typography>
-                            </div>
-                            {portfolio && portfolio.length > 0 &&
-                                <Card className="mt-12 w-full p-6">
-                                    <Typography>
-                                        Опыт: {userByName?.user_experience.experience}
+                        {userByName && userByName?.user_experience &&
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Typography variant="h5">
+                                        Мой опыт
                                     </Typography>
-                                    <Typography>
-                                        Опыт работы: {userByName && experienceObj[userByName?.user_experience.experience_years]}
+                                </div>
+                                <Card className="mt-12 w-full p-6">
+                                    <Typography className="break-all">
+                                        Опыт: {userByName?.user_experience?.experience && JSON.parse(userByName?.user_experience?.experience as any)}
+                                    </Typography>
+                                    <Typography className="break-all">
+                                        Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
                                     </Typography>
                                 </Card>
-                            }
-                        </div>
-                        <div className="flex items-center gap-2 mt-6">
+                            </div>
+                        }
+                        {userByName && userByName.user_portfolio ?
+                            <div className="flex items-center gap-2 mt-6">
+                                <Typography variant="h5">
+                                    Мое портфолио
+                                </Typography>
+                                {user && user[0]?.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
+                                    <FaEdit />
+                                </IconButton>}
+                            </div>
+                            :
                             <Typography variant="h5">
-                                Мое портфолио
+                                Портфолио пока не добавлено
                             </Typography>
-                            {user && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
-                                <FaEdit />
-                            </IconButton>}
-                        </div>
+                        }
                         {open && (
                             <>
                                 <ReactQuill
@@ -162,9 +166,9 @@ const Profile = () => {
                             </>
                         )
                         }
-                        {portfolio && portfolio.length > 0 &&
+                        {userByName && userByName.user_portfolio &&
                             <Card className="mt-12 w-full p-6">
-                                {parse(portfolio[0].portfolio_html)}
+                                {parse(userByName.user_portfolio.portfolio_html)}
                             </Card>
                         }
                     </div>

@@ -3,11 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
-        remotePatterns: [
-            {
-                hostname: 'localhost',
-            },
-        ],
+    domains: ['127.0.0.1:8000'],
   },
   webpack(config) {
     config.module.rules.push({

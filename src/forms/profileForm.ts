@@ -63,6 +63,7 @@ export const profileForm: IForm<IProfileType>[] = [
         fieldName: "date_of_birth",
         type: "input",
         placeholder: "00.00.0000",
+        inputType: 'date',
         label: "Дата рождения"
     },
     {
@@ -145,6 +146,7 @@ export const profileForm: IForm<IProfileType>[] = [
         fieldName: "graduation_date",
         type: "input",
         placeholder: "Дата окончания",
+        inputType: 'date',
         label: "Дата"
     },
     {

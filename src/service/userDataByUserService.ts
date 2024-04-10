@@ -2,7 +2,7 @@ import { IProfileType } from "@/utils/yupSchema";
 import { projectApi } from "./projectService";
 import { UserDataByUser } from "@/types/userDataByUser";
 
-const userDataByUserService = projectApi.injectEndpoints({
+export const userDataByUserService = projectApi.injectEndpoints({
     endpoints: (build) => ({
         // get all experience
         // AUTH METHOD
@@ -10,13 +10,13 @@ const userDataByUserService = projectApi.injectEndpoints({
             query: () => ({
                 url: `/userdatabyuser/`,
             }),
-            // providesTags: (result) =>
-            //     result
-            //         ? [
-            //             ...result.map(({ _id }) => ({ type: 'Experiences' as const, _id })),
-            //             { type: 'Experiences', id: 'LIST' },
-            //         ]
-            //         : [{ type: 'Experiences', id: 'LIST' }],
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: 'UserProfile' as const, id })),
+                        { type: 'UserProfile', id: 'LIST' },
+                    ]
+                    : [{ type: 'UserProfile', id: 'LIST' }],
         }),
         createUserDataByUser: build.mutation<IProfileType, FormData>({
             query: (data) => ({
@@ -24,14 +24,15 @@ const userDataByUserService = projectApi.injectEndpoints({
                 url: `/userdatabyuser/`,
                 body: data
             }),
-            // invalidatesTags: [{ type: 'Experiences', id: 'LIST' }],
+            invalidatesTags: [{ type: 'UserProfile', id: 'LIST' }],
         }),
-        updateUserDataByUser: build.mutation<IProfileType, {id: string, data: FormData}>({
-            query: ({id, data}) => ({
+        updateUserDataByUser: build.mutation<IProfileType, { id: string, data: FormData }>({
+            query: ({ id, data }) => ({
                 method: "PATCH",
                 url: `/userdatabyuser/${id}/`,
                 body: data
             }),
+            invalidatesTags: [{ type: 'UserProfile', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

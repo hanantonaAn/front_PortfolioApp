@@ -19,14 +19,14 @@ export const authSignUpForm: IForm<ISignUpType>[] = [
         fieldName: "password",
         type: "input",
         placeholder: "Пароль",
-        password: true,
+        inputType: 'password',
         label: "Пароль"
     },
     {
         fieldName: "re_password",
         type: "input",
         placeholder: "Повторите пароль",
-        password: true,
+        inputType: 'password',
         label: "Повторите пароль"
     }
 ];
@@ -45,6 +45,6 @@ export const authLoginForm: IForm<ISignInType>[] = [
         type: "input",
         placeholder: "Пароль",
         label: "Пароль",
-        password: true
+        inputType: 'password'
     }
 ];

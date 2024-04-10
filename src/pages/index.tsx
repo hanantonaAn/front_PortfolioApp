@@ -7,10 +7,13 @@ import Link from "next/link";
 import { CiBasketball, CiSearch } from "react-icons/ci";
 import { FaEye, FaLightbulb, FaRegFilePdf, FaSearch, FaShare, FaStar } from "react-icons/fa";
 import { useGetUserInfoQuery } from "@/service/userInfoService";
+import { useAppSelector } from "@/store/hooks";
 
 
 const Home = () => {
   const { data: userInfo } = useGetUserInfoQuery();
+
+  const user = useAppSelector(state => state.auth.user);
 
   return (
     <div className="mx-auto max-w-screen-xl py-12 px-5 lg:px-10">
@@ -20,7 +23,9 @@ const Home = () => {
       <Typography variant="h2" color="blue-gray">
         И кастомизируйте...
       </Typography>
-      <Button className="mt-5" color="light-blue">Создать резюме</Button>
+      <Link href={user ? "/resume" : "/registration"}>
+        <Button className="mt-5" color="light-blue">Создать резюме</Button>
+      </Link>
       <div className="mt-20">
         <Typography variant="h2">Платформа для поиска людей</Typography>
         <div className="w-[30rem] mt-4 flex items-center gap-6">
@@ -32,7 +37,7 @@ const Home = () => {
         Популярные портфолио
       </Typography>
       <div className="grid grid-cols-3 gap-6 mt-12">
-        {userInfo && userInfo.map((item, index) => {
+        {userInfo && userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
           if (index < 3) {
             return (
               <Card key={item.user_data[0]?.id} className="w-full">
@@ -40,8 +45,8 @@ const Home = () => {
                   <Image
                     width={1024}
                     height={768}
-                    className="w-full h-auto"
-                    src={item.user_data[0]?.picture}
+                    className="w-full h-full"
+                    src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/bg_signals_new.png'}
                     alt="card-image"
                   />
                 </CardHeader>
@@ -59,7 +64,7 @@ const Home = () => {
                     Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
                   </Typography>
                 </CardBody>
-                <CardFooter className="pt-0">
+                <CardFooter className="pt-0 mt-auto">
                   <Link href={`/profile/${item.user.username}`}>
                     <Button>Открыть профиль</Button>
                   </Link>
