@@ -3,12 +3,13 @@ import { RootState } from '../store'
 import { UserDataByUser } from '@/types/userDataByUser'
 import { projectApi } from '@/service/projectService'
 import { userDataByUserService } from '@/service/userDataByUserService'
+import { IUser } from '@/types/user'
 
 type AuthState = {
   access: string | null
   refresh: string | null
   user: UserDataByUser[] | null
-  username: string | null
+  me: IUser | null
 }
 
 const authSlice = createSlice({
@@ -16,7 +17,7 @@ const authSlice = createSlice({
   initialState: {
     access: typeof window !== 'undefined' ? window.localStorage.getItem('access') : null,
     user: null,
-    username: null
+    me: null
   } as AuthState,
   reducers: {
     setCredentials: (state, action) => {
@@ -25,8 +26,7 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload.user;
-      console.log(state)
-      state.username = action.payload.username;
+      state.user = action.payload.me;
     },
     setCredentialsNull: (state: AuthState) => {
       window.localStorage.setItem('access', '')
@@ -36,7 +36,7 @@ const authSlice = createSlice({
     builder.addMatcher(
       projectApi.endpoints.getUser.matchFulfilled,
       (state, { payload }) => {
-        state.username = payload.username;
+        state.me = payload;
       }
     );
     builder.addMatcher(

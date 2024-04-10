@@ -1,11 +1,18 @@
+import { IExperience } from "./experience";
+import { IPortfolio } from "./portfolio";
+import { ISkills } from "./skills";
 import { UserDataByUser } from "./userDataByUser";
 
 export type UserInfo = {
     user: {
+        id: string;
         username: string;
         email: string;
     };
     user_data: UserDataByUser[];
+    user_skills: ISkills[];
+    user_experience: IExperience[];
+    user_portfolio: IPortfolio[];
 }
 
 

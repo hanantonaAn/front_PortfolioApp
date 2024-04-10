@@ -31,8 +31,8 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
             })
             setTags((prev) => ({
                 ...prev,
-                languages: JSON.parse(profile[0].languages.toString()),
-                curses: JSON.parse(profile[0].curses.toString())
+                languages: profile[0]?.languages && JSON.parse(profile[0]?.languages?.toString()),
+                curses: profile[0]?.curses && JSON.parse(profile[0]?.curses?.toString())
             }))
         }
     }, [profile, reset])
@@ -56,7 +56,10 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
                     formData.append(key, value);
                 }
             } else if (["languages", "curses"].includes(key)) {
-                formData.append(key, JSON.stringify(tags[key as keyof typeof tags]));
+                const valuesArray = tags[key as keyof typeof tags];
+                valuesArray.forEach(item => {
+                    formData.append(key, item);
+                });
             } else if (value) {
                 formData.append(key, value);
             }

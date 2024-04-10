@@ -17,7 +17,7 @@ const usersSkillByUserService = projectApi.injectEndpoints({
                     : [{ type: 'UserSkills', id: 'LIST' }],
         }),
         // create experience
-        createUserSkillsByUser: build.mutation<ISkills, FormData>({
+        createUserSkillsByUser: build.mutation<ISkills, Partial<ISkills>>({
             query: (data) => ({
                 method: "POST",
                 url: `/userskillsbyuser/`,
@@ -26,7 +26,7 @@ const usersSkillByUserService = projectApi.injectEndpoints({
             invalidatesTags: [{ type: 'UserSkills', id: 'LIST' }],
         }),
         // update experience
-        updateUsersSkillsByUser: build.mutation<ISkills, {id: string, data: FormData}>({
+        updateUsersSkillsByUser: build.mutation<ISkills, {id: string, data: Partial<ISkills>}>({
             query: ({id, data}) => ({
                 method: "PATCH",
                 url: `/userskillsbyuser/${id}/`,

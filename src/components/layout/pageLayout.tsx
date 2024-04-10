@@ -59,13 +59,10 @@ export default function PageLayout({ children }: LayoutProps) {
         refetchOnReconnect: true
     })
 
+
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (user && getUser) {
-            dispatch(setUser({ user: user, username: getUser.username }))
-        }
-    }, [user, getUser, dispatch])
+    console.log(user)
 
     return (
         <div className={componentPageContainer}>

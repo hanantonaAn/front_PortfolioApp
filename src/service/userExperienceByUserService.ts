@@ -17,7 +17,7 @@ const userExperienceByUserService = projectApi.injectEndpoints({
                     : [{ type: 'UserExperience', id: 'LIST' }],
         }),
         // create experience
-        createUserExperienceByUser: build.mutation<IExperience, FormData>({
+        createUserExperienceByUser: build.mutation<IExperience, Partial<IExperience>>({
             query: (data) => ({
                 method: "POST",
                 url: `/userexperiencebyuser/`,
@@ -26,7 +26,7 @@ const userExperienceByUserService = projectApi.injectEndpoints({
             invalidatesTags: [{ type: 'UserExperience', id: 'LIST' }],
         }),
         // update experience
-        updateUserExperienceByUser: build.mutation<IExperience, {id: string, data: FormData}>({
+        updateUserExperienceByUser: build.mutation<IExperience, {id: string, data: Partial<IExperience>}>({
             query: ({id, data}) => ({
                 method: "PATCH",
                 url: `/userexperiencebyuser/${id}/`,

@@ -24,7 +24,7 @@ const Login: NextPage = () => {
 
   const { data: skills } = useGetUserSkillsByUserQuery()
 
-  const username = useAppSelector(state => state.auth.username);
+  const username = useAppSelector(state => state.auth.me?.username);
 
   useEffect(() => {
     localStorage.removeItem('token')

@@ -40,7 +40,7 @@ const Profile = () => {
 
     const { data: userByName } = useGetUserInfoByUsernameQuery(postId || '')
 
-    const user = useAppSelector(state => state.auth.user);
+    const user = useAppSelector(state => state.auth.me);
 
     const [createNewPortfolio] = useCreatePortfolioMutation();
     const [updatePortfolio] = useUpdatePortfolioByIdMutation();
@@ -130,7 +130,7 @@ const Profile = () => {
                                 </div>
                                 <Card className="mt-12 w-full p-6">
                                     <Typography className="break-all">
-                                        Опыт: {userByName?.user_experience?.experience && JSON.parse(userByName?.user_experience?.experience as any)}
+                                        Опыт: {userByName?.user_experience?.experience && userByName?.user_experience?.experience.join(', ')}
                                     </Typography>
                                     <Typography className="break-all">
                                         Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
@@ -143,14 +143,19 @@ const Profile = () => {
                                 <Typography variant="h5">
                                     Мое портфолио
                                 </Typography>
-                                {user && user[0]?.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
+                                {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
                                     <FaEdit />
                                 </IconButton>}
                             </div>
                             :
-                            <Typography variant="h5">
-                                Портфолио пока не добавлено
-                            </Typography>
+                            <div className="flex items-center gap-2 mt-6">
+                                <Typography variant="h5">
+                                    Портфолио пока не добавлено
+                                </Typography>
+                                {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
+                                    <FaEdit />
+                                </IconButton>}
+                            </div>
                         }
                         {open && (
                             <>

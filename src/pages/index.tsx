@@ -1,19 +1,24 @@
 import PageLayout from "@/components/layout/pageLayout";
-import { ReactElement } from "react";
-import { Button, Card, CardBody, CardFooter, CardHeader, Typography, Input } from "@material-tailwind/react";
+import { ReactElement, useState } from "react";
+import { Button, Typography, Input } from "@material-tailwind/react";
 import HeadLayout from "@/components/layout/headLayout";
-import Image from "next/image";
 import Link from "next/link";
 import { CiBasketball, CiSearch } from "react-icons/ci";
 import { FaEye, FaLightbulb, FaRegFilePdf, FaSearch, FaShare, FaStar } from "react-icons/fa";
-import { useGetUserInfoQuery } from "@/service/userInfoService";
 import { useAppSelector } from "@/store/hooks";
+import { HomeCardScreen } from "@/components/screens/homeCardScreen";
+import { useGetUserInfoQuery } from "@/service/userInfoService";
+import { useRouter } from "next/router";
 
 
 const Home = () => {
-  const { data: userInfo } = useGetUserInfoQuery();
 
   const user = useAppSelector(state => state.auth.user);
+
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
+
+  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   return (
     <div className="mx-auto max-w-screen-xl py-12 px-5 lg:px-10">
@@ -29,51 +34,27 @@ const Home = () => {
       <div className="mt-20">
         <Typography variant="h2">Платформа для поиска людей</Typography>
         <div className="w-[30rem] mt-4 flex items-center gap-6">
-          <Input size="lg" label="Найти интересующее вас портфолио" icon={<CiSearch />} />
-          <Button size="lg">Поиск</Button>
+          <Input
+            size="lg" label="Найти интересующее вас портфолио"
+            icon={<CiSearch />}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <Button onClick={() => router.push(`/advanced-search?search=${encodeURIComponent(searchValue)}`)} size="lg">Поиск</Button>
         </div>
+      </div>
+      <div className="mt-20">
+        <Typography variant="h2">Найдите интересующее Вас портфолио</Typography>
+        <Link href="/advanced-search">
+          <Button color="light-blue" className="mt-5" size="lg">Найти</Button>
+        </Link>
       </div>
       <Typography variant="h3" className="mt-20">
         Популярные портфолио
       </Typography>
-      <div className="grid grid-cols-3 gap-6 mt-12">
-        {userInfo && userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
-          if (index < 3) {
-            return (
-              <Card key={item.user_data[0]?.id} className="w-full">
-                <CardHeader color="blue-gray" className="relative h-56">
-                  <Image
-                    width={1024}
-                    height={768}
-                    className="w-full h-full"
-                    src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/bg_signals_new.png'}
-                    alt="card-image"
-                  />
-                </CardHeader>
-                <CardBody>
-                  <Typography variant="h5" color="blue-gray" className="mb-2">
-                    {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
-                  </Typography>
-                  <Typography>
-                    Уровень образования: {item.user_data[0]?.education_level}
-                  </Typography>
-                  <Typography>
-                    Город: {item.user_data[0]?.city}
-                  </Typography>
-                  <Typography>
-                    Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
-                  </Typography>
-                </CardBody>
-                <CardFooter className="pt-0 mt-auto">
-                  <Link href={`/profile/${item.user.username}`}>
-                    <Button>Открыть профиль</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            )
-          }
-        })}
-      </div>
+
+      <HomeCardScreen userInfo={userInfo} isLoading={isLoading} />
+
       <div className="container mx-auto px-4">
         <Typography variant="h4" className="text-center my-8">Почему мы?</Typography>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

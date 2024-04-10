@@ -7,15 +7,8 @@ const userInfoService = projectApi.injectEndpoints({
         // NO AUTH METHOD
         getUserInfo: build.query<UserInfo[], void>({
             query: () => ({
-                url: `/usersinfo/`,
+                url: `/public_usersinfo/`,
             }),
-            // providesTags: (result) =>
-            //     result
-            //         ? [
-            //             ...result.map(({ _id }) => ({ type: 'Experiences' as const, _id })),
-            //             { type: 'Experiences', id: 'LIST' },
-            //         ]
-            //         : [{ type: 'Experiences', id: 'LIST' }],
         }),
         getUserInfoByUsername: build.query<UserInfoSolo, string>({
             query: (id) => ({

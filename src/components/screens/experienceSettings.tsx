@@ -7,6 +7,7 @@ import { IFormTagsKey } from "@/types/form";
 import { experienceForm } from "@/forms/experienceForm";
 import { useCreateUserExperienceByUserMutation, useGetUserExperienceByUserQuery, useUpdateUserExperienceByUserMutation } from "@/service/userExperienceByUserService";
 import toast from "react-hot-toast";
+import { IExperience } from "@/types/experience";
 
 type Props = {
     children?: React.ReactNode;
@@ -41,19 +42,13 @@ export const ExperienceSettingsScreen = ({ children, submitRef }: Props) => {
     const [updateExperience] = useUpdateUserExperienceByUserMutation();
 
     const submitForm: SubmitHandler<IExperienceType> = (data) => {
-        const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (key === "picture") {
-                formData.append(key, value);
-            } else if (["experience"].includes(key)) {
-                formData.append(key, JSON.stringify(tags[key as keyof typeof tags]));
-            } else if (value) {
-                formData.append(key, value);
-            }
-        });
+        const Data: Partial<IExperience> = {
+            experience: tags ? tags.experience : [],
+            experience_years: data.experience_years
+        }
         if (experience && experience.length > 0) {
             toast.promise(
-                updateExperience({ id: experience[0].id, data: formData }).unwrap(),
+                updateExperience({ id: experience[0].id, data: Data }).unwrap(),
                 {
                   loading: 'Сохранение...',
                   success: () => `Данные успешно обновлены`,
@@ -62,7 +57,7 @@ export const ExperienceSettingsScreen = ({ children, submitRef }: Props) => {
               )
         } else {
             toast.promise(
-                createExperience(formData).unwrap(),
+                createExperience(Data).unwrap(),
                 {
                   loading: 'Сохранение...',
                   success: () => `Опыт успешно создан`,

@@ -1,7 +1,7 @@
 import React from "react";
 import {
     Navbar,
-    MobileNav,
+    Collapse,
     Typography,
     Button,
     IconButton,
@@ -21,7 +21,7 @@ export const Header = () => {
         );
     }, []);
 
-    const user = useAppSelector(state => state.auth.user);
+    const user = useAppSelector(state => state.auth.me);
 
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -31,9 +31,9 @@ export const Header = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="#" className="flex items-center">
+                <Link href="/about-us" className="flex items-center">
                     О нас
-                </a>
+                </Link>
             </Typography>
             <Typography
                 as="li"
@@ -41,9 +41,9 @@ export const Header = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="#" className="flex items-center">
+                <Link href="/contacts" className="flex items-center">
                     Контакты
-                </a>
+                </Link>
             </Typography>
         </ul>
     );
@@ -63,7 +63,7 @@ export const Header = () => {
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="mr-4 hidden lg:block">{navList}</div>
-                        {user ?
+                        {user?.id ?
                             <ProfileMenu />
                             :
                             <div className="flex items-center gap-x-1">
@@ -126,7 +126,7 @@ export const Header = () => {
                         </IconButton>
                     </div>
                 </div>
-                <MobileNav open={openNav}>
+                <Collapse open={openNav}>
                     {navList}
                     <div className="flex items-center gap-x-1">
                         <Button fullWidth variant="text" size="sm" className="">
@@ -136,7 +136,7 @@ export const Header = () => {
                             <span>Sign in</span>
                         </Button>
                     </div>
-                </MobileNav>
+                </Collapse>
             </Navbar>
         </header>
     );

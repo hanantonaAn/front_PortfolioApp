@@ -10,6 +10,7 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAppSelector } from "@/store/hooks";
+import { ISkills } from "@/types/skills";
 
 type Props = {
     redirect?: boolean;
@@ -19,13 +20,13 @@ export const SkillsSettingsScreen = ({ redirect }: Props) => {
 
     const { data: skills } = useGetUserSkillsByUserQuery();
 
-    const username = useAppSelector(state => state.auth.username)
+    const user = useAppSelector(state => state.auth.me)
 
     const { register, control, reset, handleSubmit, formState: { errors } } = useForm<ISkillsType>({
         resolver: yupResolver(SkillsSchema),
     });
 
-    const [tags, setTags] = useState<IFormTagsKey>({ experience: [] });
+    const [tags, setTags] = useState<IFormTagsKey>({ skills: [] });
     const router = useRouter()
 
     useEffect(() => {
@@ -45,33 +46,30 @@ export const SkillsSettingsScreen = ({ redirect }: Props) => {
     const [updateSkills] = useUpdateUsersSkillsByUserMutation();
 
     const submitForm: SubmitHandler<ISkillsType> = (data) => {
-        const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (["skills"].includes(key)) {
-                formData.append(key, JSON.stringify(tags[key as keyof typeof tags]));
-            }
-        });
+        const Data: Partial<ISkills> = {
+            skills: tags?.skills?.length > 0 ? tags.skills : []
+        }
         if (skills && skills.length > 0) {
             toast.promise(
-                updateSkills({ id: skills[0].id, data: formData }).unwrap(),
+                updateSkills({ id: skills[0].id, data: Data }).unwrap(),
                 {
-                  loading: 'Сохранение...',
-                  success: () => `Умения успешно добавлены`,
-                  error: () => `Произошла ошибка`
+                    loading: 'Сохранение...',
+                    success: () => `Умения успешно добавлены`,
+                    error: () => `Произошла ошибка`
                 }
-              )
+            )
         } else {
             toast.promise(
-                createSkills(formData).unwrap(),
+                createSkills(Data).unwrap(),
                 {
-                  loading: 'Сохранение...',
-                  success: () => `Умения успешно добавлены`,
-                  error: () => `Произошла ошибка`
+                    loading: 'Сохранение...',
+                    success: () => `Умения успешно добавлены`,
+                    error: () => `Произошла ошибка`
                 }
-              )
+            )
         }
-        if(redirect) {
-            router.push(`/profile/${username}`)
+        if (redirect) {
+            router.push(`/profile/${user?.username}`)
         }
     };
 

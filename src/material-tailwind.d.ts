@@ -71,4 +71,7 @@ declare module "@material-tailwind/react" {
         onPointerLeaveCapture?: undefined;
         placeholder?: undefined
     }
+    export interface ButtonGroupProps extends EventCapture {
+        placeholder?: undefined
+    }
 }

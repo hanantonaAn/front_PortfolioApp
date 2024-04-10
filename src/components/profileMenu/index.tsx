@@ -14,7 +14,8 @@ import { useRouter } from "next/router";
 export const ProfileMenu = () => {
 
   const user = useAppSelector(state => state.auth.user);
-  const username = useAppSelector(state => state.auth.username);
+  const me = useAppSelector(state => state.auth.me);
+
 
   const dispatch = useAppDispatch();
 
@@ -40,7 +41,7 @@ export const ProfileMenu = () => {
         :
         null}
       <MenuList>
-        <Link href={`/profile/${username}`}>
+        <Link href={`/profile/${me?.username}`}>
           <MenuItem className="flex items-center gap-2">
             <svg
               width="16"

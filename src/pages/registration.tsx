@@ -38,7 +38,7 @@ const Registration = () => {
         error: (err) => `Произошла ошибка (${err?.data})`
       }
     ).then((res) => {
-      dispatch(setUser({username: res.username}));
+      dispatch(setUser({me: res}));
       localStorage.setItem('token', res.data);
       // dispatch(setCredentials(res.data));
       router.push('/login')
