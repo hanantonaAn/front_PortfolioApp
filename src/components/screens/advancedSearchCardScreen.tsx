@@ -31,7 +31,7 @@ export const AdvancedSearchCardScreen = ({ userInfo, isLoading }: Props) => {
                     })}
                 </>
             ) : (
-                userInfo && userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
+                userInfo && userInfo.length > 0 ? userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
                     return (
                         <Card key={item.user_data[0]?.id} className="w-full h-full">
                             <CardHeader color="blue-gray" className="relative h-56">
@@ -65,6 +65,8 @@ export const AdvancedSearchCardScreen = ({ userInfo, isLoading }: Props) => {
                         </Card>
                     )
                 })
+                :
+                <Typography variant="h5">Ничего не найдено</Typography>
             )}
         </div>
     );

@@ -18,7 +18,11 @@ type Props = {
 
 export const SkillsSettingsScreen = ({ redirect }: Props) => {
 
-    const { data: skills } = useGetUserSkillsByUserQuery();
+    const { data: skills } = useGetUserSkillsByUserQuery(undefined, {
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true
+    });
 
     const user = useAppSelector(state => state.auth.me)
 
@@ -37,7 +41,7 @@ export const SkillsSettingsScreen = ({ redirect }: Props) => {
             })
             setTags((prev) => ({
                 ...prev,
-                experience: skills[0].skills
+                skills: skills[0].skills
             }))
         }
     }, [skills])

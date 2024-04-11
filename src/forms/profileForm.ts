@@ -83,7 +83,7 @@ export const profileForm: IForm<IProfileType>[] = [
     },
     {
         type: "title",
-        label: "Контактная информация"
+        label: "Дополнительная информация"
     },
     {
         fieldName: "languages",

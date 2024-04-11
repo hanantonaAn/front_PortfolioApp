@@ -4,10 +4,12 @@ import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { ProfileSettingsScreen } from "@/components/screens/profileSettings";
+import { ExperienceSettingsScreen } from "@/components/screens/experienceSettings";
+import { SkillsSettingsScreen } from "@/components/screens/skillsSettings";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 
-const Settings = () => {
+
+const Experience = () => {
   return (
     <AuthWrapper>
       <PageLayout>
@@ -19,11 +21,7 @@ const Settings = () => {
                 <Typography variant="h6" color="light-blue">
                   Основная информация
                 </Typography>
-                <ProfileSettingsScreen>
-                  <Button type="submit" color="light-blue" className="mt-5">
-                    Сохранить
-                  </Button>
-                </ProfileSettingsScreen>
+                <SkillsSettingsScreen />
               </Card>
             </div>
           </div>
@@ -33,12 +31,12 @@ const Settings = () => {
   );
 }
 
-Settings.getLayout = function getLayout(page: ReactElement) {
+Experience.getLayout = function getLayout(page: ReactElement) {
   return (
-    <HeadLayout title="Профиль" description="Профиль" keywords="Профиль">
+    <HeadLayout title="Опыт" description="Опыт" keywords="Опыт">
       {page}
     </HeadLayout>
   )
 }
 
-export default Settings;
+export default Experience;

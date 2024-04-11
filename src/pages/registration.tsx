@@ -73,7 +73,7 @@ const Registration = () => {
             >
               Я соглашаюсь с&nbsp;
               <Link
-                href="/rules"
+                href="/privacy-policy"
                 className="font-medium transition-colors text-blue-600 hover:underline"
               >
                 пользовательским соглашением

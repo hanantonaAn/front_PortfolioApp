@@ -33,13 +33,18 @@ export const ProfileMenu = () => {
         <MenuHandler>
           <Avatar
             variant="circular"
-            alt="tania andrew"
             className="cursor-pointer"
             src={user[0]?.picture}
           />
         </MenuHandler>
         :
-        null}
+        <MenuHandler>
+          <Avatar
+            variant="circular"
+            className="cursor-pointer"
+            src={"/assets/images/avatar_default.png"}
+          />
+        </MenuHandler>}
       <MenuList>
         <Link href={`/profile/${me?.username}`}>
           <MenuItem className="flex items-center gap-2">

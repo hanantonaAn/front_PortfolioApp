@@ -26,26 +26,26 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload.user;
-      state.user = action.payload.me;
+      state.me = action.payload.me;
     },
     setCredentialsNull: (state: AuthState) => {
       window.localStorage.setItem('access', '')
     },
   },
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      projectApi.endpoints.getUser.matchFulfilled,
-      (state, { payload }) => {
-        state.me = payload;
-      }
-    );
-    builder.addMatcher(
-      userDataByUserService.endpoints.getUserDataByUser.matchFulfilled,
-      (state, { payload }) => {
-        state.user = payload;
-      }
-    )
-  }
+  // extraReducers: (builder) => {
+  //   builder.addMatcher(
+  //     projectApi.endpoints.getUser.matchFulfilled,
+  //     (state, { payload }) => {
+  //       state.me = payload;
+  //     }
+  //   );
+  //   builder.addMatcher(
+  //     userDataByUserService.endpoints.getUserDataByUser.matchFulfilled,
+  //     (state, { payload }) => {
+  //       state.user = payload;
+  //     }
+  //   )
+  // }
 })
 
 export const { setCredentials, setCredentialsNull, setUser } = authSlice.actions

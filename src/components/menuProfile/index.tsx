@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AiTwotoneExperiment } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
+import { GiSkills } from 'react-icons/gi';
 import { LuLogOut } from 'react-icons/lu';
 
 export const MenuProfile = () => {
@@ -24,6 +25,14 @@ export const MenuProfile = () => {
               <AiTwotoneExperiment />
             </ListItemPrefix>
             Опыт
+          </ListItem>
+        </Link>
+        <Link href="/settings/skills">
+          <ListItem className={`group rounded-none py-1.5 px-3 text-sm font-normal ${router.pathname === '/settings/skills' ? 'bg-blue-500 text-white hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white' : 'text-blue-gray-700 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white'}`}>
+            <ListItemPrefix>
+              <GiSkills />
+            </ListItemPrefix>
+            Скиллы
           </ListItem>
         </Link>
         <ListItem className="rounded-none mt-auto py-1.5 px-3 text-sm font-normal text-blue-gray-700 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">

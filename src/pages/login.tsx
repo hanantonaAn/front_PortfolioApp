@@ -1,6 +1,7 @@
 import { FormConstructor } from "@/components/formConstructor"
 import { authLoginForm } from "@/forms/authForm"
-import { useLoginUserMutation } from "@/service/projectService"
+import { useGetUserQuery, useLazyGetUserQuery, useLoginUserMutation } from "@/service/projectService"
+import { useLazyGetUserDataByUserQuery } from "@/service/userDataByUserService"
 import { useGetUserSkillsByUserQuery } from "@/service/usersSkillByUserService"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { setCredentials } from "@/store/slice/authSlice"
@@ -22,7 +23,7 @@ const Login: NextPage = () => {
     resolver: yupResolver(SignInSchema),
   });
 
-  const { data: skills } = useGetUserSkillsByUserQuery()
+  const [getData] = useLazyGetUserDataByUserQuery()
 
   const username = useAppSelector(state => state.auth.me?.username);
 
@@ -31,6 +32,8 @@ const Login: NextPage = () => {
   }, [])
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  const [getUser] = useLazyGetUserQuery()
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -46,17 +49,24 @@ const Login: NextPage = () => {
     ).then((res) => {
       localStorage.setItem('token', res.access);
       dispatch(setCredentials(res));
-      if(skills && skills.length > 0) {
-        router.push(`/profile/${username}`)
-      } else if(username) {
-        router.push('/resume');
-      } else {
-        router.push('/')
-      }
-    })
-      .catch((error) => {
-        console.error(error);
-      });
+      getData().unwrap()
+      .then((userData) => {
+          getUser().unwrap().then(res => {
+            if(userData && userData.length > 0) {
+              router.push(`/profile/${res?.username}`)
+            } else if(res?.username) {
+              router.push('/resume');
+            } else {
+              router.push('/')
+            }
+          }).catch(() => {
+            router.push('/')
+          })
+        })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
   };
 
   return (

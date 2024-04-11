@@ -18,6 +18,25 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
 
     const { register, control, reset, handleSubmit, formState: { errors } } = useForm<IProfileType>({
         resolver: yupResolver(ProfileSchema),
+        defaultValues: {
+            status: '',
+            additional_info: '',
+            fullname: '',
+            surname: '',
+            lastname: '',
+            phone_number: '',
+            contact_telegram: '',
+            contact_email: '',
+            city: '',
+            date_of_birth: '',
+            sex: '',
+            graduation_place: '',
+            education_level: '',
+            graduation_date: '',
+            languages: '',
+            curses: '',
+            picture: ''
+        }
     });
 
     const [tags, setTags] = useState<IFormTagsKey>({ languages: [], curses: [] });
@@ -31,8 +50,8 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
             })
             setTags((prev) => ({
                 ...prev,
-                languages: profile[0]?.languages && JSON.parse(profile[0]?.languages?.toString()),
-                curses: profile[0]?.curses && JSON.parse(profile[0]?.curses?.toString())
+                languages: profile[0]?.languages && [],
+                curses: profile[0]?.curses || []
             }))
         }
     }, [profile, reset])
@@ -56,7 +75,7 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
                     formData.append(key, value);
                 }
             } else if (["languages", "curses"].includes(key)) {
-                const valuesArray = tags[key as keyof typeof tags];
+                const valuesArray = tags && tags[key as keyof typeof tags];
                 valuesArray.forEach(item => {
                     formData.append(key, item);
                 });

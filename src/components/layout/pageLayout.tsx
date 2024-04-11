@@ -45,24 +45,6 @@ export default function PageLayout({ children }: LayoutProps) {
 
     const componentPageContainer = pageContainer.join(' ');
 
-    const { data: user } = useGetUserDataByUserQuery(undefined, {
-        pollingInterval: 900000,
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true,
-        refetchOnReconnect: true
-    });
-
-    const { data: getUser } = useGetUserQuery(undefined, {
-        pollingInterval: 900000,
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true,
-        refetchOnReconnect: true
-    })
-
-
-    const dispatch = useAppDispatch();
-
-    console.log(user)
 
     return (
         <div className={componentPageContainer}>

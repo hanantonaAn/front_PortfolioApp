@@ -9,6 +9,7 @@ import { ExperienceSettingsScreen } from "@/components/screens/experienceSetting
 import { useGetUserDataByUserQuery } from "@/service/userDataByUserService";
 import { useGetUserExperienceByUserQuery } from "@/service/userExperienceByUserService";
 import { SkillsSettingsScreen } from "@/components/screens/skillsSettings";
+import { AuthWrapper } from "@/components/layout/authWrapper";
 
 
 const Resume = () => {
@@ -42,24 +43,28 @@ const Resume = () => {
     const handlePrev = () => setActiveStep((cur) => cur - 1);
 
     return (
-        <Wrapper>
-            <StepperComponent
-                activeStep={activeStep}
-                handleNext={handleNext}
-                handlePrev={handlePrev}
-            >
-                {activeStep === 0 && <ProfileSettingsScreen submitRef={profileRef} />}
-                {activeStep === 1 && <ExperienceSettingsScreen submitRef={experienceRef} />}
-                {activeStep === 2 && <SkillsSettingsScreen redirect />}
-            </StepperComponent>
-        </Wrapper>
+        <AuthWrapper>
+            <PageLayout>
+                <Wrapper>
+                    <StepperComponent
+                        activeStep={activeStep}
+                        handleNext={handleNext}
+                        handlePrev={handlePrev}
+                    >
+                        {activeStep === 0 && <ProfileSettingsScreen submitRef={profileRef} />}
+                        {activeStep === 1 && <ExperienceSettingsScreen submitRef={experienceRef} />}
+                        {activeStep === 2 && <SkillsSettingsScreen redirect />}
+                    </StepperComponent>
+                </Wrapper>
+            </PageLayout>
+        </AuthWrapper>
     );
 }
 
 Resume.getLayout = function getLayout(page: ReactElement) {
     return (
         <HeadLayout title="Создание резюме" description="Создание резюме" keywords="Создание резюме">
-            <PageLayout>{page}</PageLayout>
+            {page}
         </HeadLayout>
     )
 }

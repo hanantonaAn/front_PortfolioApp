@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "@/store/hooks";
 import parse from 'html-react-parser';
 import { useCreatePortfolioMutation, useGetAllPortfolioQuery, useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
+import { AuthWrapper } from "@/components/layout/authWrapper";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
@@ -66,127 +67,125 @@ const Profile = () => {
     const [value, setValue] = useState('')
 
     return (
-        <HeadLayout title={userByName?.user.username} description="Профиль" keywords="Профиль">
-            <Wrapper>
-                <div className="flex gap-12 py-12 break-all">
-                    {userByName &&
-                        <div className="flex-1">
-                            <div className="flex gap-4">
-                                {userByName.user_data?.picture && <Avatar src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} alt="avatar" variant="rounded" size="xxl" />}
-                                <div>
-                                    <Typography variant="h6">{userByName.user_data?.fullname} {userByName.user_data?.surname}</Typography>
-                                    <Typography variant="small" color="gray" className="font-normal">
-                                        Умения
-                                    </Typography>
+        <AuthWrapper>
+            <PageLayout>
+                <HeadLayout title={userByName?.user.username} description="Профиль" keywords="Профиль">
+                    <Wrapper>
+                        <div className="flex gap-12 py-12 break-all">
+                            {userByName &&
+                                <div className="flex-1">
+                                    <div className="flex gap-4">
+                                        {userByName.user_data?.picture && <Avatar src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} alt="avatar" variant="rounded" size="xxl" />}
+                                        <div>
+                                            <Typography variant="h6">{userByName.user_data?.fullname} {userByName.user_data?.surname}</Typography>
+                                            <Typography variant="small" color="gray" className="font-normal">
+                                                Умения
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className="mt-2">
+                                        <Typography variant="small">
+                                            Статус: {userByName?.user_data?.status}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Telegram: {userByName?.user_data?.contact_telegram}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Телефон: {userByName?.user_data?.phone_number}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            E-mail: {userByName?.user_data?.contact_email}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Город: {userByName?.user_data?.city}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Дата рождения: {userByName?.user_data?.date_of_birth}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Пол: {userByName?.user_data?.sex}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Языки: {userByName?.user_data?.languages && userByName?.user_data?.languages.join(', ')}
+                                        </Typography>
+                                        <Typography className="" variant="small">
+                                            Курсы: {userByName?.user_data?.curses && userByName?.user_data?.curses.join(', ')}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Образование: {userByName?.user_data?.education_level}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Учебное заведение: {userByName?.user_data?.graduation_place}
+                                        </Typography>
+                                        <Typography variant="small">
+                                            Дата окончания: {userByName?.user_data?.graduation_date}
+                                        </Typography>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="mt-2">
-                                <Typography variant="small">
-                                    Статус: {userByName?.user_data?.status}
-                                </Typography>
-                                <Typography variant="small">
-                                    Telegram: {userByName?.user_data?.contact_telegram}
-                                </Typography>
-                                <Typography variant="small">
-                                    Телефон: {userByName?.user_data?.phone_number}
-                                </Typography>
-                                <Typography variant="small">
-                                    E-mail: {userByName?.user_data?.contact_email}
-                                </Typography>
-                                <Typography variant="small">
-                                    Город: {userByName?.user_data?.city}
-                                </Typography>
-                                <Typography variant="small">
-                                    Дата рождения: {userByName?.user_data?.date_of_birth}
-                                </Typography>
-                                <Typography variant="small">
-                                    Пол: {userByName?.user_data?.sex}
-                                </Typography>
-                                <Typography variant="small">
-                                    Языки: {userByName?.user_data?.languages && JSON.parse(userByName?.user_data?.languages as any).join(', ')}
-                                </Typography>
-                                <Typography className="" variant="small">
-                                    Курсы: {userByName?.user_data?.curses && JSON.parse(userByName?.user_data?.curses as any).join(', ')}
-                                </Typography>
-                                <Typography variant="small">
-                                    Образование: {userByName?.user_data?.education_level}
-                                </Typography>
-                                <Typography variant="small">
-                                    Учебное заведение: {userByName?.user_data?.graduation_place}
-                                </Typography>
-                                <Typography variant="small">
-                                    Дата окончания: {userByName?.user_data?.graduation_date}
-                                </Typography>
+                            }
+                            <div className="flex-[3]">
+                                {userByName && userByName?.user_experience &&
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <Typography variant="h5">
+                                                Мой опыт
+                                            </Typography>
+                                        </div>
+                                        <Card className="mt-12 w-full p-6">
+                                            <Typography className="break-all">
+                                                Опыт: {userByName?.user_experience?.experience && userByName?.user_experience?.experience.join(', ')}
+                                            </Typography>
+                                            <Typography className="break-all">
+                                                Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
+                                            </Typography>
+                                        </Card>
+                                    </div>
+                                }
+                                {userByName && userByName.user_portfolio ?
+                                    <div className="flex items-center gap-2 mt-6">
+                                        <Typography variant="h5">
+                                            Мое портфолио
+                                        </Typography>
+                                        {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
+                                            <FaEdit />
+                                        </IconButton>}
+                                    </div>
+                                    :
+                                    <div className="flex items-center gap-2 mt-6">
+                                        <Typography variant="h5">
+                                            Портфолио пока не добавлено
+                                        </Typography>
+                                        {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
+                                            <FaEdit />
+                                        </IconButton>}
+                                    </div>
+                                }
+                                {open && (
+                                    <>
+                                        <ReactQuill
+                                            className="max-w-full mt-2"
+                                            formats={QuillFormats}
+                                            modules={QuillModules}
+                                            value={value}
+                                            onChange={setValue}
+                                            placeholder="Напишите свой текст здесь..."
+                                        />
+                                        <Button onClick={createPortfolio} color="light-blue" className="mt-6">Сохранить</Button>
+                                    </>
+                                )
+                                }
+                                {userByName && userByName.user_portfolio && userByName.user_portfolio.portfolio_html &&
+                                    <Card className="mt-12 w-full p-6">
+                                        {parse(userByName?.user_portfolio?.portfolio_html)}
+                                    </Card>
+                                }
                             </div>
                         </div>
-                    }
-                    <div className="flex-[3]">
-                        {userByName && userByName?.user_experience &&
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <Typography variant="h5">
-                                        Мой опыт
-                                    </Typography>
-                                </div>
-                                <Card className="mt-12 w-full p-6">
-                                    <Typography className="break-all">
-                                        Опыт: {userByName?.user_experience?.experience && userByName?.user_experience?.experience.join(', ')}
-                                    </Typography>
-                                    <Typography className="break-all">
-                                        Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
-                                    </Typography>
-                                </Card>
-                            </div>
-                        }
-                        {userByName && userByName.user_portfolio ?
-                            <div className="flex items-center gap-2 mt-6">
-                                <Typography variant="h5">
-                                    Мое портфолио
-                                </Typography>
-                                {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
-                                    <FaEdit />
-                                </IconButton>}
-                            </div>
-                            :
-                            <div className="flex items-center gap-2 mt-6">
-                                <Typography variant="h5">
-                                    Портфолио пока не добавлено
-                                </Typography>
-                                {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
-                                    <FaEdit />
-                                </IconButton>}
-                            </div>
-                        }
-                        {open && (
-                            <>
-                                <ReactQuill
-                                    className="max-w-full mt-2"
-                                    formats={QuillFormats}
-                                    modules={QuillModules}
-                                    value={value}
-                                    onChange={setValue}
-                                    placeholder="Напишите свой текст здесь..."
-                                />
-                                <Button onClick={createPortfolio} color="light-blue" className="mt-6">Сохранить</Button>
-                            </>
-                        )
-                        }
-                        {userByName && userByName.user_portfolio &&
-                            <Card className="mt-12 w-full p-6">
-                                {parse(userByName.user_portfolio.portfolio_html)}
-                            </Card>
-                        }
-                    </div>
-                </div>
-            </Wrapper>
-        </HeadLayout>
+                    </Wrapper>
+                </HeadLayout>
+            </PageLayout>
+        </AuthWrapper>
     );
-}
-
-Profile.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <PageLayout>{page}</PageLayout>
-    )
 }
 
 export default Profile;

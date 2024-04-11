@@ -41,5 +41,6 @@ export const userDataByUserService = projectApi.injectEndpoints({
 export const {
     useGetUserDataByUserQuery,
     useCreateUserDataByUserMutation,
-    useUpdateUserDataByUserMutation
+    useUpdateUserDataByUserMutation,
+    useLazyGetUserDataByUserQuery
 } = userDataByUserService;

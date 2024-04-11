@@ -92,5 +92,6 @@ export const projectApi = createApi({
 export const {
   useRegUserMutation,
   useLoginUserMutation,
-  useGetUserQuery
+  useGetUserQuery,
+  useLazyGetUserQuery
 } = projectApi;
