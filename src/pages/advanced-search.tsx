@@ -46,7 +46,7 @@ const AdvancedSearch = () => {
             const usernameMatch = !data.username || user?.user?.username.includes(data.username);
             const languagesMatch = !data.languages || userData?.languages.includes(data.languages);
             const skillsMatch = !data.skills || userSkills?.skills.some(skill => data.skills?.includes(skill));
-            const experienceMatch = !data.experience || userExperience?.experience.includes(data.experience);
+            const experienceMatch = !data.experience || userExperience?.experience_info.includes(data.experience);
             const experienceYearsMatch = !data.experience_years || userExperience?.experience_years === data?.experience_years;
             const educationLevel = !data.education_level || userData?.education_level === data?.education_level;
 
