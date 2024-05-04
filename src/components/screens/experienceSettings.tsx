@@ -44,7 +44,9 @@ export const ExperienceSettingsScreen = ({ children, submitRef }: Props) => {
     const submitForm: SubmitHandler<IExperienceType> = (data) => {
         const Data: Partial<IExperience> = {
             experience: tags ? tags.experience : [],
-            experience_years: data.experience_years
+            experience_years: data.experience_years,
+            position: data.position,
+            company: data.company
         }
         if (experience && experience.length > 0) {
             toast.promise(

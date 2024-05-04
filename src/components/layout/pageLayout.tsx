@@ -39,6 +39,7 @@ export default function PageLayout({ children }: LayoutProps) {
     const pageContainer = ['flex', 'flex-col', 'justify-between',
         'h-screen', 'items-center', 'w-screen', 'h-full',
         'font-normal', 'text-gray', 'overflow-x-hidden',
+        'bg-gray-100',
         chivo.variable, popins.variable, inter.variable, "font-chivo"];
 
     pageContainer.push('bg-dark');

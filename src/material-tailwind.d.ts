@@ -74,4 +74,25 @@ declare module "@material-tailwind/react" {
     export interface ButtonGroupProps extends EventCapture {
         placeholder?: undefined
     }
+    export interface CarouselProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface PopoverContentProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface DialogProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface DialogHeaderProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface DialogBodyProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface DialogFooterProps extends EventCapture {
+        placeholder?: undefined
+    }
+    export interface SwitchProps extends EventCapture {
+        crossOrigin?: undefined
+    }
 }

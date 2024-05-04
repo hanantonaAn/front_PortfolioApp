@@ -13,6 +13,12 @@ import { useAppSelector } from "@/store/hooks";
 import parse from 'html-react-parser';
 import { useCreatePortfolioMutation, useGetAllPortfolioQuery, useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
 import { AuthWrapper } from "@/components/layout/authWrapper";
+import { useGetUserSkillsByUserQuery } from "@/service/usersSkillByUserService";
+import { Test } from "@/components/test";
+import React from "react";
+import { SlSocialVkontakte } from "react-icons/sl";
+import { PiTelegramLogoLight } from "react-icons/pi";
+import Link from "next/link";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
@@ -39,7 +45,13 @@ const Profile = () => {
         }
     }, [router.isReady, router.query.username]);
 
-    const { data: userByName } = useGetUserInfoByUsernameQuery(postId || '')
+    const { data: userByName } = useGetUserInfoByUsernameQuery(postId || '');
+
+    const { data: skills } = useGetUserSkillsByUserQuery(undefined, {
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true
+    });
 
     const user = useAppSelector(state => state.auth.me);
 
@@ -66,12 +78,42 @@ const Profile = () => {
 
     const [value, setValue] = useState('')
 
+    function extractTextFromReactElements(element: React.ReactNode): any {
+        if (typeof element === 'string') {
+            // Если элемент является строкой, возвращаем её
+            return element;
+        }
+
+        if (React.isValidElement(element)) {
+            // Если элемент является React-элементом, рекурсивно обходим его дочерние элементы
+            return React.Children.toArray(element.props.children).reduce(
+                (text, child) => text + extractTextFromReactElements(child),
+                ''
+            );
+        }
+
+        if (Array.isArray(element)) {
+            // Если элемент является массивом, обрабатываем каждый элемент массива
+            return element.reduce(
+                (text, child) => text + extractTextFromReactElements(child),
+                ''
+            );
+        }
+
+        // Для всех остальных случаев возвращаем пустую строку
+        return '';
+    }
+
+    const reactElements = userByName && userByName.user_portfolio && userByName.user_portfolio.portfolio_html && parse(userByName?.user_portfolio?.portfolio_html);
+    const text = extractTextFromReactElements(reactElements);
+
+
     return (
         <AuthWrapper>
             <PageLayout>
                 <HeadLayout title={userByName?.user.username} description="Профиль" keywords="Профиль">
                     <Wrapper>
-                        <div className="flex gap-12 py-12 break-all">
+                        {/* <div className="flex gap-12 py-12 break-all">
                             {userByName &&
                                 <div className="flex-1">
                                     <div className="flex gap-4">
@@ -179,6 +221,75 @@ const Profile = () => {
                                         {parse(userByName?.user_portfolio?.portfolio_html)}
                                     </Card>
                                 }
+                            </div>
+                        </div> */}
+
+                        <div className="bg-gray-100 mx-auto py-8">
+                            <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+                                <div className="col-span-4 sm:col-span-3">
+                                    <Card className="bg-white shadow rounded-lg p-6">
+                                        <div className="flex flex-col items-center">
+                                            {userByName?.user_data?.picture && <img src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />}
+                                            <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
+                                            <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
+                                            <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                                                <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Связаться</a>
+                                                <Link href={`/portfolio/${userByName?.user.username}`} className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Портфолио</Link>
+                                            </div>
+                                        </div>
+                                        <hr className="my-6 border-t border-gray-300" />
+                                        <div className="flex flex-col">
+                                            <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Умения</span>
+                                            <ul>
+                                                {skills && skills[0]?.skills?.length > 0 ?
+                                                    skills[0].skills.map(item => (
+                                                        <li key={item} className="mb-2">{item}</li>
+                                                    ))
+                                                    :
+                                                    <li className="mb-2">Умения не указаны</li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </Card>
+                                </div>
+                                <div className="col-span-4 sm:col-span-9">
+                                    <Card className="bg-white shadow rounded-lg p-6">
+                                        <Typography variant="h2" className="text-xl font-bold mb-4">Обо мне</Typography>
+                                        <Typography variant="paragraph" className="text-gray-700">
+                                            {userByName?.user_data?.additional_info}
+                                        </Typography>
+
+                                        <h3 className="font-semibold text-center mt-3 -mb-2">
+                                            Социальные сети
+                                        </h3>
+                                        <div className="flex justify-center items-center gap-6 my-6">
+                                            <a className="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds LinkedIn" href=""
+                                                target="_blank">
+                                                <SlSocialVkontakte size="24" />
+                                            </a>
+                                            <a className="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds LinkedIn" href=""
+                                                target="_blank">
+                                                <PiTelegramLogoLight size="24" />
+                                            </a>
+                                        </div>
+
+                                        <h2 className="text-xl font-bold mt-6 mb-4">Опыт</h2>
+                                        {/* <div className="mb-6">
+                                            <div className="flex justify-between flex-wrap gap-2 w-full">
+                                                <span className="text-gray-700 font-bold">Web Developer</span>
+                                                <p>
+                                                    <span className="text-gray-700 mr-2">at ABC Company</span>
+                                                    <span className="text-gray-700">2017 - 2019</span>
+                                                </p>
+                                            </div>
+                                            <p className="mt-2">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus est vitae
+                                                tortor ullamcorper, ut vestibulum velit convallis. Aenean posuere risus non velit egestas
+                                                suscipit.
+                                            </p>
+                                        </div> */}
+                                    </Card>
+                                </div>
                             </div>
                         </div>
                     </Wrapper>

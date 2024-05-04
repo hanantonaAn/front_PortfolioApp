@@ -35,7 +35,7 @@ export const HomeCardScreen = ({ userInfo, isLoading }: Props) => {
                     if (index < 3) {
                         return (
                             <Card key={item.user_data[0]?.id} className="w-full">
-                                <CardHeader color="blue-gray" className="relative h-56">
+                                <CardHeader className="relative h-64 m-0 px-5 py-4 shadow-none">
                                     <Image
                                         width={1024}
                                         height={768}

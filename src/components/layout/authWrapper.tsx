@@ -1,5 +1,5 @@
-import { useGetUserQuery } from "@/service/projectService";
-import { useGetUserDataByUserQuery } from "@/service/userDataByUserService";
+import { useGetUserQuery, useLazyGetUserQuery } from "@/service/projectService";
+import { useGetUserDataByUserQuery, useLazyGetUserDataByUserQuery } from "@/service/userDataByUserService";
 import { useAppDispatch } from "@/store/hooks";
 import { setUser } from "@/store/slice/authSlice";
 import { useRouter } from "next/router";
@@ -13,19 +13,28 @@ export const AuthWrapper = ({ children }: Props) => {
     const dispatch = useAppDispatch();
 
 
-    const { data: user, isLoading } = useGetUserDataByUserQuery(undefined, {skip: false});
-
-    const { data: getUser, isLoading: isLoad } = useGetUserQuery(undefined, {skip: false})
+    const [userGet, { isLoading }] = useLazyGetUserDataByUserQuery()
+    const [meUser, { isLoading: isLoad }] = useLazyGetUserQuery()
 
 
     const router = useRouter();
 
     useEffect(() => {
-        if(user && getUser) {
-            console.log('sdfsdf')
-            dispatch(setUser({ user: user, me: getUser}))
-        }
-    }, [getUser, user, dispatch, router])
+
+        const fetchData = async () => {
+            try {
+                const userData = await userGet().unwrap();
+                const meData = await meUser().unwrap();
+                dispatch(setUser({ user: userData, me: meData }));
+            } catch (error) {
+                console.error("Failed to fetch user data:", error);
+                // Обработка ошибок, если необходимо
+            }
+        };
+    
+        fetchData();
+    }, [dispatch, router, userGet, meUser])
+
 
     if (isLoading || isLoad) {
         return <div>Загрузка...</div>;

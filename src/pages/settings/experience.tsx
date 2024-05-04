@@ -16,7 +16,7 @@ const Experience = () => {
           <div className="flex gap-5 py-12">
             <MenuProfile />
             <div className="w-full md:w-3/4">
-              <Card className="p-6 w-1/2">
+              <Card className="p-6 xl:w-1/2">
                 <Typography variant="h6" color="light-blue">
                   Основная информация
                 </Typography>

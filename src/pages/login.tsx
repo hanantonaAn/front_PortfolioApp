@@ -70,28 +70,30 @@ const Login: NextPage = () => {
   };
 
   return (
-    <Card className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible" color="transparent" shadow={false}>
-      <Typography variant="h4" color="blue-gray">
-        Войти
-      </Typography>
-      <FormConstructor
-        fieldList={authLoginForm}
-        onSubmit={handleSubmit(data => loginAuthUser(data))}
-        register={register}
-        formClassName="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-        inputClassName="mb-1 flex flex-col gap-6"
-        errors={errors}>
-        <Button className="mt-6" fullWidth loading={isLoading} type="submit">
+    <div className="bg-gray-100 min-h-screen flex justify-center items-center flex-col h-screen">
+      <Card className="bg-white place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible" color="transparent" shadow={false}>
+        <Typography variant="h4" color="blue-gray">
           Войти
-        </Button>
-      </FormConstructor>
-      <Typography color="gray" className="mt-4 text-center font-normal">
-        Ещё нет аккаунта?{" "}
-        <Link href="/registration" className="font-medium text-blue-600">
-          Регистрация
-        </Link>
-      </Typography>
-    </Card>
+        </Typography>
+        <FormConstructor
+          fieldList={authLoginForm}
+          onSubmit={handleSubmit(data => loginAuthUser(data))}
+          register={register}
+          formClassName="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+          inputClassName="mb-1 flex flex-col gap-6"
+          errors={errors}>
+          <Button className="mt-6" fullWidth loading={isLoading} type="submit">
+            Войти
+          </Button>
+        </FormConstructor>
+        <Typography color="gray" className="mt-4 text-center font-normal">
+          Ещё нет аккаунта?{" "}
+          <Link href="/registration" className="font-medium text-blue-600">
+            Регистрация
+          </Link>
+        </Typography>
+      </Card>
+    </div>
   )
 }
 

@@ -67,7 +67,7 @@ export function InputByTags<T extends FieldValues>({
                     {tags[fieldName].map((item, id) => {
                         return (
                             <div className="flex break-all gap-4 rounded-2xl bg-blue-500 text-white px-3 py-2" key={id}>
-                                #{item}
+                                {item}
                                 <span onClick={() => deleteTag(fieldName, id)} className="text-red-500 cursor-pointer hover:text-red-500/50 transition-all duration-150">x</span>
                             </div>
                         )

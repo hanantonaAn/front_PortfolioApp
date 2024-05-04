@@ -20,7 +20,6 @@ const Portfolio = () => {
 
     const router = useRouter();
 
-    
     const user = useAppSelector(state => state.auth.me);
 
     const { data: userByName } = useGetUserInfoByUsernameQuery(user?.username || '')

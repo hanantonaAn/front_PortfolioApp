@@ -38,7 +38,7 @@ const Registration = () => {
         error: (err) => `Произошла ошибка (${err?.data})`
       }
     ).then((res) => {
-      dispatch(setUser({me: res}));
+      dispatch(setUser({ me: res }));
       localStorage.setItem('token', res.data);
       // dispatch(setCredentials(res.data));
       router.push('/login')
@@ -49,56 +49,58 @@ const Registration = () => {
   };
 
   return (
-    <Card className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible" color="transparent" shadow={false}>
-      <Typography variant="h4" color="blue-gray">
-        Регистрация
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Введите свои данные для регистрации.
-      </Typography>
-      <FormConstructor
-        fieldList={authSignUpForm}
-        onSubmit={handleSubmit(data => registrationUser(data))}
-        register={register}
-        formClassName="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-        inputClassName="mb-1 flex flex-col gap-6"
-        errors={errors}>
-        <Checkbox
-          {...register('termsAccepted', { required: true })}
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
-            >
-              Я соглашаюсь с&nbsp;
-              <Link
-                href="/privacy-policy"
-                className="font-medium transition-colors text-blue-600 hover:underline"
+    <div className="bg-gray-100 min-h-screen flex justify-center items-center flex-col h-screen">
+      <Card className="bg-white place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible" color="transparent" shadow={false}>
+        <Typography variant="h4" color="blue-gray">
+          Регистрация
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal">
+          Введите свои данные для регистрации.
+        </Typography>
+        <FormConstructor
+          fieldList={authSignUpForm}
+          onSubmit={handleSubmit(data => registrationUser(data))}
+          register={register}
+          formClassName="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+          inputClassName="mb-1 flex flex-col gap-6"
+          errors={errors}>
+          <Checkbox
+            {...register('termsAccepted', { required: true })}
+            label={
+              <Typography
+                variant="small"
+                color="gray"
+                className="flex items-center font-normal"
               >
-                пользовательским соглашением
-              </Link>
+                Я соглашаюсь с&nbsp;
+                <Link
+                  href="/privacy-policy"
+                  className="font-medium transition-colors text-blue-600 hover:underline"
+                >
+                  пользовательским соглашением
+                </Link>
+              </Typography>
+            }
+            containerProps={{ className: "-ml-2.5" }}
+          />
+          {errors && errors.termsAccepted &&
+            <Typography variant="small" color="red" className="-mb-3">
+              {errors.termsAccepted?.message}
             </Typography>
           }
-          containerProps={{ className: "-ml-2.5" }}
-        />
-        {errors && errors.termsAccepted &&
-          <Typography variant="small" color="red" className="-mb-3">
-            {errors.termsAccepted?.message}
-          </Typography>
-        }
-        <Button className="mt-6" fullWidth loading={isLoading} type="submit">
-          Регистрация
-        </Button>
-      </FormConstructor>
+          <Button className="mt-6" fullWidth loading={isLoading} type="submit">
+            Регистрация
+          </Button>
+        </FormConstructor>
 
-      <Typography color="gray" className="mt-4 text-center font-normal">
-        Уже есть аккаунт?{" "}
-        <Link href="/login" className="font-medium text-blue-600">
-          Войти
-        </Link>
-      </Typography>
-    </Card>
+        <Typography color="gray" className="mt-4 text-center font-normal">
+          Уже есть аккаунт?{" "}
+          <Link href="/login" className="font-medium text-blue-600">
+            Войти
+          </Link>
+        </Typography>
+      </Card>
+    </div>
   )
 }
 

@@ -22,7 +22,7 @@ export const Header = () => {
     }, []);
 
     const user = useAppSelector(state => state.auth.me);
-    
+
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <Typography
@@ -129,12 +129,16 @@ export const Header = () => {
                 <Collapse open={openNav}>
                     {navList}
                     <div className="flex items-center gap-x-1">
-                        <Button fullWidth variant="text" size="sm" className="">
-                            <span>Log In</span>
-                        </Button>
-                        <Button fullWidth variant="gradient" size="sm" className="">
-                            <span>Sign in</span>
-                        </Button>
+                        <Link className="w-full" href="/login">
+                            <Button fullWidth variant="text" size="sm" className="">
+                                <span>Войти</span>
+                            </Button>
+                        </Link>
+                        <Link className="w-full" href="/registration">
+                            <Button fullWidth variant="gradient" size="sm" className="">
+                                <span>Регистрация</span>
+                            </Button>
+                        </Link>
                     </div>
                 </Collapse>
             </Navbar>

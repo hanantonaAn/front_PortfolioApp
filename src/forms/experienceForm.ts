@@ -32,4 +32,16 @@ export const experienceForm: IForm<IExperienceType>[] = [
             }
         ]
     },
+    {
+        fieldName: "position",
+        type: "input",
+        placeholder: "Должность",
+        label: "Напишите свою должность"
+    },
+    {
+        fieldName: "company",
+        type: "input",
+        placeholder: "Компания",
+        label: "Напишите свою компанию"
+    },
 ];

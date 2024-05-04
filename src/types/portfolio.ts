@@ -12,3 +12,8 @@ export type IPortfolio = {
     slider_ids: string[];
     hashtag_ids: string[];
 }
+
+export type IPortfolioUsername = {
+    user: any;
+    portfolio: IPortfolio;
+}

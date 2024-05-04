@@ -32,7 +32,7 @@ export const MenuProfile = () => {
             <ListItemPrefix>
               <GiSkills />
             </ListItemPrefix>
-            Скиллы
+            Умения
           </ListItem>
         </Link>
         <ListItem className="rounded-none mt-auto py-1.5 px-3 text-sm font-normal text-blue-gray-700 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white">

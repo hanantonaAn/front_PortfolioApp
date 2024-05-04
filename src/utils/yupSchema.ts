@@ -57,6 +57,8 @@ export type IProfileType = Yup.InferType<typeof ProfileSchema>;
 export const ExperienceSchema = Yup.object({
     experience_years: Yup.string(),
     experience: Yup.string(),
+    position: Yup.string(),
+    company: Yup.string(),
 });
 
 export type IExperienceType = Yup.InferType<typeof ExperienceSchema>;

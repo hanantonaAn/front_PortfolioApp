@@ -61,7 +61,14 @@ const baseQuery = fetchBaseQuery({
 
 export const projectApi = createApi({
   reducerPath: 'projectApi', // name api
-  tagTypes: ['UserExperience', 'UserSkills', 'UserProfile'],
+  tagTypes: [
+  'UserExperience', 
+  'UserSkills', 
+  'UserProfile',
+  'Hashtag',
+  'Slider',
+  'Photo'
+],
   baseQuery: baseQuery,
   endpoints: (build) => ({
     // auth
