@@ -32,6 +32,7 @@ export type ISignInType = Yup.InferType<typeof SignInSchema>;
 // форма создания/редактирования профиля
 export const ProfileSchema = Yup.object({
     status: Yup.string().nullable(),
+    position: Yup.string().nullable(),
     additional_info: Yup.string().nullable(),
     fullname: Yup.string().nullable(),
     surname: Yup.string().nullable(),

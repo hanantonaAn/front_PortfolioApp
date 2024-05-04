@@ -35,7 +35,8 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
             graduation_date: '',
             languages: '',
             curses: '',
-            picture: ''
+            picture: '',
+            position: ''
         }
     });
 
@@ -50,8 +51,8 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
             })
             setTags((prev) => ({
                 ...prev,
-                languages: profile[0]?.languages && [],
-                curses: profile[0]?.curses || []
+                languages: profile[0]?.languages ? profile[0]?.languages : [],
+                curses: profile[0]?.curses ? profile[0]?.curses : []
             }))
         }
     }, [profile, reset])
@@ -75,10 +76,18 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
                     formData.append(key, value);
                 }
             } else if (["languages", "curses"].includes(key)) {
-                const valuesArray = tags && tags[key as keyof typeof tags];
-                valuesArray.forEach(item => {
-                    formData.append(key, item);
-                });
+                if (key in tags) {
+                    const valuesArray = tags[key]; 
+
+                    
+                    if (valuesArray.length > 0) {
+                        valuesArray.forEach(item => {
+                            formData.append(key, item ? item : '');
+                        });
+                    } else {
+                        formData.append(key, '');
+                    }
+                }
             } else if (value) {
                 formData.append(key, value);
             }

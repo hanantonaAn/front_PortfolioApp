@@ -18,7 +18,7 @@ export const StepperComponent = ({
     handlePrev,
 }: StepperProps) => {
     return (
-        <div className="w-full mt-10">
+        <div className="w-full my-10">
             <div className="max-w-4xl mx-auto">
                 <Stepper
                     activeStep={activeStep}

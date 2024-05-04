@@ -67,7 +67,9 @@ export const projectApi = createApi({
   'UserProfile',
   'Hashtag',
   'Slider',
-  'Photo'
+  'Photo',
+  'UserInfo',
+  'Vacancy'
 ],
   baseQuery: baseQuery,
   endpoints: (build) => ({

@@ -10,6 +10,7 @@ import {
 } from "@material-tailwind/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { TbBriefcase } from "react-icons/tb";
 
 export const ProfileMenu = () => {
 
@@ -87,6 +88,15 @@ export const ProfileMenu = () => {
 
             <Typography variant="small" className="font-medium">
               Настройки
+            </Typography>
+          </MenuItem>
+        </Link>
+
+        <Link href={'/vacancies'}>
+          <MenuItem className="flex items-center gap-2">
+            <TbBriefcase size={16} />
+            <Typography variant="small" className="font-medium">
+              Вакансии
             </Typography>
           </MenuItem>
         </Link>

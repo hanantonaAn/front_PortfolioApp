@@ -30,7 +30,6 @@ const experienceObj: { [key: string]: string } = {
 }
 
 const Profile = () => {
-    const [open, setOpen] = useState(false);
 
     const router = useRouter();
 
@@ -55,175 +54,11 @@ const Profile = () => {
 
     const user = useAppSelector(state => state.auth.me);
 
-    const [createNewPortfolio] = useCreatePortfolioMutation();
-    const [updatePortfolio] = useUpdatePortfolioByIdMutation();
-
-    const createPortfolio = () => {
-        if (userByName && userByName.user_portfolio) {
-            console.log('sdfadsf')
-            updatePortfolio({
-                id: userByName.user_portfolio.id,
-                data: {
-                    portfolio_html: value
-                }
-            })
-            setOpen(false)
-        } else {
-            createNewPortfolio({
-                portfolio_html: value
-            }).unwrap()
-            setOpen(false)
-        }
-    };
-
-    const [value, setValue] = useState('')
-
-    function extractTextFromReactElements(element: React.ReactNode): any {
-        if (typeof element === 'string') {
-            // Если элемент является строкой, возвращаем её
-            return element;
-        }
-
-        if (React.isValidElement(element)) {
-            // Если элемент является React-элементом, рекурсивно обходим его дочерние элементы
-            return React.Children.toArray(element.props.children).reduce(
-                (text, child) => text + extractTextFromReactElements(child),
-                ''
-            );
-        }
-
-        if (Array.isArray(element)) {
-            // Если элемент является массивом, обрабатываем каждый элемент массива
-            return element.reduce(
-                (text, child) => text + extractTextFromReactElements(child),
-                ''
-            );
-        }
-
-        // Для всех остальных случаев возвращаем пустую строку
-        return '';
-    }
-
-    const reactElements = userByName && userByName.user_portfolio && userByName.user_portfolio.portfolio_html && parse(userByName?.user_portfolio?.portfolio_html);
-    const text = extractTextFromReactElements(reactElements);
-
-
     return (
         <AuthWrapper>
             <PageLayout>
                 <HeadLayout title={userByName?.user.username} description="Профиль" keywords="Профиль">
                     <Wrapper>
-                        {/* <div className="flex gap-12 py-12 break-all">
-                            {userByName &&
-                                <div className="flex-1">
-                                    <div className="flex gap-4">
-                                        {userByName.user_data?.picture && <Avatar src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} alt="avatar" variant="rounded" size="xxl" />}
-                                        <div>
-                                            <Typography variant="h6">{userByName.user_data?.fullname} {userByName.user_data?.surname}</Typography>
-                                            <Typography variant="small" color="gray" className="font-normal">
-                                                Умения
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2">
-                                        <Typography variant="small">
-                                            Статус: {userByName?.user_data?.status}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Telegram: {userByName?.user_data?.contact_telegram}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Телефон: {userByName?.user_data?.phone_number}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            E-mail: {userByName?.user_data?.contact_email}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Город: {userByName?.user_data?.city}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Дата рождения: {userByName?.user_data?.date_of_birth}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Пол: {userByName?.user_data?.sex}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Языки: {userByName?.user_data?.languages && userByName?.user_data?.languages.join(', ')}
-                                        </Typography>
-                                        <Typography className="" variant="small">
-                                            Курсы: {userByName?.user_data?.curses && userByName?.user_data?.curses.join(', ')}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Образование: {userByName?.user_data?.education_level}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Учебное заведение: {userByName?.user_data?.graduation_place}
-                                        </Typography>
-                                        <Typography variant="small">
-                                            Дата окончания: {userByName?.user_data?.graduation_date}
-                                        </Typography>
-                                    </div>
-                                </div>
-                            }
-                            <div className="flex-[3]">
-                                {userByName && userByName?.user_experience &&
-                                    <div>
-                                        <div className="flex items-center gap-2">
-                                            <Typography variant="h5">
-                                                Мой опыт
-                                            </Typography>
-                                        </div>
-                                        <Card className="mt-12 w-full p-6">
-                                            <Typography className="break-all">
-                                                Опыт: {userByName?.user_experience?.experience && userByName?.user_experience?.experience.join(', ')}
-                                            </Typography>
-                                            <Typography className="break-all">
-                                                Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
-                                            </Typography>
-                                        </Card>
-                                    </div>
-                                }
-                                {userByName && userByName.user_portfolio ?
-                                    <div className="flex items-center gap-2 mt-6">
-                                        <Typography variant="h5">
-                                            Мое портфолио
-                                        </Typography>
-                                        {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
-                                            <FaEdit />
-                                        </IconButton>}
-                                    </div>
-                                    :
-                                    <div className="flex items-center gap-2 mt-6">
-                                        <Typography variant="h5">
-                                            Портфолио пока не добавлено
-                                        </Typography>
-                                        {user && user.id === userByName?.user?.id && <IconButton onClick={() => setOpen(prev => !prev)} variant="text" >
-                                            <FaEdit />
-                                        </IconButton>}
-                                    </div>
-                                }
-                                {open && (
-                                    <>
-                                        <ReactQuill
-                                            className="max-w-full mt-2"
-                                            formats={QuillFormats}
-                                            modules={QuillModules}
-                                            value={value}
-                                            onChange={setValue}
-                                            placeholder="Напишите свой текст здесь..."
-                                        />
-                                        <Button onClick={createPortfolio} color="light-blue" className="mt-6">Сохранить</Button>
-                                    </>
-                                )
-                                }
-                                {userByName && userByName.user_portfolio && userByName.user_portfolio.portfolio_html &&
-                                    <Card className="mt-12 w-full p-6">
-                                        {parse(userByName?.user_portfolio?.portfolio_html)}
-                                    </Card>
-                                }
-                            </div>
-                        </div> */}
-
                         <div className="bg-gray-100 mx-auto py-8">
                             <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
                                 <div className="col-span-4 sm:col-span-3">

@@ -8,7 +8,7 @@ import {
     Typography,
     Tooltip,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImageUploader } from "../formConstructor/imageUploader";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { MdClose } from "react-icons/md";
@@ -17,16 +17,19 @@ import toast from "react-hot-toast";
 
 type Props = {
     id: string;
+    open: boolean;
+    handleOpen: () => void;
 }
 
-export const PhotoModal = ({ id }: Props) => {
-    const [open, setOpen] = useState<boolean>(false);
-
-    const handleOpen = () => setOpen((cur) => !cur);
-
-    const [photo, setPhoto] = useState<any>(null);
+export const PhotoModal = ({ id, open, handleOpen }: Props) => {
+    
+    const [photo, setPhoto] = useState<File | null>(null);
 
     const [createPhoto] = useCreatePhotoMutation();
+
+    useEffect(() => {
+        setPhoto(null)
+    }, [open])
 
     const createNewPhoto = async () => {
         const formData = new FormData();

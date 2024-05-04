@@ -10,6 +10,12 @@ export const profileForm: IForm<IProfileType>[] = [
         label: "Добавить статус"
     },
     {
+        fieldName: "position",
+        type: "input",
+        placeholder: "Желаемая должность",
+        label: "Желаемая должность"
+    },
+    {
         type: "title",
         label: "Контактная информация"
     },
@@ -153,7 +159,7 @@ export const profileForm: IForm<IProfileType>[] = [
         fieldName: "additional_info",
         type: "input",
         placeholder: "Дополнительная информация",
-        label: "Введите"
+        label: "Дополнительная информация"
     },
     {
         fieldName: "picture",

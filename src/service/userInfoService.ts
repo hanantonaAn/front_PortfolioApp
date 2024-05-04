@@ -14,6 +14,7 @@ const userInfoService = projectApi.injectEndpoints({
             query: (id) => ({
                 url: `/userinfo_username/${id}/`,
             }),
+            providesTags: (result) => [{ type: 'UserInfo', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

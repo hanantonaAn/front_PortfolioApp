@@ -15,6 +15,7 @@ const portfolioService = projectApi.injectEndpoints({
         url: '/portfolio/',
         body: data,
       }),
+      invalidatesTags: [{ type: 'UserInfo', id: 'LIST' }],
     }),
     updatePortfolioById: build.mutation<IPortfolio, { id: string, data: Partial<IPortfolio> }>({
       query: ({ id, data }) => ({
@@ -22,6 +23,7 @@ const portfolioService = projectApi.injectEndpoints({
         url: `/portfolio/${id}/`,
         body: data,
       }),
+      invalidatesTags: [{ type: 'UserInfo', id: 'LIST' }],
     }),
   }),
   overrideExisting: false,
