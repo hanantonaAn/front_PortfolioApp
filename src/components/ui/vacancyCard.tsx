@@ -30,7 +30,7 @@ export const VacancyCard = ({ vacancy, likeVacancy }: Props) => {
             </div>
             <div className="flex items-center mt-auto justify-between">
                 <span onClick={handleAlwaysOpen} className="text-sm font-medium text-gray-500 cursor-pointer">{alwaysOpen ? "Свернуть" : "Развернуть"}</span>
-                <a className="font-medium text-blue-500 transition-all duration-300 group-hover:text-blue-500/80">Откликнуться</a>
+                <a href={vacancy.url} target="_blank" referrerPolicy="no-referrer" className="font-medium text-blue-500 transition-all duration-300 group-hover:text-blue-500/80">Откликнуться</a>
             </div>
             {alwaysOpen &&
                 <div className="flex flex-col mt-5">

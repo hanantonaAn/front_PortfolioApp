@@ -5,7 +5,7 @@ import { IExperienceType } from "@/utils/yupSchema";
 export const experienceForm: IForm<IExperienceType>[] = [
     {
         fieldName: "experience",
-        type: "inputByTags",
+        type: "input",
         placeholder: "Опыт",
         label: "Напишите Ваш опыт"
     },

@@ -68,7 +68,7 @@ const Profile = () => {
                                             <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
                                             <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
                                             <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                                                <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Связаться</a>
+                                                {/* <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Связаться</a> */}
                                                 <Link href={`/portfolio/${userByName?.user.username}`} className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Портфолио</Link>
                                             </div>
                                         </div>

@@ -17,9 +17,6 @@ const Experience = () => {
             <MenuProfile />
             <div className="w-full md:w-3/4">
               <Card className="p-6 xl:w-1/2">
-                <Typography variant="h6" color="light-blue">
-                  Основная информация
-                </Typography>
                 <ExperienceSettingsScreen>
                   <Button type="submit" color="light-blue" className="mt-5">
                     Сохранить
