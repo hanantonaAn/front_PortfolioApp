@@ -7,7 +7,7 @@ import { experienceForm } from "@/forms/experienceForm";
 import { useCreateUserExperienceByUserMutation, useGetUserExperienceByUserQuery, useUpdateUserExperienceByUserMutation } from "@/service/userExperienceByUserService";
 import toast from "react-hot-toast";
 import { IExperience } from "@/types/experience";
-import { Button } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 
 type Props = {
     children?: React.ReactNode;
@@ -18,7 +18,6 @@ type Props = {
 export const ExperienceSettingsScreen = ({ children, submitRef }: Props) => {
 
     const { data: experience } = useGetUserExperienceByUserQuery();
-
 
     return (
         <>
@@ -34,7 +33,6 @@ export const ExperienceSettingsScreen = ({ children, submitRef }: Props) => {
                     {children}
                 </HelpComponent >
             }
-            <Button color="blue">Добавить ещё опыт</Button>
         </>
     );
 }
@@ -63,6 +61,7 @@ const HelpComponent = ({ children, submitRef, experience }: HelpProps) => {
 
     const submitForm: SubmitHandler<IExperienceType> = (data) => {
         const Data: Partial<IExperience> = {
+            experience_info: data.experience_info,
             experience_years: data.experience_years,
             position: data.position,
             company: data.company
@@ -89,14 +88,16 @@ const HelpComponent = ({ children, submitRef, experience }: HelpProps) => {
     };
 
     return (
-        <FormConstructor fieldList={experienceForm}
-            onSubmit={handleSubmit(data => submitForm(data))}
-            register={register}
-            inputClassName="grid grid-cols-1 gap-4"
-            control={control}
-            errors={errors}>
-            {submitRef && <button ref={submitRef} type="submit" style={{ display: 'none' }} />}
-            {children}
-        </FormConstructor>
+        <Card className="p-6">
+            <FormConstructor fieldList={experienceForm}
+                onSubmit={handleSubmit(data => submitForm(data))}
+                register={register}
+                inputClassName="grid grid-cols-1 gap-4"
+                control={control}
+                errors={errors}>
+                {submitRef && <button ref={submitRef} type="submit" style={{ display: 'none' }} />}
+                {children}
+            </FormConstructor>
+        </Card>
     );
 };

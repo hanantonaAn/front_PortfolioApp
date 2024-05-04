@@ -31,8 +31,8 @@ export const Header = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link href="/about-us" className="flex items-center">
-                    О нас
+                <Link href="/recommendations" className="flex items-center">
+                    Рекомендации
                 </Link>
             </Typography>
             <Typography

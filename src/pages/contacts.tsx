@@ -14,15 +14,15 @@ const Contacts = () => {
             <p className="text-gray-500 mb-8">Мы всегда рады помочь вам. Напишите нам, и мы ответим на ваши вопросы.</p>
             <div className="mb-4">
               <Typography variant="h5" className="text-gray-700 font-semibold">Наш адрес</Typography>
-              <Typography variant="lead" className="text-gray-500">123 Улица Пример, Город Пример, Страна Пример</Typography>
+              <Typography variant="lead" className="text-gray-500">г. Йошкар-Ола, ул. Волкова 196а</Typography>
             </div>
             <div className="mb-4">
               <Typography variant="h5" className="text-gray-700 font-semibold">Наш телефон</Typography>
-              <Typography variant="lead" className="text-gray-500">+123 456 7890</Typography>
+              <Typography variant="lead" className="text-gray-500">+7 951 897 60 03</Typography>
             </div>
             <div className="mb-4">
               <Typography variant="h5" className="text-gray-700 font-semibold">Наш email</Typography>
-              <Typography variant="lead" className="text-gray-500">info@example.com</Typography>
+              <Typography variant="lead" className="text-gray-500">999antonova999@mail.ru</Typography>
             </div>
           </Card>
         </div>

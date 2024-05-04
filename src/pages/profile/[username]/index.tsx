@@ -19,6 +19,7 @@ import React from "react";
 import { SlSocialVkontakte } from "react-icons/sl";
 import { PiTelegramLogoLight } from "react-icons/pi";
 import Link from "next/link";
+import { useGetUserExperienceByUserQuery } from "@/service/userExperienceByUserService";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
@@ -51,6 +52,8 @@ const Profile = () => {
         refetchOnMountOrArgChange: true,
         refetchOnReconnect: true
     });
+
+    const { data: experience } = useGetUserExperienceByUserQuery();
 
     const user = useAppSelector(state => state.auth.me);
 
@@ -109,20 +112,22 @@ const Profile = () => {
                                         </div>
 
                                         <h2 className="text-xl font-bold mt-6 mb-4">Опыт</h2>
-                                        {/* <div className="mb-6">
-                                            <div className="flex justify-between flex-wrap gap-2 w-full">
-                                                <span className="text-gray-700 font-bold">Web Developer</span>
-                                                <p>
-                                                    <span className="text-gray-700 mr-2">at ABC Company</span>
-                                                    <span className="text-gray-700">2017 - 2019</span>
-                                                </p>
-                                            </div>
-                                            <p className="mt-2">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus est vitae
-                                                tortor ullamcorper, ut vestibulum velit convallis. Aenean posuere risus non velit egestas
-                                                suscipit.
-                                            </p>
-                                        </div> */}
+                                        {experience && experience.map(item => {
+                                            return (
+                                                <div key={item.id} className="mb-6">
+                                                    <div className="flex justify-between flex-wrap gap-2 w-full">
+                                                        <span className="text-gray-700 font-bold">{item.position}</span>
+                                                        <p>
+                                                            <span className="text-gray-700 mr-2">{item.company}</span>
+                                                            <span className="text-gray-700">{experienceObj[item.experience_years]}</span>
+                                                        </p>
+                                                    </div>
+                                                    <p className="mt-2">
+                                                        {item.experience_info}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })}
                                     </Card>
                                 </div>
                             </div>
