@@ -7,7 +7,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      
+      backgroundImage: {
+        main: "url('/assets/vector/bg_vector.svg')"
+      }
     },
   },
   plugins: [],

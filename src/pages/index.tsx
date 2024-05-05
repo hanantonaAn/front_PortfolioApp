@@ -10,6 +10,8 @@ import { HomeCardScreen } from "@/components/screens/homeCardScreen";
 import { useGetUserInfoQuery } from "@/service/userInfoService";
 import { useRouter } from "next/router";
 import { AuthWrapper } from "@/components/layout/authWrapper";
+import Image from "next/image";
+import { Wrapper } from "@/components/layout/wrapper";
 
 
 const Home = () => {
@@ -23,9 +25,9 @@ const Home = () => {
 
   return (
     <AuthWrapper>
-
       <PageLayout>
-        <div className="mx-auto max-w-screen-xl py-12 px-5 lg:px-10">
+        <div className="mx-auto relative max-w-screen-xl py-12 px-5 lg:px-10">
+          <Image className="absolute -right-24 top-0 hidden lg:block" src="/assets/vector/bg_vector.svg" alt="" width={520} height={244} />
           <Typography variant="h2" color="blue-gray" className="mb-2">
             Создайте своё резюме
           </Typography>
