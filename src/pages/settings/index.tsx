@@ -4,8 +4,8 @@ import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { ProfileSettingsScreen } from "@/components/screens/profileSettings";
 import { AuthWrapper } from "@/components/layout/authWrapper";
+import { ProfileSettingsScreen } from "@/components/screens/settingsScreen/profileSettings";
 
 const Settings = () => {
   return (

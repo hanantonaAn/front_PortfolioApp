@@ -12,7 +12,7 @@ export const VacancyCard = ({ vacancy, likeVacancy }: Props) => {
 
     const handleAlwaysOpen = () => setAlwaysOpen((cur) => !cur);
     return (
-        <div className="group h-full flex flex-col bg-white rounded-2xl p-4 transition-all duration-300 hover:rotate-1 lg:p-8">
+        <div className={`group ${alwaysOpen ? "row-span-2" : "row-span-1"} h-full flex flex-col bg-white rounded-2xl p-4 transition-all duration-300 hover:rotate-1 lg:p-8`}>
             <div className="mb-3 text-right">
                 <button onClick={likeVacancy} className={vacancy.status === "favorites" ? "hover:text-gray-600 transition-all duration-300 hover:scale-110 text-red-600" : "text-gray-600 transition-all duration-300 hover:scale-110 hover:text-red-600"}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">

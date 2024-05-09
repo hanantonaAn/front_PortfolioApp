@@ -109,7 +109,7 @@ const VacanciesPage = () => {
                                     <Button onClick={() => setActivePage(false)} color={!activePage ? "blue-gray" : "blue"}>Избранные</Button>
                                     <Button onClick={handleOpenDelete} color="red">Удалить вакансии</Button>
                                 </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 flex-1 lg:pr-20">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 grid-rows-1 2xl:grid-cols-3 gap-5 flex-1 lg:pr-20">
                                     {allVacancy && allVacancy.map(item => {
                                         if (item.status !== 'favorites' && activePage) {
                                             return (

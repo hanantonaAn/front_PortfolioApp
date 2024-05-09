@@ -1,7 +1,7 @@
 import PageLayout from "@/components/layout/pageLayout";
 import { ReactElement } from "react";
 import HeadLayout from "@/components/layout/headLayout";
-import { Button, Card, Typography } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 
 const recommendations = () => {

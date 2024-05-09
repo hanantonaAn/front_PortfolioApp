@@ -15,7 +15,7 @@ const baseQuery = fetchBaseQuery({
     }
     return headers
   },
-  credentials: 'include'
+  credentials: 'same-origin',
 });
 
 // const customFetchBase: BaseQueryFn<

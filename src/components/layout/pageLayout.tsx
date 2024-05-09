@@ -1,12 +1,7 @@
 import { Chivo, Poppins, Inter } from 'next/font/google'
 import { Footer } from '../footer';
 import { Header } from '../header';
-import { useGetUserQuery } from '@/service/projectService';
-import { useAppDispatch } from '@/store/hooks';
-import { useEffect } from 'react';
-import { setUser } from '@/store/slice/authSlice';
-import { useGetUserDataByUserQuery } from '@/service/userDataByUserService';
-import { useRouter } from 'next/router';
+
 
 const chivo = Chivo({
     weight: ['400', '600', '700'],

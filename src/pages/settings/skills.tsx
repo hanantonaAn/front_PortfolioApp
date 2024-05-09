@@ -3,10 +3,9 @@ import { ReactElement } from "react";
 import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
-import { Button, Card, Typography } from "@material-tailwind/react";
-import { ExperienceSettingsScreen } from "@/components/screens/experienceSettings";
-import { SkillsSettingsScreen } from "@/components/screens/skillsSettings";
+import { Card, Typography } from "@material-tailwind/react";
 import { AuthWrapper } from "@/components/layout/authWrapper";
+import { SkillsSettingsScreen } from "@/components/screens/settingsScreen/skillsSettings";
 
 
 const Experience = () => {

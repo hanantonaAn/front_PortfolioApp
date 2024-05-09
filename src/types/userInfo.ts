@@ -30,8 +30,10 @@ export type UserInfoSolo = {
     user_experience: {
         id: string;
         experience_years: string;
-        experience: string[];
-    },
+        experience_info: string;
+        position: string;
+        company: string;
+    }[],
     user_portfolio: {
         id: string;
         portfolio_html: string;

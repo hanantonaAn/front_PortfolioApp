@@ -4,11 +4,8 @@ import HeadLayout from "@/components/layout/headLayout";
 import { Wrapper } from "@/components/layout/wrapper";
 import React from "react";
 import { StepperComponent } from "@/components/layout/stepperLayoyt";
-import { ProfileSettingsScreen } from "@/components/screens/profileSettings";
-import { ExperienceSettingsScreen } from "@/components/screens/experienceSettings";
 import { useGetUserDataByUserQuery } from "@/service/userDataByUserService";
 import { useCreateUserExperienceByUserMutation, useGetUserExperienceByUserQuery, useUpdateUserExperienceByUserMutation } from "@/service/userExperienceByUserService";
-import { SkillsSettingsScreen } from "@/components/screens/skillsSettings";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 import { FormConstructor } from "@/components/formConstructor";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,6 +14,8 @@ import toast from "react-hot-toast";
 import { ExperienceSchema, IExperienceType } from "@/utils/yupSchema";
 import { experienceForm } from "@/forms/experienceForm";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ProfileSettingsScreen } from "@/components/screens/settingsScreen/profileSettings";
+import { SkillsSettingsScreen } from "@/components/screens/settingsScreen/skillsSettings";
 
 
 const Resume = () => {
@@ -56,7 +55,7 @@ const Resume = () => {
 
 
     useEffect(() => {
-        if (experience) {
+        if (experience && experience?.length > 0) {
             reset(experience[0])
         }
     }, [experience])
@@ -71,9 +70,9 @@ const Resume = () => {
             position: data.position,
             company: data.company
         }
-        if (experience) {
+        if (experience && experience?.length > 0) {
             toast.promise(
-                updateExperience({ id: experience[0].id, data: Data }).unwrap(),
+                updateExperience({ id: experience[0]?.id, data: Data }).unwrap(),
                 {
                     loading: 'Сохранение...',
                     success: () => `Данные успешно обновлены`,

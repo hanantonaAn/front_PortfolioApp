@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "proxy": "lcp --proxyUrl http://127.0.0.1:8000"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
@@ -16,7 +20,9 @@
     "@reduxjs/toolkit": "^2.2.3",
     "async-mutex": "^0.5.0",
     "html-react-parser": "^5.1.10",
-    "next": "14.1.4",
+    "http-proxy": "^1.18.1",
+    "next-http-proxy-middleware": "^1.2.6",
+    "quill-image-resize-module-react": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
@@ -31,6 +37,10 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.6",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -40,12 +50,20 @@
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "autoprefixer": "^10.0.1",
+    "cypress": "^13.8.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-testing-library": "^6.2.2",
+    "http-proxy-middleware": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "next": "^14.2.3",
     "postcss": "^8",
     "postcss-cli": "^11.0.0",
     "tailwindcss": "^3.3.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5"
   }
 }

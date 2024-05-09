@@ -16,3 +16,7 @@
 .ql-editor:before {
     color: black !important;
 }
+
+.ql-img img {
+    cursor: default !important;
+}

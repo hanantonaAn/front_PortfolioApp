@@ -3,12 +3,12 @@ import { ReactElement } from "react";
 import HeadLayout from "@/components/layout/headLayout";
 import { MenuProfile } from "@/components/menuProfile";
 import { Wrapper } from "@/components/layout/wrapper";
-import { Button, Card, Typography } from "@material-tailwind/react";
-import { ExperienceSettingsScreen } from "@/components/screens/experienceSettings";
+import { Button } from "@material-tailwind/react";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 import { useCreateUserExperienceByUserMutation } from "@/service/userExperienceByUserService";
 import { IExperience } from "@/types/experience";
 import toast from "react-hot-toast";
+import { ExperienceSettingsScreen } from "@/components/screens/settingsScreen/experienceSettings";
 
 
 const Experience = () => {

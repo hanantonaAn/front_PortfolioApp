@@ -31,7 +31,7 @@ export const HomeCardScreen = ({ userInfo, isLoading }: Props) => {
                     })}
                 </>
             ) : (
-                userInfo && userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
+                userInfo && userInfo.filter(x => x.user.username === "hello_1" || x.user.username === "hello_2" || x.user.username === "hello_3").map((item, index) => {
                     if (index < 3) {
                         return (
                             <Card key={item.user_data[0]?.id} className="w-full">
@@ -40,7 +40,7 @@ export const HomeCardScreen = ({ userInfo, isLoading }: Props) => {
                                         width={1024}
                                         height={768}
                                         className="w-full h-full"
-                                        src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/bg_signals_new.png'}
+                                        src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/avatar_default.png'}
                                         alt="card-image"
                                     />
                                 </CardHeader>

@@ -9,7 +9,6 @@ import {
     Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { ImageUploader } from "../formConstructor/imageUploader";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { MdClose } from "react-icons/md";
 import { useCreatePhotoMutation } from "@/service/photoService";

@@ -35,7 +35,7 @@ export const ProfileMenu = () => {
           <Avatar
             variant="circular"
             className="cursor-pointer"
-            src={user[0]?.picture}
+            src={user[0]?.picture ? user[0]?.picture : "/assets/images/avatar_default.png"}
           />
         </MenuHandler>
         :

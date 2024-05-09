@@ -1,15 +1,10 @@
 import PageLayout from "@/components/layout/pageLayout";
 import HeadLayout from "@/components/layout/headLayout";
 import { Wrapper } from "@/components/layout/wrapper";
-import { Avatar, Button, ButtonGroup, Card, IconButton, Switch, Typography } from "@material-tailwind/react";
+import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
 import { AuthWrapper } from "@/components/layout/authWrapper";
-import { Test } from "@/components/test";
 import React, { useEffect, useState } from "react";
 import { useGetPortfolioUsernameQuery } from "@/service/portfolioUsername";
-import { PhotoModal } from "@/components/modals/photoModal";
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import { QuillFormats, QuillModules } from "@/utils/quillModule";
-import 'react-quill/dist/quill.snow.css';
 import dynamic from "next/dynamic";
 import parse from 'html-react-parser';
 import { useGetUserInfoByUsernameQuery } from "@/service/userInfoService";
@@ -17,6 +12,7 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "@/store/hooks";
 import { FaEdit } from "react-icons/fa";
 import { useCreatePortfolioMutation, useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
+const ReactQuill = dynamic(() => import('../../../components/textEditor'), { ssr: false });
 
 
 const experienceObj: { [key: string]: string } = {
@@ -158,7 +154,7 @@ const Profile = () => {
                                     <div className="col-span-4 sm:col-span-3">
                                         <Card className="bg-white shadow rounded-lg p-6">
                                             <div className="flex flex-col items-center">
-                                                {userByName?.user_data?.picture && <img src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />}
+                                                <img src={userByName?.user_data.picture ? userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/') : '/assets/images/avatar_default.png'} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
                                                 <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
                                                 <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
 
@@ -187,21 +183,35 @@ const Profile = () => {
                                 </div>
                             }
                             <div className="flex-[3]">
-                                {userByName && userByName?.user_experience &&
+                                {userByName && userByName?.user_experience && userByName?.user_experience.length > 0 ?
                                     <div>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 mb-2">
                                             <Typography variant="h5">
                                                 Мой опыт
                                             </Typography>
                                         </div>
-                                        <Card className="mt-12 w-full p-6">
-                                            <Typography className="break-all">
-                                                Опыт: {userByName?.user_experience?.experience && userByName?.user_experience?.experience.join(', ')}
-                                            </Typography>
-                                            <Typography className="break-all">
-                                                Опыт работы: {userByName && experienceObj[userByName?.user_experience?.experience_years]}
-                                            </Typography>
-                                        </Card>
+                                        {userByName && userByName?.user_experience.map(item => {
+                                            return (
+                                                <Card key={item.id} className="mb-3 bg-white shadow rounded-lg p-6">
+                                                    <div className="flex justify-between flex-wrap gap-2 w-full">
+                                                        <span className="text-gray-700 font-bold">{item.position}</span>
+                                                        <p className="flex flex-col">
+                                                            <span className="text-gray-700 mr-2">Компания: {item.company}</span>
+                                                            <span className="text-gray-700">Опыт работы: {experienceObj[item.experience_years]}</span>
+                                                        </p>
+                                                    </div>
+                                                    <p className="mt-2">
+                                                        Описание: {item.experience_info}
+                                                    </p>
+                                                </Card>
+                                            )
+                                        })}
+                                    </div>
+                                    :
+                                    <div className="flex items-center gap-2">
+                                        <Typography variant="h5">
+                                            Опыт не добавлен
+                                        </Typography>
                                     </div>
                                 }
                                 {userByName && userByName.user_portfolio ?
@@ -226,19 +236,15 @@ const Profile = () => {
                                 {open && (
                                     <>
                                         <ReactQuill
-                                            className="max-w-full mt-2"
-                                            formats={QuillFormats}
-                                            modules={QuillModules}
                                             value={value}
-                                            onChange={setValue}
-                                            placeholder="Напишите свой текст здесь..."
+                                            setValue={setValue}
                                         />
                                         <Button onClick={createPortfolio} color="light-blue" className="mt-6">Сохранить</Button>
                                     </>
                                 )
                                 }
                                 {userByName && userByName.user_portfolio && userByName.user_portfolio.portfolio_html &&
-                                    <Card className="mt-12 w-full p-6">
+                                    <Card className="mt-12 w-full p-6 ql-img">
                                         {parse(userByName?.user_portfolio?.portfolio_html)}
                                     </Card>
                                 }

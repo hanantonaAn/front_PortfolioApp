@@ -1,8 +1,8 @@
 import { IForm, IFormTagsKey, IFormType } from "@/types/form";
 import { Input, Select, Typography, Option } from "@material-tailwind/react";
 import { Control, Controller, FieldValues, UseFormRegister } from "react-hook-form";
-import { InputByTags } from "./inputByTags";
 import { Dispatch, SetStateAction } from "react";
+import { InputByTags } from "./inputByTags/inputByTags";
 
 type Props<T extends FieldValues> = {
     containerClassName?: string;

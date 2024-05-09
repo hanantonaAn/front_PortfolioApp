@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
-import { createSvgShimmer } from "../../utils/getBase64";
 import { Tooltip, Typography } from "@material-tailwind/react";
 import { MdClose } from "react-icons/md";
+import { createSvgShimmer } from "@/utils/getBase64";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
     files: File[] | string[];

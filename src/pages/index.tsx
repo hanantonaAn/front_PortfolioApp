@@ -6,12 +6,11 @@ import Link from "next/link";
 import { CiBasketball, CiSearch } from "react-icons/ci";
 import { FaEye, FaLightbulb, FaRegFilePdf, FaSearch, FaShare, FaStar } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";
-import { HomeCardScreen } from "@/components/screens/homeCardScreen";
 import { useGetUserInfoQuery } from "@/service/userInfoService";
 import { useRouter } from "next/router";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 import Image from "next/image";
-import { Wrapper } from "@/components/layout/wrapper";
+import { HomeCardScreen } from "@/components/screens/homeScreen/homeCardScreen";
 
 
 const Home = () => {
@@ -55,9 +54,12 @@ const Home = () => {
               <Button color="light-blue" className="mt-5" size="lg">Найти</Button>
             </Link>
           </div>
-          <Typography variant="h3" className="mt-20">
-            Популярные портфолио
-          </Typography>
+          {userInfo && userInfo.filter(x => x.user.username === "hello_1" || x.user.username === "hello_2" || x.user.username === "hello_3").length > 0 ?
+            <Typography variant="h3" className="mt-20">
+              Популярные портфолио
+            </Typography>
+            : null
+          }
 
           <HomeCardScreen userInfo={userInfo} isLoading={isLoading} />
 

@@ -1,26 +1,18 @@
 import PageLayout from "@/components/layout/pageLayout";
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeadLayout from "@/components/layout/headLayout";
 import { Wrapper } from "@/components/layout/wrapper";
-import { Avatar, Button, Card, IconButton, Typography } from "@material-tailwind/react";
-import { FaEdit } from "react-icons/fa";
-import dynamic from "next/dynamic";
-import { QuillFormats, QuillModules } from "@/utils/quillModule";
-import 'react-quill/dist/quill.snow.css';
+import { Card, Typography } from "@material-tailwind/react";
 import { useGetUserInfoByUsernameQuery } from "@/service/userInfoService";
 import { useRouter } from "next/router";
 import { useAppSelector } from "@/store/hooks";
-import parse from 'html-react-parser';
-import { useCreatePortfolioMutation, useGetAllPortfolioQuery, useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
 import { AuthWrapper } from "@/components/layout/authWrapper";
 import { useGetUserSkillsByUserQuery } from "@/service/usersSkillByUserService";
-import { Test } from "@/components/test";
 import React from "react";
 import { SlSocialVkontakte } from "react-icons/sl";
 import { PiTelegramLogoLight } from "react-icons/pi";
 import Link from "next/link";
 import { useGetUserExperienceByUserQuery } from "@/service/userExperienceByUserService";
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 
 const experienceObj: { [key: string]: string } = {
@@ -67,7 +59,7 @@ const Profile = () => {
                                 <div className="col-span-4 sm:col-span-3">
                                     <Card className="bg-white shadow rounded-lg p-6">
                                         <div className="flex flex-col items-center">
-                                            {userByName?.user_data?.picture && <img src={userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/')} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />}
+                                            <img src={userByName?.user_data.picture ? userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/') : '/assets/images/avatar_default.png'} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
                                             <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
                                             <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
                                             <div className="mt-6 flex flex-wrap gap-4 justify-center">
@@ -117,13 +109,13 @@ const Profile = () => {
                                                 <div key={item.id} className="mb-6">
                                                     <div className="flex justify-between flex-wrap gap-2 w-full">
                                                         <span className="text-gray-700 font-bold">{item.position}</span>
-                                                        <p>
-                                                            <span className="text-gray-700 mr-2">{item.company}</span>
-                                                            <span className="text-gray-700">{experienceObj[item.experience_years]}</span>
+                                                        <p className="flex flex-col">
+                                                            <span className="text-gray-700 mr-2">Компания: {item.company}</span>
+                                                            <span className="text-gray-700">Опыт работы: {experienceObj[item.experience_years]}</span>
                                                         </p>
                                                     </div>
                                                     <p className="mt-2">
-                                                        {item.experience_info}
+                                                        Описание: {item.experience_info}
                                                     </p>
                                                 </div>
                                             )
