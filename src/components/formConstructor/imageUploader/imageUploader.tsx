@@ -6,7 +6,7 @@ import { MdClose } from "react-icons/md";
 import { createSvgShimmer } from "@/utils/getBase64";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-    files: File[] | string[];
+    files: { id: string, image: File | string }[];
     onDrop: (<T extends File>(acceptedFiles: T[], fileRejections: FileRejection[], event: DropEvent) => void) | undefined;
     deleteImage: (e: any) => void;
     error?: any;
@@ -20,14 +20,14 @@ export const ImageUploader = ({ files, onDrop, deleteImage, error }: Props) => {
         onDrop
     });
 
-    const thumbs = files && files.map((file, index) => (
-        <div className="relative" key={index}>
+    const thumbs = files && files.map((file) => (
+        <div className="relative" key={file.id}>
             <Image placeholder="blur"
-                blurDataURL={createSvgShimmer(1280, 720)} className="w-[100px] h-[100px] object-cover" width={100} height={100} alt="" src={typeof file === 'string' ? file : URL.createObjectURL(file)} />
+                blurDataURL={createSvgShimmer(1280, 720)} className="w-[100px] h-[100px] object-cover" width={100} height={100} alt="" src={typeof file.image === 'string' ? file.image.replace('/', 'http://127.0.0.1:8000/') : URL.createObjectURL(file.image)} />
             <Tooltip className="!z-[10000]" content="Удалить изображение" placement="top">
                 <div
                     className="absolute top-0 w-6 h-6 right-0 flex items-center justify-center rounded-2xl bg-red-500 text-white cursor-pointer hover:opacity-50 transition-all duration-150"
-                    onClick={() => deleteImage(index)}
+                    onClick={() => deleteImage(file.id)}
                 >
                     <MdClose
                         size={16}

@@ -4,7 +4,8 @@ import HeadLayout from "@/components/layout/headLayout";
 import PageLayout from "@/components/layout/pageLayout";
 import { Wrapper } from "@/components/layout/wrapper";
 import { AdvancedSearchCardScreen } from "@/components/screens/advancedSearchScreen/advancedSearchCardScreen";
-import { advancedSearchForm } from "@/forms/advancedSearchForm";
+import { PreparedSearchForm } from "@/forms/advancedSearchForm";
+import { useGetAllSpheraQuery } from "@/service/spheraService";
 import { useGetUserInfoQuery } from "@/service/userInfoService";
 import { UserInfo } from "@/types/userInfo";
 import { AdvancedSearchSchema, IAdvancedSearchType } from "@/utils/yupSchema";
@@ -30,6 +31,8 @@ const AdvancedSearch = () => {
     const { data: userInfo, isLoading } = useGetUserInfoQuery();
     const [filteredUsers, setFilteredUsers] = useState<UserInfo[] | undefined>([]);
 
+    const { data: allSphere } = useGetAllSpheraQuery();
+
     useEffect(() => {
         if (userInfo) {
             setFilteredUsers(userInfo)
@@ -41,16 +44,14 @@ const AdvancedSearch = () => {
         const filtered = userInfo && userInfo.filter(user => {
             const userData = user.user_data[0];
             const userExperience = user.user_experience[0];
-            const userSkills = user.user_skills[0];
+            const userSphera = user.user_portfolio[0].sphere_id;
 
             const usernameMatch = !data.username || user?.user?.username.includes(data.username);
-            const languagesMatch = !data.languages || userData?.languages.includes(data.languages);
-            const skillsMatch = !data.skills || userSkills?.skills.some(skill => data.skills?.includes(skill));
-            const experienceMatch = !data.experience || userExperience?.experience_info.includes(data.experience);
+            const experienceMatch = !data.shpere || userSphera?.includes(data.shpere);
             const experienceYearsMatch = !data.experience_years || userExperience?.experience_years === data?.experience_years;
             const educationLevel = !data.education_level || userData?.education_level === data?.education_level;
 
-            return usernameMatch && languagesMatch && skillsMatch && experienceMatch && experienceYearsMatch && educationLevel;
+            return usernameMatch && experienceMatch && experienceYearsMatch && educationLevel;
         });
 
         setFilteredUsers(filtered);
@@ -79,10 +80,8 @@ const AdvancedSearch = () => {
     const clearSearch = async () => {
         reset({
             username: '',
-            languages: '',
-            skills: '',
             education_level: '',
-            experience: '',
+            shpere: '',
             experience_years: '',
         });
         setFilteredUsers(userInfo);
@@ -102,10 +101,10 @@ const AdvancedSearch = () => {
                             </Link>
                         </div>
                         <div className="flex justify-center">
-                            <FormConstructor fieldList={advancedSearchForm}
+                            <FormConstructor fieldList={PreparedSearchForm(allSphere)}
                                 onSubmit={handleSubmit(data => submitForm(data))}
                                 register={register}
-                                inputClassName="grid grid-cols-1 lg:grid-cols-3 gap-2"
+                                inputClassName="grid grid-cols-1 lg:grid-cols-4 gap-2"
                                 containerClassName="mt-6"
                                 control={control}
                                 errors={errors}>

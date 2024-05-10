@@ -1,3 +1,6 @@
+import { ISlider } from "./slider";
+import { IUser } from "./user";
+
 export type IPortfolio = {
     id: string;
     portfolio_html: string;
@@ -14,6 +17,9 @@ export type IPortfolio = {
 }
 
 export type IPortfolioUsername = {
-    user: any;
+    user: IUser;
     portfolio: IPortfolio;
+    text: any;
+    photo: any;
+    slider: ISlider[];
 }

@@ -8,6 +8,7 @@ const portfolioUsernameService = projectApi.injectEndpoints({
       query: (id) => ({
         url: `/portfolio_username/${id}/`,
       }),
+      providesTags: (result) => [{ type: 'PortfolioUsername', id: 'LIST' }],
     }),
   }),
   overrideExisting: false,

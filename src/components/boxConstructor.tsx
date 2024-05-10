@@ -24,7 +24,6 @@ interface GridItem {
 const widgetType: any = {
   textfield_ids: () => <TextFieldWidget />,
   photo_ids: () => <PhotoWidget />,
-  slider_ids: () => <CarouselWidget />
 }
 
 export const Test: React.FC = () => {

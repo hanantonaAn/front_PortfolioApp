@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
     return (
         <AuthWrapper>
             <PageLayout>
-                <div className="mx-auto max-w-screen-md py-12">
+                <div className="mx-auto px-5 break-all lg:px-0 lg:max-w-screen-md py-12">
                     <Typography variant="h2" color="blue-gray" className="mb-2">
                         Политика конфиденциальности
                     </Typography>

@@ -7,3 +7,9 @@ export type ISlider = {
     width: number;
     pictures: string[];
 }
+
+export type ISliderImage = {
+    id: string;
+    image: string;
+    slider_id: string;
+}

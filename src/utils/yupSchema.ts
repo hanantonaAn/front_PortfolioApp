@@ -77,11 +77,9 @@ export type ISkillsType = Yup.InferType<typeof SkillsSchema>;
 // форма расширенного поиска
 export const AdvancedSearchSchema = Yup.object({
     username: Yup.string(),
-    languages: Yup.string(),
-    skills: Yup.string(),
     education_level: Yup.string(),
-    experience: Yup.string(),
-    experience_years: Yup.string()
+    experience_years: Yup.string(),
+    shpere: Yup.string()
 });
 
 export type IAdvancedSearchType = Yup.InferType<typeof AdvancedSearchSchema>;

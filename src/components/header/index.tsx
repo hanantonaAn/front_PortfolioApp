@@ -62,7 +62,7 @@ export const Header = () => {
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className="mr-4 hidden lg:block">{navList}</div>
+                        <div data-test="pc-only" className="mr-4 hidden lg:block">{navList}</div>
                         {user?.id ?
                             <ProfileMenu />
                             :

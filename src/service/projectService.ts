@@ -67,7 +67,9 @@ export const projectApi = createApi({
   'UserProfile',
   'Hashtag',
   'Slider',
+  'ImageSlider',
   'Photo',
+  'PortfolioUsername',
   'UserInfo',
   'Vacancy'
 ],

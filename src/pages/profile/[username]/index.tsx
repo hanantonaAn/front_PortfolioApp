@@ -39,13 +39,6 @@ const Profile = () => {
 
     const { data: userByName } = useGetUserInfoByUsernameQuery(postId || '');
 
-    const { data: skills } = useGetUserSkillsByUserQuery(undefined, {
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true,
-        refetchOnReconnect: true
-    });
-
-    const { data: experience } = useGetUserExperienceByUserQuery();
 
     const user = useAppSelector(state => state.auth.me);
 
@@ -71,8 +64,8 @@ const Profile = () => {
                                         <div className="flex flex-col">
                                             <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Умения</span>
                                             <ul>
-                                                {skills && skills[0]?.skills?.length > 0 ?
-                                                    skills[0].skills.map(item => (
+                                                {userByName?.user_skills && userByName.user_skills?.skills?.length > 0 ?
+                                                    userByName.user_skills?.skills.map(item => (
                                                         <li key={item} className="mb-2">{item}</li>
                                                     ))
                                                     :
@@ -104,7 +97,7 @@ const Profile = () => {
                                         </div>
 
                                         <h2 className="text-xl font-bold mt-6 mb-4">Опыт</h2>
-                                        {experience && experience.map(item => {
+                                        {userByName?.user_experience && userByName.user_experience.map(item => {
                                             return (
                                                 <div key={item.id} className="mb-6">
                                                     <div className="flex justify-between flex-wrap gap-2 w-full">

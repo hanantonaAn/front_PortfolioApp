@@ -27,7 +27,7 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
         {getLayout(
           <Component {...rest} />
         )}
-        <Toaster />
+        <Toaster containerStyle={{ zIndex: '999999'}} />
       </Provider>
     </ThemeProvider>
   );

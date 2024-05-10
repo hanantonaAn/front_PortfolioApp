@@ -18,12 +18,12 @@ export const Footer = () => {
                 </div>
                 <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
                     <li>
-                        <Link href="/about-us">
+                        <Link href="/recommendations">
                             <Typography
                                 color="blue-gray"
                                 className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                             >
-                                О нас
+                                Рекомендации
                             </Typography>
                         </Link>
                     </li>

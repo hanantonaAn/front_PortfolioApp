@@ -38,7 +38,7 @@ const Home = () => {
           </Link>
           <div className="mt-20">
             <Typography variant="h2">Платформа для поиска людей</Typography>
-            <div className="w-[30rem] mt-4 flex items-center gap-6">
+            <div className="lg:w-[30rem] mt-4 flex lg:flex-row flex-col items-center gap-6">
               <Input
                 size="lg" label="Найти интересующее вас портфолио"
                 icon={<CiSearch />}
