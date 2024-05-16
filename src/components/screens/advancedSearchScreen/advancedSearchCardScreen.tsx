@@ -34,11 +34,11 @@ export const AdvancedSearchCardScreen = ({ userInfo, isLoading }: Props) => {
                 userInfo && userInfo.length > 0 ? userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
                     return (
                         <Card key={item.user_data[0]?.id} className="w-full h-full">
-                            <CardHeader color="blue-gray" className="relative h-56">
+                            <CardHeader color="blue-gray" className="relative h-[300px]">
                                 <Image
                                     width={1024}
                                     height={768}
-                                    className="w-full h-full"
+                                    className="w-full h-full object-cover"
                                     src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/bg_signals_new.png'}
                                     alt="card-image"
                                 />

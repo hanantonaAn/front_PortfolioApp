@@ -9,10 +9,11 @@ import toast from "react-hot-toast";
 
 type Props = {
     userByName: UserInfoSolo;
-    user: IUser;
+    user: IUser | null;
+    sphereId: string;
 }
 
-export const SphereComponent = ({ userByName, user }: Props) => {
+export const SphereComponent = ({ userByName, user, sphereId }: Props) => {
 
     const { data: allSphere } = useGetAllSpheraQuery(undefined);
 
@@ -43,7 +44,7 @@ export const SphereComponent = ({ userByName, user }: Props) => {
         <div className="flex items-center gap-5 mt-6">
             {userByName.user_portfolio.sphere_id ? 
             <Typography variant="lead">
-                Сфера деятельности
+                Сфера деятельности <span className="text-gray-600">{allSphere?.find(x => x.id === sphereId)?.sphere}</span>
             </Typography>
             :
             <Typography variant="lead">

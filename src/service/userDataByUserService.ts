@@ -1,4 +1,3 @@
-import { IProfileType } from "@/utils/yupSchema";
 import { projectApi } from "./projectService";
 import { UserDataByUser } from "@/types/userDataByUser";
 
@@ -18,7 +17,7 @@ export const userDataByUserService = projectApi.injectEndpoints({
                     ]
                     : [{ type: 'UserProfile', id: 'LIST' }],
         }),
-        createUserDataByUser: build.mutation<IProfileType, FormData>({
+        createUserDataByUser: build.mutation<UserDataByUser, FormData>({
             query: (data) => ({
                 method: "POST",
                 url: `/userdatabyuser/`,
@@ -26,7 +25,7 @@ export const userDataByUserService = projectApi.injectEndpoints({
             }),
             invalidatesTags: [{ type: 'UserProfile', id: 'LIST' }],
         }),
-        updateUserDataByUser: build.mutation<IProfileType, { id: string, data: FormData }>({
+        updateUserDataByUser: build.mutation<UserDataByUser, { id: string, data: FormData | Partial<UserDataByUser> }>({
             query: ({ id, data }) => ({
                 method: "PATCH",
                 url: `/userdatabyuser/${id}/`,

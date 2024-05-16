@@ -70,6 +70,7 @@ export const projectApi = createApi({
   'ImageSlider',
   'Photo',
   'PortfolioUsername',
+  'TextField',
   'UserInfo',
   'Vacancy'
 ],

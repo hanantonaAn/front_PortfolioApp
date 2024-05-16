@@ -13,7 +13,7 @@ import parse from 'html-react-parser';
 const ReactQuill = dynamic(() => import('../components/textEditor'), { ssr: false });
 
 import React from "react";
-import { CarouselWidget } from "@/widgets/carouselWidget";
+import { CarouselWidget } from "@/components/boxConstructor/widgets/carouselWidget";
 import { useGetPortfolioUsernameQuery } from "@/service/portfolioUsername";
 import { CarouselModal } from "@/components/modals/carouselModal/carouselModal";
 import { useCreateCarouselMutation, useGetImagesBySliderQuery } from "@/service/carouselService";

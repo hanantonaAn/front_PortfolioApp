@@ -18,4 +18,5 @@ export type ITextField = {
     border_transparency: number;
     border_radius: number;
     border_width: number;
+    portfolio_id: string;
 }

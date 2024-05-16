@@ -9,6 +9,7 @@ export const PreparedSearchForm = (optionsShpere?: ISphere[] ) => {
             label: x.sphere
         }
     }) : [];
+    
     const advancedSearchForm: IForm<IAdvancedSearchType>[] = [
         {
             fieldName: "username",

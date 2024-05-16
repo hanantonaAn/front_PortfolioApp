@@ -15,7 +15,7 @@ import { useCreatePhotoMutation } from "@/service/photoService";
 import toast from "react-hot-toast";
 
 type Props = {
-    id: string;
+    id?: string;
     open: boolean;
     handleOpen: () => void;
 }
@@ -38,7 +38,7 @@ export const PhotoModal = ({ id, open, handleOpen }: Props) => {
         formData.append('coordinate_z', '2147483647');
         formData.append('height', '2147483647');
         formData.append('width', '2147483647');
-        formData.append('portfolio_id', id);
+        id && formData.append('portfolio_id', id);
 
         toast.promise(
             createPhoto(formData).unwrap(),
