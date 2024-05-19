@@ -27,13 +27,7 @@ export type UserInfoSolo = {
         id: string;
         skills: string[];
     };
-    user_experience: {
-        id: string;
-        experience_years: string;
-        experience_info: string;
-        position: string;
-        company: string;
-    }[],
+    user_experience: IExperience[];
     user_portfolio: {
         id: string;
         portfolio_html: string;

@@ -31,7 +31,7 @@ export const userDataByUserService = projectApi.injectEndpoints({
                 url: `/userdatabyuser/${id}/`,
                 body: data
             }),
-            invalidatesTags: [{ type: 'UserProfile', id: 'LIST' }],
+            invalidatesTags: [{ type: 'UserProfile', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

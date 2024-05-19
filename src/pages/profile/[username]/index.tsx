@@ -13,6 +13,8 @@ import { SlSocialVkontakte } from "react-icons/sl";
 import { PiTelegramLogoLight } from "react-icons/pi";
 import Link from "next/link";
 import { useGetUserExperienceByUserQuery } from "@/service/userExperienceByUserService";
+import { useCreateNewChatMutation } from "@/service/chatService";
+import toast from "react-hot-toast";
 
 
 const experienceObj: { [key: string]: string } = {
@@ -42,6 +44,21 @@ const Profile = () => {
 
     const user = useAppSelector(state => state.auth.me);
 
+    const [createChat] = useCreateNewChatMutation();
+
+    const callWithChat = () => {
+        if(user) {
+            if(userByName?.user.username) {
+                createChat({ username: userByName?.user.username }).unwrap()
+                .then(res => {
+                    router.push({pathname: `/chat/${userByName?.user.username}`, query: { id: res.id }})
+                })
+            }
+        } else {
+            toast.error('Пожалуйста, авторизуйтесь, чтобы связаться с пользователем')
+        }
+    };
+
     return (
         <AuthWrapper>
             <PageLayout>
@@ -52,11 +69,11 @@ const Profile = () => {
                                 <div className="col-span-4 sm:col-span-3">
                                     <Card className="bg-white shadow rounded-lg p-6">
                                         <div className="flex flex-col items-center">
-                                            <img src={userByName?.user_data.picture ? userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/') : '/assets/images/avatar_default.png'} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
+                                            <img src={userByName?.user_data?.picture ? userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/') : '/assets/images/avatar_default.png'} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
                                             <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
                                             <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
                                             <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                                                {/* <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Связаться</a> */}
+                                                <button onClick={callWithChat} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Связаться</button>
                                                 <Link href={`/portfolio/${userByName?.user.username}`} className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Портфолио</Link>
                                             </div>
                                         </div>

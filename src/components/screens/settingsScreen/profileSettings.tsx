@@ -77,9 +77,9 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
                 }
             } else if (["languages", "curses"].includes(key)) {
                 if (key in tags) {
-                    const valuesArray = tags[key]; 
+                    const valuesArray = tags[key];
 
-                    
+
                     if (valuesArray.length > 0) {
                         valuesArray.forEach(item => {
                             formData.append(key, item ? item : '');
@@ -102,6 +102,10 @@ export const ProfileSettingsScreen = ({ children, submitRef }: Props) => {
                 }
             )
         } else {
+            formData.append("width", '5');
+            formData.append("height", '16');
+            formData.append("coordinate_x", '1');
+            formData.append("coordinate_y", '1');
             toast.promise(
                 createProfile(formData).unwrap(),
                 {

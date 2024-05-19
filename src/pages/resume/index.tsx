@@ -16,6 +16,7 @@ import { experienceForm } from "@/forms/experienceForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ProfileSettingsScreen } from "@/components/screens/settingsScreen/profileSettings";
 import { SkillsSettingsScreen } from "@/components/screens/settingsScreen/skillsSettings";
+import { useCreatePortfolioMutation } from "@/service/portfolioService";
 
 
 const Resume = () => {
@@ -27,10 +28,15 @@ const Resume = () => {
     const { data: profile } = useGetUserDataByUserQuery();
     const { data: experience } = useGetUserExperienceByUserQuery();
 
+    const [createNewPortfolio] = useCreatePortfolioMutation();
 
     useEffect(() => {
         if (profile && profile.length > 0) {
-            setActiveStep(prev => prev = 1)
+            createNewPortfolio({
+                portfolio_html: '',
+                portfolio_text: 'Напишите свой текст'
+            }).unwrap()
+            setActiveStep(prev => prev = 1);
         }
         if (experience && experience.length > 0) {
             setActiveStep(prev => prev = 2)
@@ -68,7 +74,7 @@ const Resume = () => {
             experience_info: data.experience_info,
             experience_years: data.experience_years,
             position: data.position,
-            company: data.company
+            company: data.company,
         }
         if (experience && experience?.length > 0) {
             toast.promise(
@@ -81,7 +87,12 @@ const Resume = () => {
             )
         } else {
             toast.promise(
-                createExperience(Data).unwrap(),
+                createExperience({
+                    ...Data, width: 5,
+                    height: 5,
+                    coordinate_x: 5,
+                    coordinate_y: 5
+                }).unwrap(),
                 {
                     loading: 'Сохранение...',
                     success: () => `Опыт успешно создан`,

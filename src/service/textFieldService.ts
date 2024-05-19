@@ -21,7 +21,7 @@ const textFieldService = projectApi.injectEndpoints({
                 url: '/textfield/',
                 body: data,
             }),
-            invalidatesTags: [{ type: 'TextField', id: 'LIST' }],
+            invalidatesTags: [{ type: 'TextField', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
         updateTextFieldById: build.mutation<ITextField, { id: string, data: Partial<ITextField> }>({
             query: ({ id, data }) => ({
@@ -36,7 +36,7 @@ const textFieldService = projectApi.injectEndpoints({
                 method: 'DELETE',
                 url: `/textfield/${id}`,
             }),
-            invalidatesTags: [{ type: 'TextField', id: 'LIST' }],
+            invalidatesTags: [{ type: 'TextField', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
         getTextFieldById: build.query<ITextField, string>({
             query: (id) => ({

@@ -13,6 +13,11 @@
     height: 400px !important;
 }
 
+.qqqq .ql-container {
+    max-height: calc(100% - 83px) !important;
+    height: 95% !important;
+}
+
 .ql-editor:before {
     color: black !important;
 }

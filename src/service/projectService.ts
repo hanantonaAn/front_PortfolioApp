@@ -63,7 +63,7 @@ export const projectApi = createApi({
   reducerPath: 'projectApi', // name api
   tagTypes: [
   'UserExperience', 
-  'UserSkills', 
+  'UserSkills',
   'UserProfile',
   'Hashtag',
   'Slider',
@@ -72,7 +72,8 @@ export const projectApi = createApi({
   'PortfolioUsername',
   'TextField',
   'UserInfo',
-  'Vacancy'
+  'Vacancy',
+  'Chat'
 ],
   baseQuery: baseQuery,
   endpoints: (build) => ({

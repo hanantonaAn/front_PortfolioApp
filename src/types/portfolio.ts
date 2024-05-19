@@ -1,3 +1,4 @@
+import { IExperience } from "./experience";
 import { ISlider } from "./slider";
 import { IUser } from "./user";
 
@@ -22,4 +23,5 @@ export type IPortfolioUsername = {
     text: any;
     photo: any;
     slider: ISlider[];
+    user_experience: IExperience[];
 }

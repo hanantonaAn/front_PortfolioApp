@@ -44,19 +44,19 @@ export default function TextFieldWidget({ textFieldId, openEditor }: Props) {
     };
 
     return (
-        <div className="break-all">
+        <div className="break-all h-full">
             {openEditor
                 ?
                 <>
                     <ReactQuill
-                        className="max-w-full"
+                        className="max-w-full h-full qqqq"
                         formats={QuillTextWidgetFormats}
                         modules={QuillTextModules}
                         value={value}
                         onChange={setValue}
                         placeholder="Напишите свой текст здесь..."
                     />
-                    <Button onClick={textCreateUpdate} color="light-blue" className="absolute right-2 bottom-2">Сохранить</Button>
+                    <Button onClick={textCreateUpdate} color="light-blue" className="!absolute right-2 bottom-2">Сохранить</Button>
                 </>
                 :
                 data && data.value &&

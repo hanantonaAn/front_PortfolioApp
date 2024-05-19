@@ -32,7 +32,7 @@ const userExperienceByUserService = projectApi.injectEndpoints({
                 url: `/userexperiencebyuser/${id}/`,
                 body: data
             }),
-            invalidatesTags: [{ type: 'UserExperience', id: 'LIST' }],
+            invalidatesTags: [{ type: 'UserExperience', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

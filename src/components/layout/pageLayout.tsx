@@ -1,6 +1,9 @@
 import { Chivo, Poppins, Inter } from 'next/font/google'
 import { Footer } from '../footer';
 import { Header } from '../header';
+import { Chat } from '../chatBox';
+import { useAppSelector } from '@/store/hooks';
+import { useRouter } from 'next/router';
 
 
 const chivo = Chivo({
@@ -41,9 +44,12 @@ export default function PageLayout({ children }: LayoutProps) {
 
     const componentPageContainer = pageContainer.join(' ');
 
+    const user = useAppSelector(state => state.auth.me);
+    const router = useRouter();
 
     return (
         <div className={componentPageContainer}>
+            {user && router.pathname !== '/chat/[username]' && <Chat />}
             <Header />
             <main className="flex-1 w-full">{children}</main>
             <Footer />

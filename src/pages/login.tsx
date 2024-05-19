@@ -47,7 +47,7 @@ const Login: NextPage = () => {
       }
     ).then((res) => {
       localStorage.setItem('token', res.access);
-      dispatch(setCredentials(res));
+      dispatch(setCredentials({ access: res.access, refresh: res.refresh }));
       getData().unwrap()
       .then((userData) => {
           getUser().unwrap().then(res => {

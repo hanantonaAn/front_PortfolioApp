@@ -28,7 +28,7 @@ const photoService = projectApi.injectEndpoints({
                 url: '/photo/',
                 body: data,
             }),
-            invalidatesTags: [{ type: 'Photo', id: 'LIST' }],
+            invalidatesTags: [{ type: 'Photo', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
         updatePhotoById: build.mutation<IPhoto, { id: string, data: Partial<IPhoto> }>({
             query: ({ id, data }) => ({
@@ -43,7 +43,7 @@ const photoService = projectApi.injectEndpoints({
                 method: 'DELETE',
                 url: `/photo/${id}`,
             }),
-            invalidatesTags: [{ type: 'Photo', id: 'LIST' }],
+            invalidatesTags: [{ type: 'Photo', id: 'LIST' }, { type: 'PortfolioUsername', id: 'LIST' }],
         }),
     }),
     overrideExisting: false,

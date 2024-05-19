@@ -21,7 +21,7 @@ type Props = {
 }
 
 export const PhotoModal = ({ id, open, handleOpen }: Props) => {
-    
+
     const [photo, setPhoto] = useState<File | null>(null);
 
     const [createPhoto] = useCreatePhotoMutation();
@@ -35,9 +35,9 @@ export const PhotoModal = ({ id, open, handleOpen }: Props) => {
         photo && formData.append('picture', photo);
         formData.append('coordinate_x', '1.0');
         formData.append('coordinate_y', '1.0');
-        formData.append('coordinate_z', '2147483647');
-        formData.append('height', '2147483647');
-        formData.append('width', '2147483647');
+        formData.append('coordinate_z', '1');
+        formData.append('height', '5');
+        formData.append('width', '5');
         id && formData.append('portfolio_id', id);
 
         toast.promise(
@@ -53,9 +53,6 @@ export const PhotoModal = ({ id, open, handleOpen }: Props) => {
     };
 
     return (
-        <>
-      <Button onClick={handleOpen}>Connect Wallet</Button>
-
         <Dialog size="lg" open={open} handler={handleOpen}>
             <DialogHeader className="justify-between">
                 <div>
@@ -98,6 +95,5 @@ export const PhotoModal = ({ id, open, handleOpen }: Props) => {
                 </Button>
             </DialogFooter>
         </Dialog>
-        </>
     );
 }

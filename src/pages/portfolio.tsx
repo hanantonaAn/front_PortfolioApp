@@ -11,7 +11,6 @@ import { useCreatePortfolioMutation, useUpdatePortfolioByIdMutation } from "@/se
 import { AuthWrapper } from "@/components/layout/authWrapper";
 import parse from 'html-react-parser';
 const ReactQuill = dynamic(() => import('../components/textEditor'), { ssr: false });
-
 import React from "react";
 import { CarouselWidget } from "@/components/boxConstructor/widgets/carouselWidget";
 import { useGetPortfolioUsernameQuery } from "@/service/portfolioUsername";
@@ -97,11 +96,11 @@ const Portfolio = () => {
         setNewSlider(undefined)
         if (userPortfolio?.portfolio.id) {
             const formData = new FormData();
-            formData.append('coordinate_x', '0')
-            formData.append('coordinate_y', '0')
-            formData.append('coordinate_z', '2147483647')
-            formData.append('height', '2147483647')
-            formData.append('width', '2147483647')
+            formData.append('coordinate_x', '1');
+            formData.append('coordinate_y', '1');
+            formData.append('coordinate_z', '1');
+            formData.append('height', '5');
+            formData.append('width', '5');
             formData.append('portfolio_id', userPortfolio.portfolio.id);
             createSlider(formData).unwrap()
                 .then(res => {
@@ -119,7 +118,7 @@ const Portfolio = () => {
                 {newSlider && <CarouselModal allImages={data} id={newSlider} open={openSlider} handleOpen={handleOpenSlider} />}
                 <HeadLayout title="Портфолио" description="Портфолио" keywords="Портфолио">
                     <Wrapper>
-                        <div className="py-12 px-20 break-all">
+                        <div className="py-12 h-full px-20 break-all">
                             <Typography variant="h4" className="text-center mb-5">Редактировать портфолио</Typography>
                             <ReactQuill
                                 value={value}

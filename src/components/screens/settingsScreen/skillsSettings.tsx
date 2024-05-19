@@ -64,7 +64,12 @@ export const SkillsSettingsScreen = ({ redirect }: Props) => {
             )
         } else {
             toast.promise(
-                createSkills(Data).unwrap(),
+                createSkills({
+                    ...Data, width: 5,
+                    height: 5,
+                    coordinate_x: 5,
+                    coordinate_y: 5
+                }).unwrap(),
                 {
                     loading: 'Сохранение...',
                     success: () => `Умения успешно добавлены`,
