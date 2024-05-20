@@ -82,6 +82,10 @@ export const QuillTextWidgetFormats = [
 
   'size',
 
+  'image',
+  'link',
+  'video',
+
   'color',
   'background',
 
@@ -105,6 +109,7 @@ export const QuillTextModules = {
     [{ indent: '-1' }, { indent: '+1' }],
 
     [{ size: ['small', false, 'large', 'huge'] }],
+
 
     [{ color: [] }, { background: [] }],
 

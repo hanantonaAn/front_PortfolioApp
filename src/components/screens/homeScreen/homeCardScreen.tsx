@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
+import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
 import Image from "next/image";
 import Link from "next/link";
 import { UserInfo } from "@/types/userInfo";
@@ -31,32 +31,29 @@ export const HomeCardScreen = ({ userInfo, isLoading }: Props) => {
                     })}
                 </>
             ) : (
-                userInfo && userInfo.filter(x => x.user.username === "hello_1" || x.user.username === "hello_2" || x.user.username === "hello_3").map((item, index) => {
+                userInfo && userInfo.filter(x => x.user.username === "hello_11" || x.user.username === "hello_22" || x.user.username === "hello_33").map((item, index) => {
                     if (index < 3) {
                         return (
                             <Card key={item.user_data[0]?.id} className="w-full">
-                                <CardHeader className="relative h-64 m-0 px-5 py-4 shadow-none">
-                                    <Image
-                                        width={1024}
-                                        height={768}
-                                        className="w-full h-full"
-                                        src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/avatar_default.png'}
-                                        alt="card-image"
-                                    />
-                                </CardHeader>
                                 <CardBody>
-                                    <Typography variant="h5" color="blue-gray" className="mb-2">
-                                        {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
-                                    </Typography>
-                                    <Typography>
-                                        Уровень образования: {item.user_data[0]?.education_level}
-                                    </Typography>
-                                    <Typography>
-                                        Город: {item.user_data[0]?.city}
-                                    </Typography>
-                                    <Typography>
-                                        Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
-                                    </Typography>
+                                    <Avatar
+                                        size="xl"
+                                        src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/avatar_default.png'}
+                                    />
+                                    <div className="mt-5">
+                                        <Typography variant="h5" color="blue-gray" className="mb-2">
+                                            {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
+                                        </Typography>
+                                        <Typography>
+                                            Уровень образования: {item.user_data[0]?.education_level}
+                                        </Typography>
+                                        <Typography>
+                                            Город: {item.user_data[0]?.city}
+                                        </Typography>
+                                        <Typography>
+                                            Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
+                                        </Typography>
+                                    </div>
                                 </CardBody>
                                 <CardFooter className="pt-0 mt-auto">
                                     <Link href={`/profile/${item.user.username}`}>

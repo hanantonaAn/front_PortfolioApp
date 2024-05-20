@@ -5,6 +5,7 @@ import { Avatar, Button } from "@material-tailwind/react";
 import { useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useRouter } from "next/router";
 
 export const Chat = () => {
     const username = useAppSelector(state => state.auth.me?.username);
@@ -13,6 +14,7 @@ export const Chat = () => {
     const { data: getAllChat } = useGetAllChatQuery();
 
     const socketRef = useRef<any>()
+    const router = useRouter();
 
     const [chatById] = useLazyGetChatByIdQuery();
 
@@ -95,7 +97,7 @@ export const Chat = () => {
                     Чат
                 </Button>
             </div>
-            <section className={`${openChat ? 'block' : 'hidden'} fixed z-50 bottom-72 right-12 w-96`}>
+            <section className={`${openChat ? 'block' : 'hidden'} fixed z-50 bottom-56 right-36 w-96`}>
                 <div className="border-borderPrim rounded-2xl flex flex-col justify-between min-h-[500px] max-h-[510px] bg-gray-300 border-solid border-[2px]">
                     {changeUser ?
                         <>
@@ -103,13 +105,13 @@ export const Chat = () => {
                                 <IoMdArrowRoundBack onClick={() => { setChangeUser(null); socketRef.current.close(); }} className="cursor-pointer absolute left-2 hover:bg-black hover:text-white rounded-full w-5 h-5 p-1" />
                                 {changeUser.initiator.username !== username ?
 
-                                    <div className="flex items-center gap-2.5">
+                                    <div onClick={() => router.push(`/profile/${changeUser.initiator.username}`)} className="flex items-center gap-2.5 cursor-pointer">
                                         <Avatar size="sm" variant="circular" src={changeUser.initiator_chat.picture ? changeUser.initiator_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
                                         <div>{changeUser.initiator_chat.fullname} {changeUser.initiator_chat.surname}</div>
                                     </div>
                                     :
                                     changeUser.receiver.username !== username ?
-                                        <div className="flex items-center gap-2.5">
+                                        <div onClick={() => router.push(`/profile/${changeUser.receiver.username}`)} className="flex items-center gap-2.5 cursor-pointer">
                                             <Avatar size="sm" variant="circular" src={changeUser.receiver_chat.picture ? changeUser.receiver_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
                                             <div>{changeUser.receiver_chat.fullname} {changeUser.receiver_chat.surname}</div>
                                         </div>
@@ -119,17 +121,23 @@ export const Chat = () => {
                             </div>
                             <div className="overflow-y-hidden flex flex-col min-h-full h-full justify-end">
                                 <div className="px-4 overflow-y-auto aside-scrollbars-light">
-                                    {allMessage && allMessage.map(item => {
-                                            return (
-                                                <div key={item.id} className={`flex items-end mt-6 gap-1 ${item.sender === userId ? 'flex-row-reverse' : 'flex-row'}`}>
-                                                    {item.sender === userId ?
+                                    {allMessage && allMessage.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).map(item => {
+                                        return (
+                                            <div key={item.id} className={`flex items-end mt-6 gap-1 ${item.sender === userId ? 'flex-row-reverse' : 'flex-row'}`}>
+                                                {item.sender === userId && changeUser.initiator.username === username ?
                                                     <Avatar size="sm" variant="circular" src={changeUser.initiator_chat.picture ? changeUser.initiator_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
                                                     :
-                                                    <Avatar size="sm" variant="circular" src={changeUser.initiator_chat.picture ? changeUser.initiator_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
-                                                    }
-                                                    <span>{item.text}</span>
-                                                </div>
-                                            )
+                                                    item.sender !== userId && changeUser.receiver.username !== username ?
+                                                        <Avatar size="sm" variant="circular" src={changeUser.receiver_chat.picture ? changeUser.receiver_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
+                                                        :
+                                                        item.sender !== userId && changeUser.receiver.username === username ?
+                                                        <Avatar size="sm" variant="circular" src={changeUser.receiver_chat.picture ? changeUser.receiver_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
+                                                        :
+                                                        <Avatar size="sm" variant="circular" src={changeUser.initiator_chat.picture ? changeUser.initiator_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
+                                                }
+                                                <span>{item.text}</span>
+                                            </div>
+                                        )
                                     })}
                                     <div className="pb-10" ref={messagesEndRef} />
                                 </div>
@@ -145,7 +153,15 @@ export const Chat = () => {
                         <div className="overflow-y-hidden flex flex-col min-h-full h-full justify-end">
                             {getAllChat && getAllChat.map(item => {
                                 const otherUser = username === item.initiator.username ? item.receiver_chat : item.initiator_chat;
-                                if (username !== item.initiator.username || username !== item.receiver.username) {
+                                if (username !== item.initiator.username) {
+                                    return (
+
+                                        <div onClick={() => setChangeUser(item)} key={item.id} className="flex cursor-pointer rounded-2xl gap-2.5 px-2 py-2 items-center hover:bg-blue-gray-300">
+                                            <Avatar size="md" variant="circular" src={item.initiator_chat.picture ? item.initiator_chat.picture.replace('/', 'http://127.0.0.1:8000/') : "/assets/images/avatar_default.png"} />
+                                            <span>{otherUser.fullname} {otherUser.surname}</span>
+                                        </div>
+                                    )
+                                } else if(username !== item.receiver.username) {
                                     return (
 
                                         <div onClick={() => setChangeUser(item)} key={item.id} className="flex cursor-pointer rounded-2xl gap-2.5 px-2 py-2 items-center hover:bg-blue-gray-300">

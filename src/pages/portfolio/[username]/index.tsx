@@ -44,6 +44,13 @@ const Profile = () => {
     const [editor, setEditor] = useState<boolean>(false);
     const openEditor = () => {
         setEditor(prev => !prev)
+        setConstructor(false);
+    };
+
+    const [constructor, setConstructor] = useState<boolean>(false);
+    const openConstructor = () => {
+        setConstructor(prev => !prev);
+        setEditor(false);
     };
 
     useEffect(() => {
@@ -228,7 +235,7 @@ const Profile = () => {
                     {userPortfolio && <ExperienceModal portfolio={userPortfolio} open={openExperience} handleOpen={handleOpenExperience} />}
                     <Wrapper>
                         <div className={`py-12 h-full" ${editor ? "border-2 border-r-blue-500 border-l-blue-500" : ""}`}>
-                            {editor &&
+                            {(editor || constructor) &&
                                 <div className="pb-12 flex flex-col items-center">
                                     {(user && user.id === userByName?.user?.id) &&
                                         <Tooltip className="!z-[10000]" content="Вы уверены, что хотите поменять видимость публичность?" placement="top">
@@ -256,7 +263,8 @@ const Profile = () => {
                                         </Tooltip>
                                     }
                                     <Typography variant="lead" className="mb-2 mt-3">Добавьте желаемый элемент</Typography>
-                                    <Button onClick={openEditor} color="red">Закрыть конструктор</Button>
+                                    <Button onClick={() => { setEditor(false); setConstructor(false)} } color="red">Закрыть конструктор</Button>
+                                    <Button className="mt-5" onClick={() => { setEditor(prev => !prev); setConstructor(prev => !prev) }} color="blue-gray">{editor ? "Вернуться в конструктор" : "Перейти к редактированию"}</Button>
                                     <div className="mt-2">
                                         <ButtonGroup color="blue">
                                             <Button onClick={addNewItemTest}>Текстовое поле</Button>
@@ -284,7 +292,9 @@ const Profile = () => {
                                             gridItems={gridItems}
                                             setGridItems={setGridItems}
                                             openEditor={editor}
+                                            constructor={constructor}
                                             onOpenEditor={openEditor}
+                                            openConstructor={openConstructor}
                                         />}
                                 </div>
                                 :

@@ -44,7 +44,7 @@ export default function TextFieldWidget({ textFieldId, openEditor }: Props) {
     };
 
     return (
-        <div className="break-all h-full">
+        <div className="break-all ql-snow ql-editor">
             {openEditor
                 ?
                 <>
@@ -60,10 +60,10 @@ export default function TextFieldWidget({ textFieldId, openEditor }: Props) {
                 </>
                 :
                 data && data.value &&
-                <Card className="mt-12 w-full p-6 ql-img">
+                <Card className="w-full p-6 ql-snow ql-editor">
                     {parse(data.value)}
                 </Card>
-}
+            }
         </div>
     );
 }

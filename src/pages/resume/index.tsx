@@ -89,9 +89,9 @@ const Resume = () => {
             toast.promise(
                 createExperience({
                     ...Data, width: 5,
-                    height: 5,
-                    coordinate_x: 5,
-                    coordinate_y: 5
+                    height: 4,
+                    coordinate_x: 4,
+                    coordinate_y: 0
                 }).unwrap(),
                 {
                     loading: 'Сохранение...',

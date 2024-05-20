@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
+import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
 import Image from "next/image";
 import Link from "next/link";
 import { UserInfo } from "@/types/userInfo";
@@ -34,39 +34,36 @@ export const AdvancedSearchCardScreen = ({ userInfo, isLoading }: Props) => {
                 userInfo && userInfo.length > 0 ? userInfo.filter(x => x.user_data.length > 0).map((item, index) => {
                     return (
                         <Card key={item.user_data[0]?.id} className="w-full h-full">
-                            <CardHeader color="blue-gray" className="relative h-[300px]">
-                                <Image
-                                    width={1024}
-                                    height={768}
-                                    className="w-full h-full object-cover"
-                                    src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/bg_signals_new.png'}
-                                    alt="card-image"
+                            <CardBody className="flex gap-24">
+                                <Avatar
+                                    size="xxl"
+                                    src={item.user_data[0]?.picture ? item.user_data[0].picture.replace('/media/', 'http://127.0.0.1:8000/media/') : '/assets/images/avatar_default.png'}
                                 />
-                            </CardHeader>
-                            <CardBody>
-                                <Typography variant="h5" color="blue-gray" className="mb-2">
-                                    {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
-                                </Typography>
-                                <Typography>
-                                    Уровень образования: {item.user_data[0]?.education_level}
-                                </Typography>
-                                <Typography>
-                                    Город: {item.user_data[0]?.city}
-                                </Typography>
-                                <Typography>
-                                    Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
-                                </Typography>
+                                <div>
+                                    <Typography variant="h5" color="blue-gray" className="mb-2">
+                                        {item.user_data[0]?.fullname} {item.user_data[0]?.lastname}
+                                    </Typography>
+                                    <Typography>
+                                        Уровень образования: {item.user_data[0]?.education_level}
+                                    </Typography>
+                                    <Typography>
+                                        Город: {item.user_data[0]?.city}
+                                    </Typography>
+                                    <Typography>
+                                        Пол: {item.user_data[0]?.sex === 'male' ? 'Мужской' : 'Женский'}
+                                    </Typography>
+                                </div>
                             </CardBody>
-                            <CardFooter className="pt-0 mt-auto">
+                            <CardFooter className="pt-10 flex justify-end">
                                 <Link href={`/profile/${item.user.username}`}>
-                                    <Button>Открыть профиль</Button>
+                                    <Button color="blue-gray">Открыть профиль</Button>
                                 </Link>
                             </CardFooter>
                         </Card>
                     )
                 })
-                :
-                <Typography variant="h5">Ничего не найдено</Typography>
+                    :
+                    <Typography variant="h5">Ничего не найдено</Typography>
             )}
         </div>
     );

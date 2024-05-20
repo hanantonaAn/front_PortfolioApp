@@ -111,7 +111,7 @@ const Chat = () => {
                     <Wrapper>
                         <div className="flex-1 p:2 sm:p-6 justify-between max-h-1/2 flex flex-col h-full">
                             <div className="flex sm:items-center py-3 border-b-2 border-gray-200">
-                                <div className="relative flex items-center space-x-4">
+                                <div onClick={() => router.push(`/profile/${userByName?.user?.username}`)} className="relative flex items-center space-x-4 cursor-pointer">
                                     <Avatar size="xl" src={userByName?.user_data.picture ? userByName.user_data.picture.replace('/', 'http://127.0.0.1:8000/') : '/assets/images/avatar_default.png'} alt="" />
                                     <div className="flex flex-col leading-tight">
                                         <div className="text-2xl mt-1 flex items-center">
@@ -122,7 +122,7 @@ const Chat = () => {
                                 </div>
                             </div>
                             <div className="flex max-h-96 flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-                                {allMessage && allMessage.map(item => {
+                                {allMessage && allMessage.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).map(item => {
                                     return (
                                         <div key={item.id} className={`flex items-end ${item.sender === userId ? 'justify-end' : ''}`}>
                                             <div className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${item.sender === userId ? 'items-end order-1' : 'items-start order-2'}`}>

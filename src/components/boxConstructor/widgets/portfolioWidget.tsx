@@ -70,7 +70,7 @@ export default function PortfolioWidget({ openEditor, user, portfolio, userByNam
 
     return (
         <>
-            <SphereComponent user={user} sphereId={portfolio?.portfolio?.sphere_id} userByName={userByName} />
+            {/* <SphereComponent user={user} sphereId={portfolio?.portfolio?.sphere_id} userByName={userByName} /> */}
             {openEditor ? (
                 <>
                     <ReactQuill

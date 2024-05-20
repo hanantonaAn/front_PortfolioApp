@@ -1,5 +1,6 @@
 import { makeStore } from "@/store/store";
 import "@/styles/globals.css";
+import 'react-quill/dist/quill.snow.css';
 import { ThemeProvider } from "@material-tailwind/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";

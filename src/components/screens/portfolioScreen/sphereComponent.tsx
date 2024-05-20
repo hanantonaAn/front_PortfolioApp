@@ -11,9 +11,10 @@ type Props = {
     userByName: UserInfoSolo;
     user: IUser | null;
     sphereId: string;
+    openEditor: boolean;
 }
 
-export const SphereComponent = ({ userByName, user, sphereId }: Props) => {
+export const SphereComponent = ({ userByName, user, sphereId, openEditor }: Props) => {
 
     const { data: allSphere } = useGetAllSpheraQuery(undefined);
 
@@ -44,13 +45,13 @@ export const SphereComponent = ({ userByName, user, sphereId }: Props) => {
         <div className="flex items-center gap-5 mt-6">
             {userByName.user_portfolio.sphere_id ? 
             <Typography variant="lead">
-                Сфера деятельности <span className="text-gray-600">{allSphere?.find(x => x.id === sphereId)?.sphere}</span>
+                Сфера деятельности: <span className="text-gray-600">{allSphere?.find(x => x.id === sphereId)?.sphere}</span>
             </Typography>
             :
             <Typography variant="lead">
                 Сфера деятельности не указана
             </Typography>}
-            {user && user.id === userByName?.user?.id && allSphere &&
+            {openEditor && user && user.id === userByName?.user?.id && allSphere &&
                 <Tooltip className="!z-[10000]" content="Изменить сферу" placement="top">
                     <div className="w-32">
                         <Select

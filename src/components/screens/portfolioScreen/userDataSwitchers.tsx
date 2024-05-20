@@ -1,6 +1,7 @@
 import { useUpdateUserDataByUserMutation } from "@/service/userDataByUserService";
 import { UserInfoSolo } from "@/types/userInfo";
 import { Checkbox, Switch, Tooltip, Typography } from "@material-tailwind/react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -25,6 +26,8 @@ export const UserDataSwitchers = ({ userByName, openEditor }: Props) => {
         ...(userByName?.user_data?.graduation_date ? [{ id: "graduation_date_show", name: `Дата окончания: ${userByName.user_data.graduation_date}`, isVisible: userByName.user_data.graduation_date_show }] : []),
     ];
 
+    const [state, setState] = useState(elements);
+
 
     const [updateUserData] = useUpdateUserDataByUserMutation();
 
@@ -45,13 +48,21 @@ export const UserDataSwitchers = ({ userByName, openEditor }: Props) => {
                     error: () => `Произошла ошибка`
                 }
             )
+                .then(res => {
+                    const indexToUpdate = state.findIndex(elem => elem.id === id);
+
+                    const newState = [...state];
+                    newState[indexToUpdate].isVisible = !newState[indexToUpdate].isVisible;
+
+                    setState(newState);
+                })
         }
     };
 
 
     return (
         <ul className="mb-5">
-            {elements.map((elem) => (
+            {state.map((elem) => (
                 openEditor ?
                     <li key={elem.id}>
                         <Tooltip className="!z-[10000]" content="Вы уверены, что хотите изменить видимость?" placement="top">
@@ -59,11 +70,14 @@ export const UserDataSwitchers = ({ userByName, openEditor }: Props) => {
                         </Tooltip>
                     </li>
                     :
-                    <li key={elem.id} className="mb-2">
-                        {elem.name}
-                    </li>
+                    null
             ))
             }
+            {!openEditor && state.filter(elem => elem.isVisible).map((elem) => (
+                <li key={elem.id} className="mb-2">
+                    {elem.name}
+                </li>
+            ))}
         </ul>
     );
 };

@@ -16,6 +16,7 @@ import { useUpdateUserDataByUserMutation } from '@/service/userDataByUserService
 import { useDeleteTextFieldMutation, useUpdateTextFieldByIdMutation } from '@/service/textFieldService';
 import { useDeletePhotoMutation, useUpdatePhotoByIdMutation } from '@/service/photoService';
 import { ExperienceWidget } from './widgets/experienceWidget';
+import { useUpdateUserExperienceByUserMutation } from '@/service/userExperienceByUserService';
 const TextFieldWidget = dynamic(() => import('./widgets/textFieldWidget'), { ssr: false });
 
 
@@ -49,11 +50,13 @@ type BoxProps = {
   setLayouts: Dispatch<React.SetStateAction<GridItem[]>>;
   openEditor: boolean;
   onOpenEditor: () => void;
+  constructor: boolean;
+  openConstructor: () => void;
 }
 
 export const BoxConstructor: React.FC<BoxProps> = ({
   user, portfolio, userByName, gridItems, setGridItems, layouts, setLayouts,
-  openEditor, onOpenEditor
+  openEditor, onOpenEditor, constructor, openConstructor
 }) => {
 
   const onLayoutChange = useCallback((newLayout: any) => {
@@ -66,6 +69,7 @@ export const BoxConstructor: React.FC<BoxProps> = ({
   const [updateProfile] = useUpdateUserDataByUserMutation();
   const [updateTextField] = useUpdateTextFieldByIdMutation();
   const [updatePhoto] = useUpdatePhotoByIdMutation();
+  const [updateExperience] = useUpdateUserExperienceByUserMutation();
 
   // Функции обновления для каждого типа виджета
   const widgetUpdates: any = {
@@ -104,6 +108,17 @@ export const BoxConstructor: React.FC<BoxProps> = ({
     },
     photo: async (props: ReactGridLayout.Layout) => {
       updatePhoto({
+        id: props.i,
+        data: {
+          coordinate_x: props.x,
+          coordinate_y: props.y,
+          height: props.h,
+          width: props.w
+        }
+      }).unwrap()
+    },
+    user_experience: async (props: ReactGridLayout.Layout) => {
+      updateExperience({
         id: props.i,
         data: {
           coordinate_x: props.x,
@@ -170,10 +185,10 @@ export const BoxConstructor: React.FC<BoxProps> = ({
       draggableHandle=".drag-handle"
       layouts={{ lg: gridItems }}
       rowHeight={30}
-      allowOverlap={true}
-      isResizable={openEditor}
-      isDraggable={openEditor}
-      isDroppable={openEditor}
+      // allowOverlap={true}
+      isResizable={constructor}
+      isDraggable={constructor}
+      isDroppable={constructor}
       preventCollision={false}
       containerPadding={[0, 0]}
       onLayoutChange={onLayoutChange}
@@ -186,8 +201,8 @@ export const BoxConstructor: React.FC<BoxProps> = ({
     >
       {layouts.map(item => {
         return (
-          <div className={openEditor ? "border-blue-600 border-2 relative" : ""} key={item.i}>
-            {openEditor &&
+          <div className={constructor ? "border-blue-600 border-2 relative" : ""} key={item.i}>
+            {constructor &&
               <>
                 <Tooltip className="!z-[10000]" content="Перенести элемент" placement="top">
                   <div className="drag-handle bg-black/10 h-3 rounded cursor-move"></div>
@@ -211,7 +226,7 @@ export const BoxConstructor: React.FC<BoxProps> = ({
                   case 'slider':
                     return <CarouselWidget slider_id={item.i} user={user} userPortfolio={portfolio} />;
                   case 'profile':
-                    return <ProfileWidget openEditor={openEditor} onOpenEditor={onOpenEditor} userByName={userByName} user={user} />;
+                    return <ProfileWidget openEditor={openEditor} openConstructor={openConstructor} userByName={userByName} user={user} />;
                   case 'text':
                     return <TextFieldWidget openEditor={openEditor} textFieldId={item.i} />;
                   case 'photo':

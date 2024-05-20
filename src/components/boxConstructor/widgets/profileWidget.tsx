@@ -1,3 +1,4 @@
+import { SphereComponent } from "@/components/screens/portfolioScreen/sphereComponent";
 import { UserDataSwitchers } from "@/components/screens/portfolioScreen/userDataSwitchers";
 import { useUpdatePortfolioByIdMutation } from "@/service/portfolioService";
 import { IUser } from "@/types/user";
@@ -9,11 +10,11 @@ import toast from "react-hot-toast";
 type Props = {
     userByName: UserInfoSolo;
     user: IUser | null;
-    onOpenEditor: () => void;
+    openConstructor: () => void;
     openEditor: boolean;
 }
 
-export const ProfileWidget = ({ userByName, user, onOpenEditor, openEditor }: Props) => {
+export const ProfileWidget = ({ userByName, user, openConstructor, openEditor }: Props) => {
 
 
     const [updatePortfolio] = useUpdatePortfolioByIdMutation();
@@ -52,36 +53,12 @@ export const ProfileWidget = ({ userByName, user, onOpenEditor, openEditor }: Pr
                     <h1 className="text-xl font-bold">{userByName?.user_data?.fullname} {userByName?.user_data?.surname}</h1>
                     <Typography variant="paragraph" className="text-gray-700">Статус: {userByName?.user_data?.status}</Typography>
                 </div>
-                {(user && user.id === userByName?.user?.id) && <Button onClick={onOpenEditor} color="light-blue">Перейти в конструктор</Button>}
+                {(user && user.id === userByName?.user?.id) && <Button onClick={openConstructor} color="light-blue">Перейти в конструктор</Button>}
                 <hr className="my-6 border-t border-gray-300" />
                 <div className="flex flex-col">
                     <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Личная информация</span>
                     <UserDataSwitchers openEditor={openEditor} userByName={userByName} />
-                    {(user && user.id === userByName?.user?.id) &&
-                        <Tooltip className="!z-[10000]" content="Вы уверены, что хотите поменять видимость публичность?" placement="top">
-                            <Switch
-                                checked={userByName.user_portfolio.public}
-                                onChange={updatePublic}
-                                label={
-                                    <div>
-                                        <Typography color="blue-gray" className="font-medium">
-                                            Публичность портфолио
-                                        </Typography>
-                                        <Typography variant="small" color="gray" className="font-normal">
-                                            Сделать портфолио публичным
-                                        </Typography>
-                                    </div>
-                                }
-                                className="h-full w-full checked:bg-[#2ec946]"
-                                containerProps={{
-                                    className: "w-11 h-6",
-                                }}
-                                circleProps={{
-                                    className: "before:hidden left-0.5 border-none",
-                                }}
-                            />
-                        </Tooltip>
-                    }
+                    <SphereComponent openEditor={openEditor} user={user} userByName={userByName} sphereId={userByName.user_portfolio.sphere_id} />
                 </div>
             </Card>
         </div>
